@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using PushAPI.Models.Push;
+using PushAPI.Models.Sites;
 
 namespace PushAPI.Helpers
 {

@@ -3,8 +3,10 @@
     public enum Role
     {
         Admin = 1,
-        Transmissor = 4,
-        GestorTI = 5,   
+        GECDI = 2,
+        Transmissor = 3,
+        GestorTI = 4,
+        Solicitante = 5,
         User = 6
     }
 }

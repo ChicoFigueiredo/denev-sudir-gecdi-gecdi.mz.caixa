@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PushAPI.Classes;
 using PushAPI.Helpers;
-using PushAPI.Models.Push;
+using PushAPI.Models.Sites;
+using PushAPI.Requests;
 using PushAPI.Services;
 
 namespace PushAPI.Controllers.User
@@ -17,10 +17,10 @@ namespace PushAPI.Controllers.User
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly dbProjetos _context;
+        private readonly dbSites _context;
         private IUserService _userService;
 
-        public UserController(dbProjetos context, IUserService userService)
+        public UserController(dbSites context, IUserService userService)
         {
             _context = context;
             _userService = userService;
@@ -66,7 +66,7 @@ namespace PushAPI.Controllers.User
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
-            if (id != usuario.iID_Matriz_Permissao)
+            if (id != usuario.idUsuario)
             {
                 return BadRequest();
             }
@@ -100,7 +100,7 @@ namespace PushAPI.Controllers.User
             _context.Usuario.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.iID_Matriz_Permissao }, usuario);
+            return CreatedAtAction("GetUsuario", new { id = usuario.idUsuario }, usuario);
         }
 
         // DELETE: api/User/5
@@ -121,7 +121,7 @@ namespace PushAPI.Controllers.User
 
         private bool UsuarioExists(int id)
         {
-            return _context.Usuario.Any(e => e.iID_Matriz_Permissao == id);
+            return _context.Usuario.Any(e => e.idUsuario == id);
         }
     }
 }

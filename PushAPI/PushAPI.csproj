@@ -27,6 +27,8 @@
   <ItemGroup>
     <Folder Include="Controllers\User\Login\" />
     <Folder Include="Models\Push\" />
+    <Folder Include="ModelX\Atendimento\" />
+    <Folder Include="ModelX\Push\" />
   </ItemGroup>
 
 </Project>

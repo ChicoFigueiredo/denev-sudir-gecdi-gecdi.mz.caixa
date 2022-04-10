@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "e608996d-11b9-4eb4-8ec3-fb823e4a6c38"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -12,7 +15,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "preserveSymlinks": true,
-            "outputPath": "dist",
+            "outputPath": "../PushAPI/wwwroot",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -92,7 +95,10 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-admin-demo:build"
+            "browserTarget": "ngx-admin-demo:build",
+            "ssl": true,
+            "sslKey": "localhost.key",
+            "sslCert": "localhost.crt"
           },
           "configurations": {
             "production": {

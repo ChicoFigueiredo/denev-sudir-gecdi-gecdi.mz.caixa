@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using PushAPI.Classes;
 using PushAPI.Helpers;
-using PushAPI.Models.Push;
+using PushAPI.Models.Sites;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -10,9 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices;
 using PushAPI.Requests;
+using PushAPI.Responses;
 
 namespace PushAPI.Services
-{
+{ 
     public interface IUserService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
@@ -25,30 +25,30 @@ namespace PushAPI.Services
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<Usuario> _users = new List<Usuario>();
 
-        private dbProjetos _db;
+        private dbSites _dbSites;
 
         private readonly AppSettings _appSettings;
 
-        public UserService(IOptions<AppSettings> appSettings, dbProjetos __db)
+        public UserService(IOptions<AppSettings> appSettings, dbSites __dbSites)
         {
             _appSettings = appSettings.Value;
-            _db = __db;
+            _dbSites = __dbSites;
         }
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var __Usuario = _db.Usuario.Include(b => b.iID_PerfilNavigation).SingleOrDefault<Usuario>(u => u.cUsuario == model.Username); //_users.SingleOrDefault(x => x.cUsuario == model.Username ); //&& x.Password == model.Password
+            var __Usuario = _dbSites.Usuario.Include(b => b.idRoleNavigation).SingleOrDefault<Usuario>(u => u.cUsuario == model.Username); //_users.SingleOrDefault(x => x.cUsuario == model.Username ); //&& x.Password == model.Password
 
             // return null if Usuario not found
             if (__Usuario == null) return null;
 
             using (PrincipalContext context = new PrincipalContext(ContextType.Domain))
             {
-                if (context.ValidateCredentials(model.Username, model.Password))
+                if (context.ValidateCredentials(model.Username, model.password))
                 {
                     //UserPrincipal u = UserPrincipal.FindByIdentity(context, model.Username);
-                    //xDE = new DirectoryEntry(_appSettings.LDAP_User_Manager);
-                    //xDE_User = BuscaUsuarioDominio(model.Username, xDE);
+                    xDE = new DirectoryEntry(_appSettings.LDAP_User_Manager);
+                    xDE_User = BuscaUsuarioDominio(model.Username, xDE);
                     SearchResult UserData = Get_UserData(model.Username.ToUpper());
 
                     // authentication successful so generate jwt token
@@ -70,7 +70,7 @@ namespace PushAPI.Services
 
         public Usuario GetById(int id)
         {
-            return _db.Usuario.Include(b => b.iID_PerfilNavigation).SingleOrDefault<Usuario>(u => u.iID_Matriz_Permissao == id); // _users.FirstOrDefault(x => x.iID_Matriz_Permissao == id);
+            return _dbSites.Usuario.Include(b => b.idRoleNavigation).SingleOrDefault<Usuario>(u => u.idUsuario == id); // _users.FirstOrDefault(x => x.iID_Matriz_Permissao == id);
         }
 
         // helper methods
@@ -80,12 +80,13 @@ namespace PushAPI.Services
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { 
-                                new Claim("idUser", Usuario.iID_Matriz_Permissao.ToString()),
+                                new Claim("idUser", Usuario.idUsuario.ToString()),
                                 new Claim("Matricula", Usuario.cUsuario.ToString().ToUpper()),
-                                new Claim("Role", Usuario.iID_PerfilNavigation.Role.ToString()),
+                                new Claim("Role", Usuario.idRoleNavigation.Role.ToString()),
                                 new Claim("Nome", UserData.Properties.Contains("no-usuario") ? (String)UserData.Properties["no-usuario"][0] : ""),
                                 new Claim("CodFuncao", UserData.Properties.Contains("nu-funcao") ? UserData.Properties["nu-funcao"][0].ToString() : ""),
                                 new Claim("Funcao",  UserData.Properties.Contains("no-funcao") ? (String)(UserData.Properties["no-funcao"][0]).ToString() : ""),

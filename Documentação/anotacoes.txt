@@ -1,0 +1,114 @@
+npm config set python C:\Python27\python.exe
+npm config set msvs_version 2017
+
+
+git lfs track "*.doc*"
+git lfs track "*.xls*"
+git lfs track "*.pdf"
+git lfs track "*.zip"
+git lfs track "*.dll"
+git lfs track "*.exe"
+
+
+ng g s gecdi/services/user/user
+
+Arquivo certificate.cnf:
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+x509_extensions = v3_req
+distinguished_name = dn
+
+[dn]
+C = BR
+ST = Brasilia
+L = Plano Piloto
+O = CAIXA
+OU = GECDI02
+emailAddress = gecdi02@caixa.gov.br
+CN = localhost
+
+[v3_req]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = localhost
+
+
+
+
+
+openssl req -new -x509 -newkey rsa:2048 -sha256 -nodes -keyout localhost.key -days 3560 -out localhost.crt -config certificate.cnf
+
+
+Instalar o angular.crt na Raiz de certificados confiáveis
+
+
+
+
+
+
+GECDI 11/ABR/2022 ->  REQ000054145604 / REQ000054145604
+Pasta: \\Cr7260nt036\sicpu\GECDI\GECDI\2022-04-11
+
+====================================================================================
+!! MUITA ATENÇÃO AOS NOVOS PARÂMETROS                                             !!
+====================================================================================
+
+TAREFA A SER EXECUTADA AO LONGO DO DIA 11/ABR/2022 - ENTRAR NA SALA DO TEAMS ABAIXO PARA MAIORES DETALHES
+
+Copiar os arquivos da pasta \\Cr7260nt036\sicpu\GECDI\GECDI\2022-04-11 para o drive Y: do servidor wrkpbatchPRD01 (20.197.182.203)
+
+Acessar o console VM da maquina wrkpbatchPRD01 (20.197.182.203), exemplo via remote desktop, executar os programas abaixo, via powershell, nos horários indicados (após reprogramação) :
+
+====================================================================================
+!! MUITA ATENÇÃO AOS NOVOS PARÂMETROS                                             !!
+====================================================================================
+
+
+   07:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H070000_Msg0101-Tranche01-ID00001152-QTD0000200000.csv'
+   07:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H073000_Msg0101-Tranche02-ID00001153-QTD0000200000.csv'
+   08:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H080000_Msg0101-Tranche03-ID00001154-QTD0000200000.csv'
+   08:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H083000_Msg0101-Tranche04-ID00001155-QTD0000200000.csv'
+   09:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H090000_Msg0101-Tranche05-ID00001156-QTD0000200000.csv'
+   09:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H093000_Msg0101-Tranche06-ID00001157-QTD0000085311.csv'
+   10:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H100000_Msg0040-Tranche07-ID00001158-QTD0000025000.csv'
+   10:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H103000_Msg0040-Tranche08-ID00001159-QTD0000025000.csv'
+   11:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H110000_Msg0040-Tranche09-ID00001160-QTD0000025000.csv'
+   11:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H113000_Msg0040-Tranche10-ID00001161-QTD0000025000.csv'
+   12:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H120000_Msg0040-Tranche11-ID00001162-QTD0000025000.csv'
+   12:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H123000_Msg0040-Tranche12-ID00001163-QTD0000025000.csv'
+   13:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H130000_Msg0040-Tranche13-ID00001164-QTD0000025000.csv'
+   13:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H133000_Msg0040-Tranche14-ID00001165-QTD0000025000.csv'
+   14:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H140000_Msg0040-Tranche15-ID00001166-QTD0000025000.csv'
+   14:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H143000_Msg0040-Tranche16-ID00001167-QTD0000025000.csv'
+   15:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H150000_Msg0040-Tranche17-ID00001168-QTD0000100000.csv'
+   15:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H153000_Msg0040-Tranche18-ID00001169-QTD0000100000.csv'
+   16:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H160000_Msg0103-Tranche19-ID00001141-QTD0000060000.csv'
+   16:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H163000_Msg0103-Tranche20-ID00001142-QTD0000060000.csv'
+   17:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H170000_Msg0103-Tranche21-ID00001143-QTD0000008857.csv'
+   17:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H173000_Msg0100-Tranche22-ID00001144-QTD0000060000.csv'
+   18:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H180000_Msg0100-Tranche23-ID00001145-QTD0000060000.csv'
+   18:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H183000_Msg0100-Tranche24-ID00001146-QTD0000060000.csv'
+   19:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H190000_Msg0100-Tranche25-ID00001147-QTD0000060000.csv'
+   19:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H193000_Msg0100-Tranche26-ID00001148-QTD0000060000.csv'
+   20:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H200000_Msg0095-Tranche27-ID00001149-QTD0000060000.csv'
+   20:30 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H203000_Msg0095-Tranche28-ID00001150-QTD0000060000.csv'
+   21:00 > C:\apps\processacsv\ProcessaCSV -a prd -l 1500 -L true -d 'Y:\' -f 'PUSH_D20220411-H210000_Msg0095-Tranche29-ID00001151-QTD0000060000.csv'
+
+
+Informar o retorno com Quantidade de PUSH enviados e tempo em milissegundos na sala após cada execução 
+
+Dúvidas e orientações na sala do TEAMS : https://teams.microsoft.com/l/meetup-join/19%3ameeting_ODM4NzE4ZGUtNTA1Yi00NzRmLWIwMzMtMDY4YzkxODdlODBj%40thread.v2/0?context=%7b%22Tid%22%3a%22ab9bba98-684a-43fb-add8-9c2bebede229%22%2c%22Oid%22%3a%225d4b76ca-517a-4c1d-a6ac-9a43d5e7b9fc%22%7d
+
+Pontos focais: Lindia Campos (C077909) / Carol Salek (C098709) / Matheus Coatio (C138177) / Chico Figueiredo (C051431)
+
+
+
+
+
+
+(1 linha afetada)
+
+Horário de conclusão: 2022-04-10T09:56:24.4224010-03:00

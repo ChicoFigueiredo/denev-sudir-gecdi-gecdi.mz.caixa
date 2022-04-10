@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PushAPI.Helpers;
+using PushAPI.Models.Atendimento;
 using PushAPI.Models.Push;
+using PushAPI.Models.Sites;
 using PushAPI.Services;
 using Swashbuckle.AspNetCore;
 using System.Configuration;
@@ -46,7 +48,9 @@ builder.Services.AddSwaggerGen(setup =>
 
 // configure strongly typed settings object
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-builder.Services.AddDbContext<dbProjetos>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
+builder.Services.AddDbContext<dbSites>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBSites")));
+builder.Services.AddDbContext<dbPUSH>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBPUSH")));
+builder.Services.AddDbContext<dbAtendimento>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBAtendimento")));
 
 // configure DI for application services
 builder.Services.AddScoped<IUserService, UserService>();

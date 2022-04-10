@@ -38,8 +38,8 @@ namespace PushAPI.Models.Push
         public TimeSpan? Enviar_Horario_Inicial { get; set; }
         public TimeSpan? Enviar_Horario_Final { get; set; }
         public int? Limitacao_Tranche { get; set; }
-        public int? Quantidade_Total { get; set; }
-        public int? Quantidade_Enviada { get; set; }
+        public int Quantidade_Total { get; set; }
+        public int Quantidade_Enviada { get; set; }
         public string? Matricula_Cadastramento { get; set; }
         public DateTime? Data_Cadastramento { get; set; }
         public bool Autorizacao_Gestor_PUSH { get; set; }
@@ -56,7 +56,7 @@ namespace PushAPI.Models.Push
         public bool Finalizado { get; set; }
         public string? Impactos_Previstos { get; set; }
         public byte Prioridade { get; set; }
-        public int? Quantidade_Agendada { get; set; }
+        public int Quantidade_Agendada { get; set; }
         public int? Quantidade_Total_Restante { get; set; }
 
         public virtual Canais CanalNavigation { get; set; } = null!;
