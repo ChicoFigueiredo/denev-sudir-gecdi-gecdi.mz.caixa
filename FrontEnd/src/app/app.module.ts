@@ -52,7 +52,7 @@ registerLocaleData(localePt, 'pt-BR');
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({
-          name: 'email',
+          name: environment.authname,
           baseEndpoint: environment.urlAPI,
            login: {
              endpoint: '/api/user/login',
@@ -65,8 +65,7 @@ registerLocaleData(localePt, 'pt-BR');
       ],
       forms: {
         login: {
-          redirectDelay: 0,
-          strategy: 'email',  // strategy id key.
+          strategy: environment.authname,  // strategy id key.
           rememberMe: true,   // whether to show or not the `rememberMe` checkbox
           showMessages: {
             success: true,
@@ -75,6 +74,9 @@ registerLocaleData(localePt, 'pt-BR');
       },
     }),
 
+  ],
+  exports: [
+    NbAuthJWTToken
   ],
   bootstrap: [AppComponent],
   providers: [
