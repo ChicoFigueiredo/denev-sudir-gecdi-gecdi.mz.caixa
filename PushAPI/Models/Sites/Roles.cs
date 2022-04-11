@@ -14,6 +14,7 @@ namespace PushAPI.Models.Sites
         public string Role { get; set; } = null!;
         public string Nome_Role { get; set; } = null!;
         public short Ordem { get; set; }
+        public string Rota { get; set; } = null!;
         public bool Tem_Permissao_Geral { get; set; }
         public bool E_Admin { get; set; }
         public bool Pode_Marcar_Envio { get; set; }

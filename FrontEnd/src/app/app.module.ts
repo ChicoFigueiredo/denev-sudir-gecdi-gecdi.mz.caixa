@@ -75,9 +75,7 @@ registerLocaleData(localePt, 'pt-BR');
     }),
 
   ],
-  exports: [
-    NbAuthJWTToken
-  ],
+  exports: [],
   bootstrap: [AppComponent],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },

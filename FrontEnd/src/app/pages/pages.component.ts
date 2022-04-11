@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuService } from '../gecdi/services/menu/menu.service';
 
 import { MENU_ITEMS } from './pages-menu';
 
@@ -13,6 +14,10 @@ import { MENU_ITEMS } from './pages-menu';
   `,
 })
 export class PagesComponent {
-
   menu = MENU_ITEMS;
+  constructor(
+    menuService: MenuService
+  ){
+    menuService.changeMenu().subscribe(_menu => this.menu = _menu)
+  }
 }

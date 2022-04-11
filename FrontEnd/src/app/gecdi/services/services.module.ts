@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ServicesRoutingModule } from './services-routing.module';
 import { ServicesComponent } from './services.component';
+import { NbAuthModule } from '@nebular/auth';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ServicesComponent } from './services.component';
   ],
   imports: [
     CommonModule,
-    ServicesRoutingModule
+    ServicesRoutingModule,
+    NbAuthModule
   ]
 })
 export class ServicesModule { }

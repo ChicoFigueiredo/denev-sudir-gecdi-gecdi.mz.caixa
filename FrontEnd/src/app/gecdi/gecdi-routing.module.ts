@@ -21,7 +21,8 @@ const routes: Routes = [{
         pathMatch: 'full',
       },
     ]
-  }];
+  },
+  { path: 'template', loadChildren: () => import('./atendimento/atendimento.module').then(m => m.AtendimentoModule) }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

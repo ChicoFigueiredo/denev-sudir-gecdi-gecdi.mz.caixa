@@ -47,6 +47,10 @@ namespace PushAPI.Models.Sites
                 entity.Property(e => e.Role)
                     .HasMaxLength(15)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Rota)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('/gecdi/dashboard')");
             });
 
             modelBuilder.Entity<Usuario>(entity =>

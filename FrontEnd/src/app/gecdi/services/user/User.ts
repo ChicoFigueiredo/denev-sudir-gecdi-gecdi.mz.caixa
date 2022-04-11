@@ -29,6 +29,7 @@ export interface IDRoleNavigation {
   idRole:                     number;
   role:                       string;
   nome_Role:                  string;
+  rota:                       string;
   ordem:                      number;
   tem_Permissao_Geral:        boolean;
   e_Admin:                    boolean;

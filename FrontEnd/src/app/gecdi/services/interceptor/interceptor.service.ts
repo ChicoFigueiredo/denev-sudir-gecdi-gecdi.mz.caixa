@@ -5,7 +5,7 @@ import {
   HttpRequest
 } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Injectable } from "@angular/core";
+import { Injectable, Injector } from "@angular/core";
 import { UserService } from "../../services/user/user.service";
 import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
 
@@ -13,21 +13,25 @@ import { NbAuthJWTToken, NbAuthService } from "@nebular/auth";
 export class JwtHeaderInterceptor implements HttpInterceptor {
 
   private currentToken: string = "";
+  //private tokenService : NbAuthJWTToken;
+  //private authService: NbAuthService;
 
   constructor(
-    private tokenService : NbAuthJWTToken,
-    private authService: NbAuthService
+    private injector: Injector,
+    authService: NbAuthService
   ) {
 
-    this.currentToken = tokenService.getValue();
+    //this.tokenService = injector.get(NbAuthJWTToken);
+    //this.authService  = injector.get(NbAuthService);
+
+    //this.currentToken = this.tokenService.getValue();
 
     authService.onTokenChange()
         .subscribe((token: NbAuthJWTToken) => {
           if (token.isValid()) {
             this.currentToken = token.getValue();
           }
-
-    });
+        });
   }
 
   intercept(

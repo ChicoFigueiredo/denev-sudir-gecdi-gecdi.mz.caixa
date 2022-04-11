@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { BehaviorSubject } from 'rxjs';
+import { MenuService } from '../menu/menu.service';
 import { User } from './User';
 
 @Injectable({
@@ -11,11 +12,14 @@ export class UserService {
 
   public currentUser: User = null;
   public _changeUser: BehaviorSubject<any> = new BehaviorSubject<any>(this.currentUser);
-  get changeUser() { return this._changeUser.asObservable(); }
+  public changeUser() {
+    return this._changeUser.asObservable();
+  }
 
 
   constructor(
     private authService: NbAuthService,
+    private menuService: MenuService,
     private router:Router
   ) {
 
@@ -27,13 +31,10 @@ export class UserService {
 
           this._changeUser.next(this.currentUser);
 
-          if (this.currentUser.user.idRole = 2) {
-            this.router.navigateByUrl('/gecdi/dashboard')
-          } else {
-            this.router.navigateByUrl('/')
-          }
+          this.menuService.SetMenu(`${this.currentUser.user.idRole}`);
 
-          //this.user = token.getPayload(); // here we receive a payload from the token and assigns it to our `user` variable
+          this.router.navigateByUrl(this.menuService.GetRota(`${this.currentUser.user.idRole}`));
+
         }
 
     });

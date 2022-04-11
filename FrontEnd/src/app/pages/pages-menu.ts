@@ -6,19 +6,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Dashboard Atendimento',
+    title: 'Login',
     icon: 'shopping-cart-outline',
     link: '/gecdi/dashboard',
     home: true,
   },
   {
-    title: 'Security',
-    icon: 'shopping-cart-outline',
-    link: '/gecdi/security',
-    home: true,
-  },
-  {
-    title: 'INSPIRAÇÃO',
+    title: 'EXAMPLEs',
     group: true,
   },
   {
