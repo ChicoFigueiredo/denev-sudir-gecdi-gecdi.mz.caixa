@@ -1,1 +1,176 @@
-<p>atendimento works!</p>
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="row">
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-3 col-md-2">
+                <div class="icon-big text-center icon-warning">
+                  <i class="fas fa-users fa-3x blue"></i>
+                </div>
+              </div>
+              <div class="col-9 col-md-10">
+                <div class="numbers">
+                  <p class="card-category">Atendentes</p>
+                  <p class="card-title"><b class="numero-grande">{{ estatisticas?.Atendentes }}</b> | {{ estatisticas?.ChamadosAtribuidos }} atribuídos / {{ estatisticas?.TotalChamadosServicos }} não atribuídos </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-3 col-md-2">
+                <div class="icon-big text-center icon-warning">
+                  <i class="fas fa-list-ul fa-3x blue"></i>
+                </div>
+              </div>
+              <div class="col-9 col-md-10">
+                <div class="numbers">
+                  <p class="card-category">Chamados</p>
+                  <p class="card-title"><b class="numero-grande">{{ estatisticas?.TotalChamados }}</b> | {{ estatisticas?.TotalChamadosAtender }} atender /  {{ estatisticas?.TotalChamadosServicos }} WO serviço </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-3 col-md-2">
+                <div class="icon-big text-center icon-warning">
+                  <i class="fas fa-exclamation fa-3x red"></i>
+                </div>
+              </div>
+              <div class="col-9 col-md-10">
+                <div class="numbers">
+                  <p class="card-category">Ouvidorias</p>
+                  <p class="card-title"><b class="numero-grande">{{ estatisticas?.Ouvidorias }}</b> | {{ estatisticas?.OuvidoriasVencendo }} ouvidorias vencendo </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-3 col-md-2">
+                <div class="icon-big text-center icon-warning">
+                  <i class="far fa-clock fa-3x red"></i>
+                </div>
+              </div>
+              <div class="col-9 col-md-10">
+                <div class="numbers">
+                  <p class="card-category">Vencido/Vencer</p>
+                  <p class="card-title"><b class="numero-grande">{{ estatisticas?.ChamadosVencidosOuVencendo }}</b> | {{ estatisticas?.ChamadosUltimoDiaTransferir }} que podem transferir hoje </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <nb-card>
+      <nb-card-header>Resumo por atendente</nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div *ngFor="let u of estatisticasAtendentes; let i = index ;" class="col-lg-2 col-md-3 col-sm-4 margin-2-bt">
+            <nb-user
+                    size="large"
+                    name="{{u.Apelido}}"
+                    title="{{u.Chamados}} Ch | {{u.Ouvidorias}} Ouv"
+                    badgeText="{{u.Total}}"
+                    badgeStatus="success"
+                    badgePosition="bottom right"
+                    picture="{{u.UrlAvatar}}"
+                    >
+            </nb-user>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+
+
+    <nb-card>
+      <nb-card-header>
+        Chamados - Atendente:
+
+        <nb-select placeholder="Atendente"
+            [ngModel]="apelidoAtendente"
+            (ngModelChange)="onChange($event)"
+            class="select-atendente">
+            <nb-option *ngFor="let i of atendentes | async" [value]="i?.vApelidoAtendente">
+                {{ i?.vApelidoAtendente }}
+            </nb-option>
+        </nb-select>
+        &nbsp;&nbsp;<button nbButton (click)="syncList()" ><i class="fas fa-sync"></i>&nbsp;Atualizar</button>
+
+      </nb-card-header>
+
+      <nb-card-body>
+
+        <div class="float-right">Atualizado até <b>{{ parametros?.dDataHoraAtualizacao |  date:'dd/LL/yyyy HH:mm'  }}</b></div>
+        <table class="table">
+            <thead  class="row-title">
+                <tr>
+                    <td scope="col">Numero<br>Ocorrência</td>
+                    <td scope="col">Trat.</td>
+                    <td scope="col">Sistema</td>
+                    <td scope="col">CPF</td>
+                    <td scope="col">Cliente</td>
+                    <td scope="col">Abertura</td>
+                    <td scope="col">Vencimento</td>
+                    <td scope="col">Prazo<br>Transf.</td>
+                    <td scope="col">Situação</td>
+                    <td scope="col">Ação</td>
+                    <td scope="col">Categorização</td>
+                    <td scope="col">Atendente</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let c of chamados | async; let i = index ;" [ngClass]="checkRow(c) + ' hand'">
+                    <th scope="row" (click)="c?.vOrigem == 'ATENDER'? openAtender(c?.iIdentificacaoChamado) : detalheChamado(c?.idChamado,i)">
+                      <a *ngIf="c?.vOrigem == 'ATENDER'" class="no-wrap" ><i class="fas fa-external-link-alt"></i> {{c?.iIdentificacaoChamado}}</a>
+                      <a *ngIf="c?.vOrigem != 'ATENDER'">{{c?.iIdentificacaoChamado}}</a>
+                    </th>
+                    <td scope="row"><nb-checkbox  [ngModel]="c?.bFoiTratado" (ngModelChange)="changeCheckTratado(c,$event)" status="primary"></nb-checkbox></td>
+                    <td scope="row" (click)="detalheChamado(c?.idChamado,i)">{{c?.vOrigem}}</td>
+                    <td scope="row" class="no-wrap" (click)="detalheChamado(c?.idChamado,i)">{{c?.vCPF_CNPJ_Solicitante || ""}}</td>
+                    <td scope="row" (click)="detalheChamado(c?.idChamado,i)">{{c?.vNomeSolicitante}}</td>
+                    <td scope="row" (click)="detalheChamado(c?.idChamado,i)">{{c?.dDataHoraAbertura | date:'dd/LL/yyyy HH:mm'}}</td>
+                    <td scope="row" (click)="detalheChamado(c?.idChamado,i)">{{c?.dDataVencimento | date:'dd/LL/yyyy'}}</td>
+                    <td scope="row" (click)="detalheChamado(c?.idChamado,i)">{{c?.dDataMaximaTransferencia | date:'dd/LL/yyyy'}}</td>
+                    <td scope="row" [ngClass]="checkCellTransferir(c)+' no-wrap'" (click)="detalheChamado(c?.idChamado,i)">{{c?.vSituacaoGECDI}}</td>
+                    <td scope="row" (click)="detalheChamado(c?.idChamado,i)">{{ c?.vAcao ? c?.vAcao + ' | ' + c?.vTemplateResposta : '' }} </td>
+                    <td scope="row" [ngClass]="checkCell(c)" (click)="detalheChamado(c?.idChamado,i)">{{c?.vTipoOcorrencia}} | {{c?.vNatureza}} | {{c?.vAssunto}} | {{c?.vMotivo}} | {{c?.vItem}}</td>
+                    <td scope="row" (click)="detalheChamado(c?.idChamado,i)">{{c?.vApelidoAtendente}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+      </nb-card-body>
+
+      <nb-card-footer>
+        Footer
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>
+
+<ngx-dialog-chamado #diag [chamado]="chamadoAtual | async" [position]="posicao" [listaChamados]="chamados | async" [callbackMark]="positionTratado" ></ngx-dialog-chamado>

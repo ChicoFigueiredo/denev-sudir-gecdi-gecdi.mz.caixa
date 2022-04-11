@@ -1,0 +1,48 @@
+<div class="row margin-top-1em">
+    <div class="col-md-4 top-linha-cinza">
+        Solicitante: <b>{{ chamado?.vCPF_CNPJ_Solicitante }} {{ chamado?.vNomeSolicitante }}</b><br>
+        Situação (GECDI): <b>{{ chamado?.vSituacao }}</b><br>
+        Abertura: <b>{{ chamado?.dDataHoraAbertura | date:'dd/LL/yyyy HH:mm' }}</b><br>
+        Vencimento: <b>{{ chamado?.dDataVencimento | date:'dd/LL/yyyy'  }}</b><br>
+        Transferir até: <b>{{ chamado?.dDataMaximaTransferencia | date:'dd/LL/yyyy'  }}</b><br>
+        Atendente: <b class="blue-font">{{ chamado?.vApelidoAtendente }}</b><br>
+    </div>
+    <div class="col-md-4 top-linha-cinza">
+        Tipo: <b>{{ chamado?.vTipoOrigem }}</b> <br>
+        Ocorrencia: <b>{{ chamado?.vTipoOcorrencia }}</b><br>
+        Natureza: <b>{{ chamado?.vNatureza }}</b><br>
+        Assunto: <b>{{ chamado?.vAssunto }}</b><br>
+        Item: <b>{{ chamado?.vItem }}</b><br>
+        Motivo: <b>{{chamado?.vMotivo}}</b>
+    </div> 
+    <div class="col-md-4 top-linha-cinza" *ngIf="template != null || chamado?.vTemplateResposta != null">
+        <div *ngIf="template != null && chamado?.vTemplateResposta == null">
+            <span>PRÉVIA: <b class="blue-font">{{ template?.vAcao }} | {{ template?.vTemplateResposta }}</b></span> &nbsp;&nbsp;&nbsp; <BR>
+                {{ template?.cgC_TranferenciaNavigation?.nome_Exibicao }}
+            <div class="limitar-25em" [innerHTML]="template?.vResposta" *ngIf="template?.vAcao == 'Fechar!'"></div>
+            <b><pre class="limitar-25em" *ngIf="template?.vAcao == 'Transferir!'">{{template?.vResposta}}</pre></b>
+        </div>
+        
+        <div *ngIf="template == null || (chamado?.vTemplateResposta != null || chamado?.vTemplateResposta != '')" > 
+            <span>CARIMBADO: <b class="blue-font">{{ chamado?.vAcao }} | {{ chamado?.vTemplateResposta }}</b></span> &nbsp;&nbsp;&nbsp; <BR>
+                {{ chamado?.cgC_TranferenciaNavigation?.nome_Exibicao }}
+            <div class="limitar-25em" [innerHTML]="chamado?.vTemplateRespostaNavigation?.vResposta" *ngIf="chamado?.vTemplateRespostaNavigation?.vAcao == 'Fechar!'"></div>
+            <b><pre class="limitar-25em" *ngIf="chamado?.vTemplateRespostaNavigation?.vAcao == 'Transferir!'">{{chamado?.vTemplateRespostaNavigation?.vResposta}}</pre></b>
+        </div>
+    </div>
+</div>
+
+<div class="row margin-top-1em">
+    <div class="col-md-4 top-linha-cinza">
+        Manifesto:<br>
+        <b><pre>{{chamado?.vManifesto}}</pre></b>
+    </div>
+    <div class="col-md-4 top-linha-cinza">
+        Movimentacoes:<br>
+        <b><pre>{{chamado?.vMovimentacoes}}</pre></b>
+    </div>
+    <div class="col-md-4 top-linha-cinza">
+        Comentario:<br>
+        <b><pre>{{chamado?.vComentario}}</pre></b>
+    </div>
+</div>

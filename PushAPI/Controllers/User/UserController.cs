@@ -1,15 +1,11 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PushAPI.Helpers;
 using PushAPI.Models.Sites;
 using PushAPI.Requests;
 using PushAPI.Services;
+using PushAPI.Helpers;
 
 namespace PushAPI.Controllers.User
 {
@@ -19,11 +15,13 @@ namespace PushAPI.Controllers.User
     {
         private readonly dbSites _context;
         private IUserService _userService;
+        private readonly HttpClient _client;
 
         public UserController(dbSites context, IUserService userService)
         {
             _context = context;
             _userService = userService;
+            _client = new HttpClient(new HttpClientHandler(){ AllowAutoRedirect = false });
         }
 
 
@@ -59,6 +57,25 @@ namespace PushAPI.Controllers.User
             }
 
             return usuario;
+        }
+
+
+        // GET: api/User/whoami
+        [HttpGet("{id}/avatar", Name = "GetAvatar")]
+        public async Task<IActionResult> GetAvatar(string id)
+        {
+            try
+            {
+                string matricula = id.ToLower();
+                var request = HttpContext.CreateProxyHttpRequest(new Uri($"http://tdv.caixa/img/{matricula}.jpg"));
+                var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, HttpContext.RequestAborted);
+                await HttpContext.CopyProxyHttpResponse(response);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         // PUT: api/User/5

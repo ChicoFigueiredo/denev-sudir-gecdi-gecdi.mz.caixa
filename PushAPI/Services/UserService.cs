@@ -10,6 +10,7 @@ using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices;
 using PushAPI.Requests;
 using PushAPI.Responses;
+using PushAPI.Models.Atendimento;
 
 namespace PushAPI.Services
 { 
@@ -26,13 +27,15 @@ namespace PushAPI.Services
         private List<Usuario> _users = new List<Usuario>();
 
         private dbSites _dbSites;
+        private dbAtendimento _dbAtendimento;
 
         private readonly AppSettings _appSettings;
 
-        public UserService(IOptions<AppSettings> appSettings, dbSites __dbSites)
+        public UserService(IOptions<AppSettings> appSettings, dbSites __dbSites, dbAtendimento __dbAtendimento)
         {
             _appSettings = appSettings.Value;
             _dbSites = __dbSites;
+            _dbAtendimento = __dbAtendimento;
         }
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
@@ -46,14 +49,14 @@ namespace PushAPI.Services
             {
                 if (context.ValidateCredentials(model.Username, model.password))
                 {
-                    //UserPrincipal u = UserPrincipal.FindByIdentity(context, model.Username);
                     xDE = new DirectoryEntry(_appSettings.LDAP_User_Manager);
                     xDE_User = BuscaUsuarioDominio(model.Username, xDE);
                     SearchResult UserData = Get_UserData(model.Username.ToUpper());
 
-                    // authentication successful so generate jwt token
                     var token = generateJwtToken(__Usuario, xDE_User, UserData);
-                    return new AuthenticateResponse(__Usuario, token, xDE_User, UserData);
+
+                    Atendentes at = _dbAtendimento.Atendentes.FirstOrDefault(x => x.cUsuario == model.Username);
+                    return new AuthenticateResponse(__Usuario, token, xDE_User, UserData, at);
 
                 }
                 else

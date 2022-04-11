@@ -1,4 +1,5 @@
-﻿using PushAPI.Models.Sites;
+﻿using PushAPI.Models.Atendimento;
+using PushAPI.Models.Sites;
 using System.DirectoryServices;
 
 namespace PushAPI.Responses
@@ -17,9 +18,10 @@ namespace PushAPI.Responses
         public string LotacaoSigla { get; set; }
         public string LotacaoNome { get; set; }
         public string LotacaoTipo { get; set; }
+        public string ApelidoAtendente { get; set; }
 
 
-        public AuthenticateResponse(Usuario _Usuario, string _token, DirectoryEntry xDE, SearchResult UserData)
+        public AuthenticateResponse(Usuario _Usuario, string _token, DirectoryEntry xDE, SearchResult UserData, Atendentes at)
         {
             Id = _Usuario.idUsuario;
             Username = _Usuario.cUsuario;
@@ -30,6 +32,7 @@ namespace PushAPI.Responses
             LotacaoSigla = UserData.Properties.Contains("sg-unidade") ? (String)UserData.Properties["sg-unidade"][0].ToString() : "" ;
             LotacaoNome = UserData.Properties.Contains("no-lotacaofisica") ? (String)UserData.Properties["no-lotacaofisica"][0].ToString() : "";
             LotacaoTipo = UserData.Properties.Contains("nu-tp-unidade") ? UserData.Properties["nu-tp-unidade"][0].ToString() : "0";
+            ApelidoAtendente = at?.vApelidoAtendente ?? "";
             token = _token;
             User = _Usuario;
             if (xDE.Properties["thumbnailPhoto"] != null)

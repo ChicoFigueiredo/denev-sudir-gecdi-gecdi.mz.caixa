@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using gecdi.mz.caixa.Models.AtenderDigital;
-using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
+using PushAPI.Models.Atendimento;
+using PushAPI.Helpers;
 
 namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
 {
@@ -16,6 +17,7 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
 
         // GET: api/chamados/estatisticas
         [HttpGet("estatisticas")]
+        [Authorize(Role.Admin, Role.GECDI)]
         public async Task<ActionResult<EstatisticasChamadosPorSistema>> GetEstatisticas(string id)
         {
             return null;
@@ -24,10 +26,10 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
 
     public class EstatisticasChamados
     {
-        EstatisticasChamados(dbAtenderDigital db)
+        EstatisticasChamados(dbAtendimento db)
         {
             DateTime hoje = DateTime.Now;
-            var porSistema = db.Chamados.Where(w => !w.bFechado).GroupBy(g => new { Origem = g.vOrigem, Situacao = (g.dDataVencimento.Value.Date == hoje.Date) ? "VenceHoje" : (g.dDataVencimento.Value.Date < hoje.Date) ? "Vencida" : "AVencer" }).ToList();
+            var porSistema = db.Chamado.Where(w => !w.bFechado).GroupBy(g => new { Origem = g.vOrigem, Situacao = (g.dDataVencimento.Value.Date == hoje.Date) ? "VenceHoje" : (g.dDataVencimento.Value.Date < hoje.Date) ? "Vencida" : "AVencer" }).ToList();
             //this.ChamadosAbertos.Servicos = porSistema[0]["Origem"]
         }
         public DateTime dataHoraEstatistica { get; set; } = DateTime.Now;

@@ -1,0 +1,75 @@
+.select-atendente {
+  width: 12em;
+}
+
+.no-wrap {
+  // display: inline-block;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-red {
+  background-color: red;
+  color: yellow;
+}
+
+.row-blue {
+  background-color: blue;
+  color: white;
+}
+
+.row-green {
+  background-color: #4caf50;
+  color: white;
+}
+
+.row-title {
+  background-color: black;
+  color: white;
+}
+
+.cell-nao-transferir {
+  background-color: gold;
+  color: black;
+  font-weight: bold;
+}
+
+
+.cell-ultimo-dia-transferir {
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+}
+
+.hand {
+  cursor: pointer;
+}
+
+.numero-grande {
+  font-size: 3em;
+}
+
+.card-category {
+  font-size: 2em;
+}
+
+.row {
+  margin-bottom: 1em;
+}
+
+.red {
+  color: red;
+}
+
+.blue {
+  color: blue;
+}
+
+.margin-2-bt {
+  margin-bottom: 1em;
+}
+
+:host-context(.user-name) {
+  font-weight: bold;
+}

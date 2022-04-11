@@ -1,0 +1,42 @@
+
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.margin-top-1em {
+    margin-top: 1em;
+}
+
+.top-linha-cinza {
+    border-top: 1px gray solid;
+    margin-left: 6px;
+    margin-right: 6px;
+    padding: 3px;
+}
+
+.col-md-4 {
+    max-width: calc(33.3333333% - 12px);
+}
+
+
+.col-md-6 {
+    max-width: calc(50% - 12px);
+}
+
+.limitar-25em {
+    max-height: 22em;
+    overflow: auto;
+    color: blue;
+    span {
+        color: blue;
+    }
+}
+
+.blue-font {
+    color: blue;
+    font-size: 1.2em;
+}

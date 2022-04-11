@@ -74,12 +74,15 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseMiddleware<OptionsMiddleware>();
 
 // global cors policy
 app.UseCors(x => x
+    .WithMethods("OPTIONS","GET","PUT","DELETE","POST", "HEAD", "TRACE", "PATCH")
     .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader());
+    .AllowAnyHeader()
+    );
+
 
 // custom jwt auth middleware
 app.UseMiddleware<JwtMiddleware>();

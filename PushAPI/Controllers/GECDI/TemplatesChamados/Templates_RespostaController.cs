@@ -5,39 +5,40 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using gecdi.mz.caixa.Models.AtenderDigital;
-using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using PushAPI.Models.Atendimento;
+using PushAPI.Helpers;
 
 namespace gecdi.mz.caixa.Controllers.GECDI.TemplatesChamados
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Role.Admin, Role.GECDI)]
     public class Templates_RespostaController : ControllerBase
     {
-        private readonly dbAtenderDigital _context;
+        private readonly dbAtendimento _dbAtendimento;
 
-        public Templates_RespostaController(dbAtenderDigital context)
+        public Templates_RespostaController(dbAtendimento context)
         {
-            _context = context;
+            _dbAtendimento = context;
         }
 
         // GET: api/Templates_Resposta
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Templates_Resposta>>> GetTemplates_Respostas()
+        public async Task<ActionResult<IEnumerable<Templates_Respostas>>> GetTemplates_Respostas()
         {
-            List<Templates_Resposta> tr = await _context.Templates_Respostas
+            List<Templates_Respostas> tr = await _dbAtendimento.Templates_Respostas
                                                         .Include(i => i.CGC_TranferenciaNavigation)
-                                                        .ToListAsync<Templates_Resposta>();
+                                                        .ToListAsync<Templates_Respostas>();
             return tr;
         }
 
         // GET: api/Templates_Resposta/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Templates_Resposta>> GetTemplates_Resposta(string id)
+        public async Task<ActionResult<Templates_Respostas>> GetTemplates_Resposta(string id)
         {
-            var templates_Resposta = await _context.Templates_Respostas.FindAsync(id);
+            var templates_Resposta = await _dbAtendimento.Templates_Respostas.FindAsync(id);
 
             if (templates_Resposta == null)
             {
@@ -50,18 +51,18 @@ namespace gecdi.mz.caixa.Controllers.GECDI.TemplatesChamados
         // PUT: api/Templates_Resposta/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTemplates_Resposta(string id, Templates_Resposta templates_Resposta)
+        public async Task<IActionResult> PutTemplates_Resposta(string id, Templates_Respostas templates_Resposta)
         {
             if (id != templates_Resposta.vTemplateResposta)
             {
                 return BadRequest();
             }
 
-            _context.Entry(templates_Resposta).State = EntityState.Modified;
+            _dbAtendimento.Entry(templates_Resposta).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbAtendimento.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,12 +82,12 @@ namespace gecdi.mz.caixa.Controllers.GECDI.TemplatesChamados
         // POST: api/Templates_Resposta
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Templates_Resposta>> PostTemplates_Resposta(Templates_Resposta templates_Resposta)
+        public async Task<ActionResult<Templates_Respostas>> PostTemplates_Resposta(Templates_Respostas templates_Resposta)
         {
-            _context.Templates_Respostas.Add(templates_Resposta);
+            _dbAtendimento.Templates_Respostas.Add(templates_Resposta);
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbAtendimento.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -107,21 +108,21 @@ namespace gecdi.mz.caixa.Controllers.GECDI.TemplatesChamados
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTemplates_Resposta(string id)
         {
-            var templates_Resposta = await _context.Templates_Respostas.FindAsync(id);
+            var templates_Resposta = await _dbAtendimento.Templates_Respostas.FindAsync(id);
             if (templates_Resposta == null)
             {
                 return NotFound();
             }
 
-            _context.Templates_Respostas.Remove(templates_Resposta);
-            await _context.SaveChangesAsync();
+            _dbAtendimento.Templates_Respostas.Remove(templates_Resposta);
+            await _dbAtendimento.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool Templates_RespostaExists(string id)
         {
-            return _context.Templates_Respostas.Any(e => e.vTemplateResposta == id);
+            return _dbAtendimento.Templates_Respostas.Any(e => e.vTemplateResposta == id);
         }
     }
 }

@@ -6,14 +6,18 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PushAPI.Helpers;
 
 namespace gecdi.mz.caixa.Controllers.Admin
 {
     [Route("api/[controller]")]
+    [Authorize(Role.Admin)]
     public class TestController : Controller
     {
 
         // GET: api/Test
+
+        [HttpGet("api/test")]
         public String[] Get(string id = "login.caixa.gov.br", int tentativas = 6)
         {
             Ping p = new Ping();
@@ -45,7 +49,7 @@ namespace gecdi.mz.caixa.Controllers.Admin
         }
 
         // GET: api/Test
-        [Route("TestPort")]
+        [HttpGet("api/testport")]
         public String[] GetPort(string id = "login.caixa.gov.br", int tentativas = 3, string protocolo = "https")
         {
             string url = !id.Contains(protocolo) ? protocolo + "://" + id : id;

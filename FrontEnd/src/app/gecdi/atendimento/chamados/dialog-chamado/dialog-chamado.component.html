@@ -1,0 +1,47 @@
+a<ng-template #dialog let-data let-ref="dialogRef" class="template-chamado">
+    <nb-card class="dialog-card">
+        <nb-card-header>
+            <a *ngIf="chamado?.vOrigem == 'ATENDER'" class="no-wrap hand" (click)="openAtender(chamado?.iIdentificacaoChamado)" ><i class="fas fa-external-link-alt"></i> Chamado {{chamado?.vOrigem}} Nº {{ chamado?.iIdentificacaoChamado }} </a>
+            <a *ngIf="chamado?.vOrigem != 'ATENDER'">Chamado {{chamado?.vOrigem}} Nº {{ chamado?.iIdentificacaoChamado }} {{ chamado?.vWorkOrderID ? ('( ' + chamado?.vWorkOrderID + ' / ' + chamado?.vREQ + ' )') : ''}}</a>
+            <div class="float-right">
+                <button nbButton (click)="getPosition(-1)" *ngIf="position > 0" ><</button>
+                    {{ position + 1 }}
+                <button nbButton (click)="getPosition(+1)"  *ngIf="position < listaChamados.length" >></button>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+            <ngx-dados-chamado [chamado]="chamado" [template]="selectedTemplateResponse"></ngx-dados-chamado>
+        </nb-card-body>
+        <nb-card-footer>
+            <div class="float-left" *ngIf="chamado?.vOrigem == 'ATENDER'">
+                Carimbar com (F6) :
+                <input
+                    [ngModel]="selectedTemplateResponseString"
+                    (ngModelChange)="onChangeTemplateResponse($event)"
+                    nbInput
+                    type="text"
+                    placeholder="Escolha o template de Resposta"
+                    [nbAutocomplete]="autoChoiceTemplateRespose"
+                    class = "input-template"
+                    #inputTemplateRef />
+
+                  <nb-autocomplete #autoChoiceTemplateRespose>
+                    <nb-option *ngFor="let tr of filteredNgModelOptions$ | async" [value]="tr">
+                      {{ tr }}
+                    </nb-option>
+                  </nb-autocomplete>&nbsp;&nbsp;
+
+                  <button nbButton (click)="Carimbar(chamado,selectedTemplateResponse)">Carimbar {{ selectedTemplateResponse?.vAcao }} (F7)</button> &nbsp;&nbsp;
+                  <button nbButton (click)="desCarimbar(chamado)" >Descarimbar (F8)</button>
+
+            </div>
+            <div class="align-middle margin-left-2em">
+                <nb-checkbox  [ngModel]="chamado?.bFoiTratado" (ngModelChange)="changeCheckTratado(chamado,$event)" status="primary">Ja foi tratado</nb-checkbox>
+            </div>
+
+            <div class="float-right">
+                <button nbButton (click)="ref.close()">Fechar</button>
+            </div>
+        </nb-card-footer>
+    </nb-card>
+</ng-template>

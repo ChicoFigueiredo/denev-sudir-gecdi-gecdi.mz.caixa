@@ -12,6 +12,9 @@ const routes: Routes = [{
         canActivate: [AuthGuard], //Chama a rotina de autenticação
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       }, {
+        path: 'atendimento',
+        loadChildren: () => import('./atendimento/atendimento.module').then(m => m.AtendimentoModule)
+      }, {
         path: 'security',
         loadChildren: () => import('./security/security.module').then(m => m.SecurityModule)
       },
@@ -22,7 +25,7 @@ const routes: Routes = [{
       },
     ]
   },
-  { path: 'template', loadChildren: () => import('./atendimento/atendimento.module').then(m => m.AtendimentoModule) }];
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

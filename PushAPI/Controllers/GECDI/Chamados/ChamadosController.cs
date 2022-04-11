@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using gecdi.mz.caixa.Models.AtenderDigital;
-using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Authorization;
 using System.Text.RegularExpressions;
+using PushAPI.Models.Atendimento;
+using PushAPI.Helpers;
 
 namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Role.Admin,Role.GECDI)]
     public partial class ChamadosController : ControllerBase
     {
         private readonly dbAtendimento _dbAtendimento;
@@ -40,7 +41,7 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
         )
         {
 
-            IQueryable<Chamado> tmp = _dbAtendimento.Chamados.AsQueryable();
+            IQueryable<Chamado> tmp = _dbAtendimento.Chamado.AsQueryable();
 
             if (listaCampos == "" || listaCampos == null)
                 listaCampos = "minimo";
@@ -77,7 +78,7 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
 
             if (Regex.IsMatch(atendente??"", @"[Cc]\d{6}"))
             {
-                Atendente at = _dbAtendimento.Atendentes.Where(w => w.cUsuario == (atendente??"")).FirstOrDefault();
+                Atendentes at = _dbAtendimento.Atendentes.Where(w => w.cUsuario == (atendente??"")).FirstOrDefault();
                 if (at != null)
                     atendente = at.vApelidoAtendente;
             }
@@ -275,13 +276,13 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
         [HttpPost("{id}/descarimbar")]
         public async Task<ActionResult<Chamado>> PostCarimbaChamado(long id, string carimbo="")
         {
-            var chamado = await _dbAtendimento.Chamados.FindAsync(id);
+            var chamado = await _dbAtendimento.Chamado.FindAsync(id);
             if (chamado == null)
                 return NotFound();
 
             if (carimbo.Trim() != "")
             {
-                Templates_Resposta tr = await _dbAtendimento.Templates_Respostas.FindAsync(carimbo);
+                Templates_Respostas tr = await _dbAtendimento.Templates_Respostas.FindAsync(carimbo);
                 if (tr == null)
                 {
                     chamado.vAcao = null;
@@ -310,7 +311,7 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
         [HttpGet("{id}")]
         public async Task<ActionResult<Chamado>> GetChamado(long id)
         {
-            var chamado = await _dbAtendimento.Chamados
+            var chamado = await _dbAtendimento.Chamado
                                         .Where(w => w.idChamado == id || w.iIdentificacaoChamado == id)
                                         .Include(p => p.vTemplateRespostaNavigation)
                                         .FirstOrDefaultAsync<Chamado>();
@@ -354,7 +355,7 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
         [HttpPost]
         public async Task<ActionResult<Chamado>> PostChamado(Chamado chamado)
         {
-            _dbAtendimento.Chamados.Add(chamado);
+            _dbAtendimento.Chamado.Add(chamado);
             await _dbAtendimento.SaveChangesAsync();
 
             return CreatedAtAction("GetChamado", new { id = chamado.idChamado }, chamado);
@@ -364,13 +365,13 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteChamado(long id)
         {
-            var chamado = await _dbAtendimento.Chamados.FindAsync(id);
+            var chamado = await _dbAtendimento.Chamado.FindAsync(id);
             if (chamado == null)
             {
                 return NotFound();
             }
 
-            _dbAtendimento.Chamados.Remove(chamado);
+            _dbAtendimento.Chamado.Remove(chamado);
             await _dbAtendimento.SaveChangesAsync();
 
             return NoContent();
@@ -378,7 +379,7 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
 
         private bool ChamadoExists(long id)
         {
-            return _dbAtendimento.Chamados.Any(e => e.idChamado == id);
+            return _dbAtendimento.Chamado.Any(e => e.idChamado == id);
         }
 
 
@@ -393,11 +394,11 @@ namespace gecdi.mz.caixa.Controllers.GECDI.Chamados
             //if (id != rtc.idChamado)
             //    return BadRequest(new { msg = "Chamado mal chamado" });
 
-            Atendente at = await _dbAtendimento.Atendentes.FindAsync(apelidoAtendente);
+            Atendentes at = await _dbAtendimento.Atendentes.FindAsync(apelidoAtendente);
             if (at == null)
                 return BadRequest(new { msg = "Atendente não encontrado" });
 
-            Chamado chamado = await _dbAtendimento.Chamados.FindAsync(id);
+            Chamado chamado = await _dbAtendimento.Chamado.FindAsync(id);
             if (at == null)
                 return BadRequest(new { msg = "Chamado não encontrado" });
 

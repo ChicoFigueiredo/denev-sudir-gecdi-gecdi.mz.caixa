@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using gecdi.mz.caixa.Models.AtenderDigital;
+using PushAPI.Models.Atendimento;
 
 namespace gecdi.mz.caixa.Controllers.GECDI
 {
@@ -13,35 +13,35 @@ namespace gecdi.mz.caixa.Controllers.GECDI
     [ApiController]
     public class AtendentesController : ControllerBase
     {
-        private readonly dbAtenderDigital _context;
+        private readonly dbAtendimento _dbAtendimentos;
 
-        public AtendentesController(dbAtenderDigital context)
+        public AtendentesController(dbAtendimento context)
         {
-            _context = context;
+            _dbAtendimentos = context;
         }
 
         // GET: api/Atendentes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Atendente>>> GetAtendentes(bool adicionarTodos = true, bool adicionarVazios = true, bool? incluirInativos = false)
+        public async Task<ActionResult<IEnumerable<Atendentes>>> GetAtendentes(bool adicionarTodos = true, bool adicionarVazios = true, bool? incluirInativos = false)
         {
-            List<Atendente> listaAtendentes = new List<Atendente>();
+            List<Atendentes> listaAtendentes = new List<Atendentes>();
 
             if (adicionarTodos)
-                listaAtendentes.Add(new Atendente { vApelidoAtendente = "<Todos>" });
+                listaAtendentes.Add(new Atendentes { vApelidoAtendente = "<Todos>" });
 
             if (adicionarVazios)
-                listaAtendentes.Add(new Atendente { vApelidoAtendente = "-VAZIO-" });
+                listaAtendentes.Add(new Atendentes { vApelidoAtendente = "-VAZIO-" });
 
-            listaAtendentes.AddRange(await _context.Atendentes.Where(w=> w.bE_Ativo == (incluirInativos == null || (bool)incluirInativos) ? w.bE_Ativo : true).ToListAsync());
+            listaAtendentes.AddRange(await _dbAtendimentos.Atendentes.Where(w=> w.bE_Ativo == (incluirInativos == null || (bool)incluirInativos) ? w.bE_Ativo : true).ToListAsync());
 
             return listaAtendentes;
         }
 
         // GET: api/Atendentes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Atendente>> GetAtendente(string id)
+        public async Task<ActionResult<Atendentes>> GetAtendente(string id)
         {
-            var atendente = await _context.Atendentes.FindAsync(id);
+            var atendente = await _dbAtendimentos.Atendentes.FindAsync(id);
 
             if (atendente == null)
             {
@@ -54,18 +54,18 @@ namespace gecdi.mz.caixa.Controllers.GECDI
         // PUT: api/Atendentes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAtendente(string id, Atendente atendente)
+        public async Task<IActionResult> PutAtendente(string id, Atendentes atendente)
         {
             if (id != atendente.vApelidoAtendente)
             {
                 return BadRequest();
             }
 
-            _context.Entry(atendente).State = EntityState.Modified;
+            _dbAtendimentos.Entry(atendente).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbAtendimentos.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -85,12 +85,12 @@ namespace gecdi.mz.caixa.Controllers.GECDI
         // POST: api/Atendentes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Atendente>> PostAtendente(Atendente atendente)
+        public async Task<ActionResult<Atendentes>> PostAtendente(Atendentes atendente)
         {
-            _context.Atendentes.Add(atendente);
+            _dbAtendimentos.Atendentes.Add(atendente);
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbAtendimentos.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -111,21 +111,21 @@ namespace gecdi.mz.caixa.Controllers.GECDI
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAtendente(string id)
         {
-            var atendente = await _context.Atendentes.FindAsync(id);
+            var atendente = await _dbAtendimentos.Atendentes.FindAsync(id);
             if (atendente == null)
             {
                 return NotFound();
             }
 
-            _context.Atendentes.Remove(atendente);
-            await _context.SaveChangesAsync();
+            _dbAtendimentos.Atendentes.Remove(atendente);
+            await _dbAtendimentos.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool AtendenteExists(string id)
         {
-            return _context.Atendentes.Any(e => e.vApelidoAtendente == id);
+            return _dbAtendimentos.Atendentes.Any(e => e.vApelidoAtendente == id);
         }
     }
 }

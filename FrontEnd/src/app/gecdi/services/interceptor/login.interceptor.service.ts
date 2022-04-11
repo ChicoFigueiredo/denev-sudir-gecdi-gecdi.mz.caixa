@@ -5,11 +5,12 @@ import { map, filter } from 'rxjs/operators';
 
 @Injectable()
 export class UserDataInterceptor implements HttpInterceptor {
-  intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(httpRequest).pipe(
-      filter(event => event instanceof HttpResponse && httpRequest.url.includes('/api/user/login')),
-      map((event: HttpResponse<any>) => {
-        localStorage.setItem("gecdi.user.data",JSON.stringify(event.body));
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req).pipe(
+      map(event => {
+        if (event instanceof HttpResponse && req.url.includes('/api/user/login') ) {
+          localStorage.setItem("gecdi.user.data",JSON.stringify(event.body));
+        };
         return event;
       })
     );

@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using gecdi.mz.caixa.Models.AtenderDigital;
+using PushAPI.Models.Atendimento;
 
-namespace gecdi.mz.caixa.Controllers.CacheParametros
+namespace gecdi.mz.caixa.Controllers.Cache_Parametros
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CacheParametroesController : ControllerBase
     {
-        private readonly dbAtenderDigital _context;
+        private readonly dbAtendimento _dbAtendimento;
 
-        public CacheParametroesController(dbAtenderDigital context)
+        public CacheParametroesController(dbAtendimento context)
         {
-            _context = context;
+            _dbAtendimento = context;
         }
 
         // GET: api/CacheParametroes
@@ -29,9 +29,9 @@ namespace gecdi.mz.caixa.Controllers.CacheParametros
 
         // GET: api/CacheParametroes/5
         [HttpGet("{id?}")]
-        public async Task<ActionResult<CacheParametro>> GetCacheParametro(byte id=1)
+        public async Task<ActionResult<CacheParametros>> GetCacheParametro(byte id=1)
         {
-            var cacheParametro = await _context.CacheParametros.FindAsync(id);
+            var cacheParametro = await _dbAtendimento.CacheParametros.FindAsync(id);
 
             if (cacheParametro == null)
             {
@@ -44,18 +44,18 @@ namespace gecdi.mz.caixa.Controllers.CacheParametros
         // PUT: api/CacheParametroes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCacheParametro(byte id, CacheParametro cacheParametro)
+        public async Task<IActionResult> PutCacheParametro(byte id, CacheParametros cacheParametro)
         {
             if (id != cacheParametro.idCacheParametros)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cacheParametro).State = EntityState.Modified;
+            _dbAtendimento.Entry(cacheParametro).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbAtendimento.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -75,10 +75,10 @@ namespace gecdi.mz.caixa.Controllers.CacheParametros
         // POST: api/CacheParametroes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<CacheParametro>> PostCacheParametro(CacheParametro cacheParametro)
+        public async Task<ActionResult<CacheParametros>> PostCacheParametro(CacheParametros cacheParametro)
         {
-            _context.CacheParametros.Add(cacheParametro);
-            await _context.SaveChangesAsync();
+            _dbAtendimento.CacheParametros.Add(cacheParametro);
+            await _dbAtendimento.SaveChangesAsync();
 
             return CreatedAtAction("GetCacheParametro", new { id = cacheParametro.idCacheParametros }, cacheParametro);
         }
@@ -87,21 +87,21 @@ namespace gecdi.mz.caixa.Controllers.CacheParametros
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCacheParametro(byte id)
         {
-            var cacheParametro = await _context.CacheParametros.FindAsync(id);
+            var cacheParametro = await _dbAtendimento.CacheParametros.FindAsync(id);
             if (cacheParametro == null)
             {
                 return NotFound();
             }
 
-            _context.CacheParametros.Remove(cacheParametro);
-            await _context.SaveChangesAsync();
+            _dbAtendimento.CacheParametros.Remove(cacheParametro);
+            await _dbAtendimento.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool CacheParametroExists(byte id)
         {
-            return _context.CacheParametros.Any(e => e.idCacheParametros == id);
+            return _dbAtendimento.CacheParametros.Any(e => e.idCacheParametros == id);
         }
     }
 }
