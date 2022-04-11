@@ -25,6 +25,7 @@ namespace PushAPI.Responses
             Username = _Usuario.cUsuario;
             Name = UserData.Properties.Contains("no-usuario") ? (String)UserData.Properties["no-usuario"][0] : "";
             CodFuncao = UserData.Properties.Contains("nu-funcao") ? UserData.Properties["nu-funcao"][0].ToString() : "";
+            Funcao = UserData.Properties.Contains("no-funcao") ? (String)(UserData.Properties["no-funcao"][0]).ToString() : "";
             LotacaoFisica = UserData.Properties.Contains("nu-lotacaofisica") ? UserData.Properties["nu-lotacaofisica"][0].ToString() : "0";
             LotacaoSigla = UserData.Properties.Contains("sg-unidade") ? (String)UserData.Properties["sg-unidade"][0].ToString() : "" ;
             LotacaoNome = UserData.Properties.Contains("no-lotacaofisica") ? (String)UserData.Properties["no-lotacaofisica"][0].ToString() : "";
