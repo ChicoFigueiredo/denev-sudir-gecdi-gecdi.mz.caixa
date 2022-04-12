@@ -6,5 +6,9 @@ import { NbLoginComponent } from '@nebular/auth';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent extends NbLoginComponent {
+export class AuthComponent extends NbLoginComponent implements OnInit {
+
+  ngOnInit(){
+    this.rememberMe = true;
+  }
 }

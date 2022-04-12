@@ -3,11 +3,13 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { UserService } from '../../../gecdi/services/user/user.service';
 import { environment } from '../../../../environments/environment';
+import { Router } from '@angular/router';
+import { MenuService } from '../../../gecdi/services/menu/menu.service';
 
 @Component({
   selector: 'ngx-header',
@@ -41,7 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Perfil' }, { title: 'Sair' } ];
 
 
   title: string = environment.nomeSite;
@@ -52,7 +54,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService,
-              private authService: NbAuthService
+              private authService: NbAuthService,
+              private route: Router,
+              private leftMenuService: MenuService,
   ) {
   }
 
@@ -77,6 +81,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'profile'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe(title => {
+          if (title === "Sair") {
+              localStorage.clear();
+              this.route.navigateByUrl('/');
+              this.leftMenuService.SetMenu('-1');
+          }
+      });
   }
 
   ngOnDestroy() {

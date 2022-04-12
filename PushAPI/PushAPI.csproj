@@ -25,6 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\PUSH\Mensagem_PUSH\" />
+    <Folder Include="Controllers\PUSH\Simulacao_Envio_PUSH\" />
     <Folder Include="Controllers\User\Login\" />
     <Folder Include="Models\Push\" />
     <Folder Include="ModelX\Atendimento\" />

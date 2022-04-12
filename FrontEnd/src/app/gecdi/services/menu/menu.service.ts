@@ -20,8 +20,12 @@ export class MenuService {
    }
 
    public SetMenu(role:string){
-      this.Menu_Atual = MENU_DA_ROLE[role].menu;
-      this._changeMenu.next(this.Menu_Atual);
+     if(role === '-1'){
+        this.Menu_Atual = MENU_ITEMS;
+     } else {
+        this.Menu_Atual = MENU_DA_ROLE[role].menu;
+     }
+     this._changeMenu.next(this.Menu_Atual);
    }
 
    public GetRota(role:string){
