@@ -12,6 +12,9 @@ const routes: Routes = [{
         canActivate: [AuthGuard], //Chama a rotina de autenticação
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       }, {
+        path: 'push',
+        loadChildren: () => import('./push/push.module').then(m => m.PushModule)
+      }, {
         path: 'atendimento',
         loadChildren: () => import('./atendimento/atendimento.module').then(m => m.AtendimentoModule)
       }, {
@@ -24,7 +27,7 @@ const routes: Routes = [{
         pathMatch: 'full',
       },
     ]
-  },
+  }
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import {
   NbMenuItem
 } from '@nebular/theme';
+import { environment } from '../../../../environments/environment';
 import {
   MENU_ITEMS
 } from '../../../pages/pages-menu';
@@ -32,23 +33,19 @@ export const MENU_DA_ROLE: MenuMap = {
         home: true,
       },
       {
-        title: 'Security',
+        title: 'login',
         icon: 'shopping-cart-outline',
-        link: '/gecdi/security',
+        link: '/gecdi/security/auth',
         home: true,
-      },
-      {
-        title: 'INSPIRAÇÃO',
-        group: true,
       },
       {
         title: 'PUSH',
         group: true,
       },
       {
-        title: 'Monitoração Envio',
+        title: 'Monitoração envios',
         icon: 'shopping-cart-outline',
-        link: '/gecdi/push/envio',
+        link: '/gecdi/push/envios',
         home: true,
       },
       {
@@ -63,6 +60,13 @@ export const MENU_DA_ROLE: MenuMap = {
         link: '/gecdi/push/solicitacoes',
         home: true,
       },
+      {
+        title: 'resumo',
+        icon: 'shopping-cart-outline',
+        link: '/gecdi/push/resumo',
+        home: true,
+      },
+      ...(!environment.production?MENU_ITEMS:[])
     ],
   },
   2: {
@@ -84,9 +88,9 @@ export const MENU_DA_ROLE: MenuMap = {
         home: true,
       },
       {
-        title: 'Security',
+        title: 'login',
         icon: 'shopping-cart-outline',
-        link: '/gecdi/security',
+        link: '/gecdi/security/auth',
         home: true,
       },
       {
@@ -94,9 +98,9 @@ export const MENU_DA_ROLE: MenuMap = {
         group: true,
       },
       {
-        title: 'Monitoração Envio',
+        title: 'Monitoração envios',
         icon: 'shopping-cart-outline',
-        link: '/gecdi/push/envio',
+        link: '/gecdi/push/envios',
         home: true,
       },
       {
@@ -111,9 +115,75 @@ export const MENU_DA_ROLE: MenuMap = {
         link: '/gecdi/push/solicitacoes',
         home: true,
       },
+      {
+        title: 'resumo',
+        icon: 'shopping-cart-outline',
+        link: '/gecdi/push/resumo',
+        home: true,
+      },
     ],
   },
   3: {
+    rota: '/gecdi/push/envios',
+    menu: [{
+        title: 'PUSH',
+        group: true,
+      },
+      {
+        title: 'Monitoração envios',
+        icon: 'shopping-cart-outline',
+        link: '/gecdi/push/envios',
+        home: true,
+      },
+      {
+        title: 'Monitoração Fila',
+        icon: 'shopping-cart-outline',
+        link: '/gecdi/push/fila',
+        home: true,
+      },
+    ],
+  },
+  4: {
+    rota: '/gecdi/push/envios',
+    menu: [{
+        title: 'PUSH',
+        group: true,
+      },
+      {
+        title: 'Monitoração envios',
+        icon: 'shopping-cart-outline',
+        link: '/gecdi/push/envios',
+        home: true,
+      },
+      {
+        title: 'Monitoração Fila',
+        icon: 'shopping-cart-outline',
+        link: '/gecdi/push/fila',
+        home: true,
+      },
+    ],
+  },
+  5: {
+    rota: '/gecdi/push/envios',
+    menu: [{
+        title: 'PUSH',
+        group: true,
+      },
+      {
+        title: 'Monitoração envios',
+        icon: 'shopping-cart-outline',
+        link: '/gecdi/push/envios',
+        home: true,
+      },
+      {
+        title: 'Monitoração Fila',
+        icon: 'shopping-cart-outline',
+        link: '/gecdi/push/fila',
+        home: true,
+      },
+    ],
+  },
+  6: {
     rota: '/gecdi/dashboard',
     menu: [{
         title: 'GECDI',
@@ -125,28 +195,6 @@ export const MENU_DA_ROLE: MenuMap = {
         link: '/gecdi/dashboard',
         home: true,
       },
-      {
-        title: 'Atendimento',
-        icon: 'shopping-cart-outline',
-        link: '/gecdi/atendimento',
-        home: true,
-      },
-      {
-        title: 'Security',
-        icon: 'shopping-cart-outline',
-        link: '/gecdi/security',
-        home: true,
-      },
-      {
-        title: 'PUSH',
-        group: true,
-      },
-      {
-        title: 'Monitoração Envio',
-        icon: 'shopping-cart-outline',
-        link: '/gecdi/push/envio',
-        home: true,
-      },
-    ]
+    ],
   },
 }

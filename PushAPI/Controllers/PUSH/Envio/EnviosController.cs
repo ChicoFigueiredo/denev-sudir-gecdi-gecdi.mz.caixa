@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PushAPI.Helpers;
 using PushAPI.Models.Push;
 
-namespace PushAPI.Controllers.PUSH.Envio_PUSH
+namespace PushAPI.Controllers.PUSH.Envio
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -37,15 +37,35 @@ namespace PushAPI.Controllers.PUSH.Envio_PUSH
                 xAte = (DateTime)De;
 
             if (Enviados < 0)
-                return await _dbPush.Solicitacao_Simulacao_Envio.Where(x => x.Data >= xDe && x.Data <= xAte).ToListAsync();
+            {
+
+                if (NaoEnviadosAntigos)
+                    return await _dbPush.Solicitacao_Simulacao_Envio
+                                        .Include(r => r.idSolicitacao_PUSHNavigation)
+                                        .Where(x => (x.Data >= xDe && x.Data <= xAte || (x.Data < xAte && x.Enviado == false)))
+                                        .ToListAsync();
+                else
+                    return await _dbPush.Solicitacao_Simulacao_Envio
+                                        .Include(r => r.idSolicitacao_PUSHNavigation)
+                                        .Where(x => (x.Data >= xDe && x.Data <= xAte))
+                                        .ToListAsync();
+            }
             else
             {
                 bool bEnvio = Enviados == 0 ? false : true;
-                if (NaoEnviadosAntigos) 
-                    return await _dbPush.Solicitacao_Simulacao_Envio.Where(x => (x.Data >= xDe && x.Data <= xAte) || (x.Data < xAte && x.Enviado == bEnvio)).ToListAsync(); 
+            
+                if (NaoEnviadosAntigos)
+                    return await _dbPush.Solicitacao_Simulacao_Envio
+                                        .Include(r => r.idSolicitacao_PUSHNavigation)
+                                        .Where(x => (x.Data >= xDe && x.Data <= xAte) || (x.Data < xAte && x.Enviado == bEnvio))
+                                        .ToListAsync();
                 else
-                    return await _dbPush.Solicitacao_Simulacao_Envio.Where(x => x.Data >= xDe && x.Data <= xAte).ToListAsync();
+                    return await _dbPush.Solicitacao_Simulacao_Envio
+                                        .Include(r => r.idSolicitacao_PUSHNavigation)
+                                        .Where(x => x.Data >= xDe && x.Data <= xAte)
+                                        .ToListAsync();
             }
+            
         }
 
         // GET: api/Envios/5
@@ -82,7 +102,7 @@ namespace PushAPI.Controllers.PUSH.Envio_PUSH
                 return BadRequest(new { Error = 1000, Message = "Não é possível marcar enviado em um envio simulado e não homologado" });
         }
 
-        // GET: api/Envios/5/MarcarEnviado
+        // GET: api/Envios/5/MarcarCancelado
         [HttpPost("{id}/MarcarCancelado")]
         public async Task<ActionResult<Solicitacao_Simulacao_Envio>> GetSolicitacao_Simulacao_Envio_MarcarCancelamento(long id, bool MarcarCancelado = false)
         {

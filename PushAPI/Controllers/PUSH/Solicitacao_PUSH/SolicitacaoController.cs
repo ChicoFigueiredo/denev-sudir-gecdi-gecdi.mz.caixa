@@ -21,13 +21,14 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
         public SolicitacaoController(dbPUSH context)
         {
             _dbPush = context;
+            
         }
 
         // GET: api/Solicitacoes
         [HttpGet("lista")]
         public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao()
         {
-            return await _dbPush.Solicitacao.ToListAsync();
+            return await GetSolicitacaoCGC(-1, DateTime.Now.AddDays(-50000));
         }
 
 
@@ -37,7 +38,16 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
         {
             if (De == null)
                 De = DateTime.Now.AddDays(-90);
-            return await _dbPush.Solicitacao.Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De).ToListAsync();
+
+            if (CGC < 0)
+                return await _dbPush.Solicitacao
+                    .Include(i => i.idEnvio_MensagemNavigation)
+                    .Where(x => x.Data_Cadastramento >= (DateTime)De).ToListAsync();
+           else
+                return await _dbPush.Solicitacao
+                    .Include(i => i.idEnvio_MensagemNavigation)
+                    .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De).ToListAsync();
+
         }
 
         // GET: api/Solicitacao/5

@@ -1,0 +1,80 @@
+.mensagem-limite {
+  width: 30%;
+}
+
+tbody > tr:nth-child(odd) {background: #F4EEFF}
+tbody > tr:nth-child(even) {background: #FFF}
+
+tr > td, tr > th {
+  vertical-align: middle;
+}
+
+.select-atendente {
+  width: 12em;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.row-red {
+  background-color: red;
+  color: yellow;
+}
+
+.row-blue {
+  background-color: blue;
+  color: white;
+}
+
+
+tbody > tr.row-orange:nth-child(odd) {background: #fa9200}
+tbody > tr.row-orange:nth-child(even) {background: #ffb348}
+.row-orange {
+  color: white;
+}
+
+tbody > tr.row-green:nth-child(odd) {background: #4caf50}
+tbody > tr.row-green:nth-child(even) {background: #79c97c}
+.row-green {
+  color: white;
+}
+
+.row-title {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+.hand {
+  cursor: pointer;
+}
+
+.numero-grande {
+  font-size: 3em;
+}
+
+.card-category {
+  font-size: 2em;
+}
+
+.row {
+  margin-bottom: 1em;
+  vertical-align: middle;
+}
+
+.red {
+  color: red;
+}
+
+.blue {
+  color: blue;
+}
+
+.margin-2-bt {
+  margin-bottom: 1em;
+}
+
+:host-context(.user-name) {
+  font-weight: bold;
+}

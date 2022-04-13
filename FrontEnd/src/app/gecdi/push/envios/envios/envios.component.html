@@ -1,0 +1,72 @@
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="row">
+
+
+      <nb-card>
+        <nb-card-header>
+          <h1>Envios de PUSH</h1>
+        </nb-card-header>
+
+        <nb-card-body>
+          Data:
+          <input nbInput placeholder="Hoje" [nbDatepicker]="dateTimePicker" [ngModel]="dataSelecionada" (ngModelChange)="changeDataSelecionada(dataSelecionada,$event)">
+          <nb-datepicker #dateTimePicker format="dd/MMM/yyyy"></nb-datepicker>
+          &nbsp;&nbsp;&nbsp;<button nbButton (click)="refreshEnvios()" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>
+          <BR><BR>
+          <!-- <div class="float-right">Atualizado até <b>{{ parametros?.dDataHoraAtualizacao |  date:'dd/LL/yyyy HH:mm'  }}</b></div> -->
+          <table class="table">
+            <thead class="row-title">
+              <tr class="row-title">
+                <td scope="col">ID<BR>Envio</td>
+                <td scope="col">ID<BR>Sol.</td>
+                <td scope="col">WF</td>
+                <td scope="col">Data</td>
+                <td scope="col">Hora</td>
+                <td scope="col">Mensagem</td>
+                <td scope="col">Qtd</td>
+                <td scope="col">Arquivo</td>
+                <td scope="col">Enviado</td>
+                <td scope="col">Extras</td>
+                <td scope="col">Cancelado</td>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let e of envios | async; let i = index ;" [ngClass]="checkRow(e) + ' hand'">
+                <th scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.idSolicitacao_Simulacao_Envio}}</th>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.idSolicitacao_PUSH}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.idSolicitacao_PUSHNavigation.wF_GECRM}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.data  | date:'dd/MMM/yyyy'}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.horaFormatado}}</td>
+                <td scope="row" class="mensagem-limite" (click)="rowClick(e)">{{e?.idSolicitacao_PUSHNavigation?.mensagem}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.quantidade}}</td>
+                <td scope="row" class="mensagem-limite" (click)="rowClick(e)">{{e?.nome_Arquivo}}</td>
+                <td scope="row"                         (click)="rowClick(e)">
+                  <nb-toggle [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="success"></nb-toggle>
+                  <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
+                </td>
+                <td scope="row" class="no-wrap" (click)="rowClick(e)">...</td>
+                <td scope="row"                         (click)="rowClick(e)">
+                  <nb-toggle [ngModel]="e?.cancelado" (ngModelChange)="changeCheckCancelado(e,$event)" status="warning"></nb-toggle>
+                  <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </nb-card-body>
+
+        <nb-card-footer>
+          Footer
+        </nb-card-footer>
+      </nb-card>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- <ngx-dialog-chamado #diag [chamado]="chamadoAtual | async" [position]="posicao" [listaChamados]="chamados | async" [callbackMark]="positionTratado" ></ngx-dialog-chamado> -->

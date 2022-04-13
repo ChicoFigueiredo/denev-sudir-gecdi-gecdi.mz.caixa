@@ -36,7 +36,8 @@ namespace PushAPI.Responses
             token = _token;
             User = _Usuario;
             if (xDE.Properties["thumbnailPhoto"] != null)
-                Photo = "data:image/png;base64," + Convert.ToBase64String((byte[])xDE.Properties["thumbnailPhoto"].Value);
+                if (xDE.Properties["thumbnailPhoto"].Value != null)
+                    Photo = "data:image/png;base64," + Convert.ToBase64String((byte[]) xDE.Properties["thumbnailPhoto"]?.Value);
 
         }
     }
