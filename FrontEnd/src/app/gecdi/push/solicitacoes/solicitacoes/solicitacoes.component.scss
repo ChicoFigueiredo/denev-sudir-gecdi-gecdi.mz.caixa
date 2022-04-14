@@ -1,0 +1,39 @@
+.mensagem-limite30 {
+  width: 30%;
+}
+
+.mensagem-limite10 {
+  width: 10%;
+}
+
+.dir {
+  text-align: right !important;
+}
+
+
+tbody > tr:nth-child(odd) {background: #F4EEFF}
+tbody > tr:nth-child(even) {background: #FFF}
+
+tr > td, tr > th {
+  vertical-align: middle;
+}
+
+tbody > tr.row-green:nth-child(odd) {background: #4caf50}
+tbody > tr.row-green:nth-child(even) {background: #79c97c}
+.row-green {
+  color: white;
+}
+
+.row-title {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+.hand {
+  cursor: pointer;
+}
+
+:host-context(.user-name) {
+  font-weight: bold;
+}

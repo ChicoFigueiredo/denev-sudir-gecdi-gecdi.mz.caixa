@@ -1,1 +1,75 @@
-<p>solicitacoes works!</p>
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="row">
+
+      <nb-card>
+        <nb-card-header>
+          <h1>Solicitações de PUSH</h1>
+        </nb-card-header>
+
+        <nb-card-body>
+          <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>
+          &nbsp;&nbsp;<button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>
+          <BR><BR>
+
+          <table class="table">
+            <thead class="row-title">
+              <tr class="row-title">
+                <td scope="col">ID<BR>Sol.</td>
+                <td scope="col">Data</td>
+                <td scope="col">Priori<BR>dade</td>
+                <td scope="col">Nome</td>
+                <td scope="col">WF / REQ</td>
+                <td scope="col">ID<BR>Msg</td>
+                <td scope="col">Mensagem</td>
+                <td scope="col">Canal</td>
+                <td scope="col dir">Qtd.</td>
+                <td scope="col dir">Qtd.<BR>Env.</td>
+                <td scope="col dir">Qtd.<BR>Ag.</td>
+                <td scope="col dir">Fila</td>
+                <td scope="col">Curvas</td>
+                <td scope="col">De/Ate</td>
+                <td scope="col">Horário</td>
+                <td scope="col">Demand.<BR>Exec.</td>
+                <td scope="col">Impactos</td>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let s of solicitacao | async; let i = index ;" [ngClass]="checkRow(s) + ' hand'">
+                <th scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.idSolicitacao_PUSH}}</th>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.data_Cadastramento  | date:'dd/MMM/yy'}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.prioridade}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.nome}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.wF_GECRM}} <BR> {{s?.reQ_WO_Aprovacao_Mensagem}}</td>
+                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.idEnvio_Mensagem}}</td>
+                <td scope="row" class="mensagem-limite30" (click)="rowClick(s,i)">{{s?.mensagem}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.canal}}</td>
+                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Total | number:'0.':'pt-BR'}}</td>
+                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Enviada | number:'0.':'pt-BR'}}</td>
+                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Agendada | number:'0.':'pt-BR'}}</td>
+                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Total_Restante | number:'0.':'pt-BR'}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.idCurva_Envio_Dia_Normal}} / {{s?.idCurva_Envio_Dia_Cheio}} </td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_a_partir_de  | date:'dd/MMM/yy'}} - {{s?.enviar_no_maximo_ate  | date:'dd/MMM/yy'}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_Horario_Inicial }} - {{s?.enviar_Horario_Final  }}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.cgcDemandante}} / {{s?.cgcExecutora}}</td>
+                <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </nb-card-body>
+
+        <nb-card-footer>
+          Footer
+        </nb-card-footer>
+      </nb-card>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- <ngx-dialog-envio #diag [envio]="EnvioSelecionado" [position]="posicao" [listaEnvios]="envios | async"></ngx-dialog-envio> -->

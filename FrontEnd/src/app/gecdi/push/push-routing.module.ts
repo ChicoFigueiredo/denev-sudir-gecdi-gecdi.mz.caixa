@@ -5,6 +5,7 @@ import { EnviosComponent } from './envios/envios/envios.component';
 import { FilaComponent } from './fila/fila/fila.component';
 import { PushComponent } from './push.component';
 import { SolicitacaoComponent } from './solicitacoes/solicitacao/solicitacao.component';
+import { SolicitacoesComponent } from './solicitacoes/solicitacoes/solicitacoes.component';
 
 const routes: Routes = [{
         path: '',
@@ -15,7 +16,7 @@ const routes: Routes = [{
         component: EnviosComponent
     }, {
         path: 'solicitacoes',
-        component: SolicitacaoComponent
+        component: SolicitacoesComponent
     }, {
         path: 'fila',
         component: FilaComponent

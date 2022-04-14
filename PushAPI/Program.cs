@@ -49,8 +49,14 @@ builder.Services.AddSwaggerGen(setup =>
 // configure strongly typed settings object
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddDbContext<dbSites>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBSites")));
-builder.Services.AddDbContext<dbPUSH>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBPUSH")));
-builder.Services.AddDbContext<dbAtendimento>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBAtendimento")));
+builder.Services.AddDbContext<dbPUSH>(options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("WebApiDBPUSH"),
+        sql => sql.CommandTimeout(60*60*5)
+));
+builder.Services.AddDbContext<dbAtendimento>(options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("WebApiDBAtendimento"),
+        sql => sql.CommandTimeout(60 * 60 * 5)
+)); 
 
 // configure DI for application services
 builder.Services.AddScoped<IUserService, UserService>();

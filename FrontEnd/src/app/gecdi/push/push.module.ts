@@ -14,7 +14,9 @@ import { FilaComponent } from './fila/fila/fila.component';
 import { NbMomentDateModule } from '@nebular/moment';
 import { DetalheEnvioComponent } from './envios/detalhe-envio/detalhe-envio.component';
 import { DialogEnvioComponent } from './envios/dialog-envio/dialog-envio.component';
-import { DadosEnvioComponent } from './envios/dados-envio/dados-envio.component'
+import { DadosEnvioComponent } from './envios/dados-envio/dados-envio.component';
+import { DetalhesSolicitacaoComponent } from './solicitacoes/detalhes-solicitacao/detalhes-solicitacao.component';
+import { DialogSolicitacaoComponent } from './solicitacoes/dialog-solicitacao/dialog-solicitacao.component'
 
 const configToastr: NbToastrConfig =  <NbToastrConfig> {
   duration: 1500,
@@ -35,6 +37,8 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     DialogEnvioComponent,
     DadosEnvioComponent,
     DialogEnvioComponent,
+    DetalhesSolicitacaoComponent,
+    DialogSolicitacaoComponent,
   ],
   imports: [
     CommonModule,

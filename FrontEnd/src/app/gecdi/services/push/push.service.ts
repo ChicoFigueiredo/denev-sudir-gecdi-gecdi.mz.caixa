@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { EnviosResponse } from './classes/envios';
 import { FilaResponse } from './classes/fila';
 import { Curva } from './classes/curvas';
+import { Solicitacao } from './classes/solicitacao';
 
 const API_PUSH = environment.urlAPI + '/api'
 
@@ -58,4 +59,7 @@ export class PushService {
                .get<Curva[]>(`${API_PUSH}/Curvas`)
   }
 
+  getSolicitacoes(recontar:boolean=true){
+      return this.http.get<Solicitacao>(`${API_PUSH}/solicitacao/lista?recount=${recontar}`);
+  }
 }
