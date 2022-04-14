@@ -4,6 +4,7 @@ import { environment } from '../../../../environments/environment';
 import * as moment from 'moment';
 import { EnviosResponse } from './classes/envios';
 import { FilaResponse } from './classes/fila';
+import { Curva } from './classes/curvas';
 
 const API_PUSH = environment.urlAPI + '/api'
 
@@ -12,10 +13,12 @@ const API_PUSH = environment.urlAPI + '/api'
 })
 export class PushService {
 
+  public Curvas:Curva[] = [];
+
   constructor(
     private http: HttpClient
   ) {
-
+    this.getCurvas().subscribe((c:Curva[]) => this.Curvas = c);
   }
 
   getSolicitacoesEnvio(de = null,ate = null, enviados = -1, antigos = true){
@@ -27,14 +30,18 @@ export class PushService {
                .get<EnviosResponse>(`${API_PUSH}/envios/lista?De=${xDe.format("YYYY-MM-DD")}&Ate=${xAte.format("YYYY-MM-DD")}&Enviados=${enviados}&NaoEnviadosAntigos=${antigos}`)
   }
 
+  getEnvioById(id){
+    return this.http
+               .get<EnviosResponse>(`${API_PUSH}/envios/${id}`)
+  }
 
-  setEnviado(idEnvio,enviado){
+  setEnvioEnviado(idEnvio,enviado){
     return this.http
                .post(`${API_PUSH}/Envios/${idEnvio}/MarcarEnviado?MarcarEnvioRealizado=${enviado}`,{})
   }
 
 
-  setCancelado(idEnvio,enviado){
+  setEnvioCancelado(idEnvio,enviado){
     return this.http
                .post(`${API_PUSH}/Envios/${idEnvio}/MarcarCancelado?MarcarCancelado=${enviado}`,{})
   }
@@ -44,6 +51,11 @@ export class PushService {
         return this.http.post<FilaResponse>(`${API_PUSH}/fila/historico?recount=${recount}`,{});
     else
         return this.http.post<FilaResponse>(`${API_PUSH}/fila/status?recount=${recount}`,{});
+  }
+
+  getCurvas() {
+    return this.http
+               .get<Curva[]>(`${API_PUSH}/Curvas`)
   }
 
 }

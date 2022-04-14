@@ -5,6 +5,7 @@ import { EnviosResponse } from '../../../services/push/classes/envios';
 import { PushService } from '../../../services/push/push.service';
 import * as moment from 'moment';
 import { switchMap } from 'rxjs/operators';
+import { DialogEnvioComponent } from '../dialog-envio/dialog-envio.component';
 
 
 @Component({
@@ -14,7 +15,10 @@ import { switchMap } from 'rxjs/operators';
 })
 export class EnviosComponent implements OnInit, OnDestroy {
 
-  envios: Observable<EnviosResponse> = new Observable<EnviosResponse>(null);
+  public envios: Observable<EnviosResponse> = new Observable<EnviosResponse>(null);
+  public EnvioSelecionado: EnviosResponse = null;
+  public posicao:number = 0;
+
   dataSelecionada:any = moment(); //.format("DD/MMM/YYYY");
   timerSubscription: Subscription;
   timerSlip:number = 60*15+1;
@@ -24,6 +28,7 @@ export class EnviosComponent implements OnInit, OnDestroy {
   everySecond: Observable<number> = timer(0, 1000);
 
   @ViewChild('atu') relogio: ElementRef<any>;
+  @ViewChild('diag') dialog: ElementRef<DialogEnvioComponent>;
 
   constructor(
     private pushService: PushService,
@@ -60,12 +65,21 @@ export class EnviosComponent implements OnInit, OnDestroy {
 
   }
 
+  detalheEnvio(envio:EnviosResponse, position){
+
+    this.pushService.getEnvioById(envio.idSolicitacao_Simulacao_Envio)
+                    .subscribe(e => this.EnvioSelecionado = e);
+    this.posicao = position;
+    (<any> this.dialog).openDialog();
+
+ }
+
   changeCheckEnviado(c:EnviosResponse,$event){
-    this.pushService.setEnviado(c.idSolicitacao_Simulacao_Envio,!c.enviado).subscribe((e:EnviosResponse) => {
+    this.pushService.setEnvioEnviado(c.idSolicitacao_Simulacao_Envio,!c.enviado).subscribe((e:EnviosResponse) => {
       if(e.enviado == !c.enviado){
-        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} marcado como ${e?.enviado?'ENVIADO':'NÃO ENVIADO'}`,'',{ status: 'success' })
         c.enviado = e.enviado;
         c = e;
+        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} marcado como ${e?.enviado?'ENVIADO':'NÃO ENVIADO'}`,'',{ status: 'success' })
       } else {
         this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} com erro na marcação de envio`,'',{ status: 'danger', duration: 5000 })
       }
@@ -73,11 +87,11 @@ export class EnviosComponent implements OnInit, OnDestroy {
   }
 
   changeCheckCancelado(c:EnviosResponse,$event){
-    this.pushService.setCancelado(c.idSolicitacao_Simulacao_Envio,!c.cancelado).subscribe((e:EnviosResponse) => {
+    this.pushService.setEnvioCancelado(c.idSolicitacao_Simulacao_Envio,!c.cancelado).subscribe((e:EnviosResponse) => {
       if(e.cancelado == !c.cancelado){
-        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} marcado como ${e?.cancelado?'CANCELADO':'NÃO CANCELADO'}`,'',{ status: 'success' })
         c.cancelado = e.cancelado;
         c = e;
+        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} marcado como ${e?.cancelado?'CANCELADO':'NÃO CANCELADO'}`,'',{ status: 'success' })
       } else {
         this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} com erro na marcação de cancelamento`,'',{ status: 'danger', duration: 5000 })
       }

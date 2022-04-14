@@ -35,15 +35,15 @@
 
             <tbody>
               <tr *ngFor="let e of envios | async; let i = index ;" [ngClass]="checkRow(e) + ' hand'">
-                <th scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.idSolicitacao_Simulacao_Envio}}</th>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.idSolicitacao_PUSH}}</td>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.idSolicitacao_PUSHNavigation.wF_GECRM}}</td>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.data  | date:'dd/MMM/yyyy'}}</td>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.horaFormatado}}</td>
-                <td scope="row" class="mensagem-limite" (click)="rowClick(e)">{{e?.idSolicitacao_PUSHNavigation?.mensagem}}</td>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e)">{{e?.quantidade}}</td>
-                <td scope="row" class="mensagem-limite" (click)="rowClick(e)">{{e?.nome_Arquivo}}</td>
-                <td scope="row"                         (click)="rowClick(e)">
+                <th scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.idSolicitacao_Simulacao_Envio}}</th>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.idSolicitacao_PUSH}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.idSolicitacao_PUSHNavigation.wF_GECRM}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.data  | date:'dd/MMM/yyyy'}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.horaFormatado}}</td>
+                <td scope="row" class="mensagem-limite" (click)="rowClick(e,i)">{{e?.idSolicitacao_PUSHNavigation?.mensagem}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.quantidade}}</td>
+                <td scope="row" class="mensagem-limite" (click)="rowClick(e,i)">{{e?.nome_Arquivo}}</td>
+                <td scope="row"                         (click)="rowClick(e,i)">
                   <nb-toggle [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="success"></nb-toggle>
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
@@ -69,4 +69,4 @@
 </div>
 
 
-<!-- <ngx-dialog-chamado #diag [chamado]="chamadoAtual | async" [position]="posicao" [listaChamados]="chamados | async" [callbackMark]="positionTratado" ></ngx-dialog-chamado> -->
+<ngx-dialog-envio #diag [envio]="EnvioSelecionado" [position]="posicao" [listaEnvios]="envios | async"></ngx-dialog-envio> -->

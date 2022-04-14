@@ -11,7 +11,10 @@ import { EnviosComponent } from './envios/envios/envios.component';
 import { SolicitacoesComponent } from './solicitacoes/solicitacoes/solicitacoes.component';
 import { SolicitacaoComponent } from './solicitacoes/solicitacao/solicitacao.component';
 import { FilaComponent } from './fila/fila/fila.component';
-import { NbMomentDateModule } from '@nebular/moment'
+import { NbMomentDateModule } from '@nebular/moment';
+import { DetalheEnvioComponent } from './envios/detalhe-envio/detalhe-envio.component';
+import { DialogEnvioComponent } from './envios/dialog-envio/dialog-envio.component';
+import { DadosEnvioComponent } from './envios/dados-envio/dados-envio.component'
 
 const configToastr: NbToastrConfig =  <NbToastrConfig> {
   duration: 1500,
@@ -28,7 +31,10 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     SolicitacoesComponent,
     SolicitacaoComponent,
     FilaComponent,
-
+    DetalheEnvioComponent,
+    DialogEnvioComponent,
+    DadosEnvioComponent,
+    DialogEnvioComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +56,9 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
 
     FormsModule
 
+  ],
+  exports:[
+    DialogEnvioComponent,
   ]
 })
 export class PushModule { }

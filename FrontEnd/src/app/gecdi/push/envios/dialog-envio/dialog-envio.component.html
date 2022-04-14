@@ -1,0 +1,20 @@
+<ng-template #dialog let-data let-ref="dialogRef" class="template-chamado">
+  <nb-card class="dialog-card">
+      <nb-card-header>
+          <H1>Envio {{Envio?.idSolicitacao_Simulacao_Envio}}</H1> = {{Envio?.nome_Arquivo}}
+          <div class="float-right">
+              <button nbButton (click)="getPosition(-1)" *ngIf="position > 0" ><</button>
+                  {{ position + 1 }}
+              <button nbButton (click)="getPosition(+1)"  *ngIf="position < listaChamados.length" >></button>
+          </div>
+      </nb-card-header>
+      <nb-card-body>
+          <ngx-dados-envio [Envio]="Envio"></ngx-dados-envio>
+      </nb-card-body>
+      <nb-card-footer>
+          <div class="float-right">
+              <button nbButton (click)="ref.close()">Fechar</button>
+          </div>
+      </nb-card-footer>
+  </nb-card>
+</ng-template>

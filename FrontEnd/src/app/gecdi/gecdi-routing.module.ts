@@ -13,9 +13,11 @@ const routes: Routes = [{
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       }, {
         path: 'push',
+        canActivate: [AuthGuard], //Chama a rotina de autenticação
         loadChildren: () => import('./push/push.module').then(m => m.PushModule)
       }, {
         path: 'atendimento',
+        canActivate: [AuthGuard], //Chama a rotina de autenticação
         loadChildren: () => import('./atendimento/atendimento.module').then(m => m.AtendimentoModule)
       }, {
         path: 'security',

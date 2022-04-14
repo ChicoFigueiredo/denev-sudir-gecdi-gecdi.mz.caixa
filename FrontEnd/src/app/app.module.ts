@@ -28,6 +28,7 @@ import { JwtHeaderInterceptor } from './gecdi/services/interceptor/interceptor.s
 import localePt from '@angular/common/locales/pt';
 import { environment } from '../environments/environment';
 import { UserDataInterceptor } from './gecdi/services/interceptor/login.interceptor.service';
+
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({

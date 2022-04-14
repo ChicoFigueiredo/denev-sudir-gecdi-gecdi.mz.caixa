@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { MenuService } from '../menu/menu.service';
 import { User } from './User';
 
@@ -33,10 +34,17 @@ export class UserService {
 
           this.menuService.SetMenu(`${this.currentUser.user.idRole}`);
 
-          this.router.navigateByUrl(this.menuService.GetRota(`${this.currentUser.user.idRole}`));
+          const lastUrl = localStorage.getItem('gecdi.url.route')
+
+          this.router.navigateByUrl(lastUrl ? lastUrl : this.menuService.GetRota(`${this.currentUser.user.idRole}`));
 
         }
+    });
 
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart)
+    ).subscribe((event:NavigationStart) => {
+        localStorage.setItem('gecdi.url.route',event.url);
     });
 
   }
