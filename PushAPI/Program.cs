@@ -51,7 +51,7 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.AddDbContext<dbSites>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBSites")));
 builder.Services.AddDbContext<dbPUSH>(options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("WebApiDBPUSH"),
-        sql => sql.CommandTimeout(60*60*5)
+        sql => sql.CommandTimeout(60 * 60 * 5)
 ));
 builder.Services.AddDbContext<dbAtendimento>(options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("WebApiDBAtendimento"),

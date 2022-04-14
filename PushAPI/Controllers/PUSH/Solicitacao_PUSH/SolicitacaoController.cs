@@ -94,6 +94,47 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             return solicitacao;
         }
 
+
+        // GET: api/Solicitacao/5/MarcarCancelado
+        [HttpPost("{id}/MarcarCancelado")]
+        public async Task<ActionResult<Solicitacao>> GetSolicitacao_MarcarCancelado(int id, bool MarcarCancelado = false)
+        {
+            var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
+
+            if (solicitacao == null)
+                return NotFound();
+
+            if (solicitacao.Finalizado)
+                return BadRequest(new { Error = 1001, Message = "Não é possível marcar cancelado em uma solicitação já finalizada" });
+            else
+            {
+                solicitacao.Cancelado = MarcarCancelado;
+                await _dbPush.SaveChangesAsync();
+
+                return Ok(solicitacao);
+            }
+        }
+
+        // GET: api/Solicitacao/5/MarcarCancelado
+        [HttpPost("{id}/Autorizar")]
+        public async Task<ActionResult<Solicitacao>> GetSolicitacao_MarcarAutorizado(int id, bool MarcarAutorizado = true)
+        {
+            var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
+
+            if (solicitacao == null)
+                return NotFound();
+
+            if (solicitacao.Finalizado)
+                return BadRequest(new { Error = 1001, Message = "Não é possível mexer na autorização em uma solicitação já finalizada" });
+            else
+            {
+                solicitacao.Autorizacao_Gestor_PUSH = MarcarAutorizado;
+                await _dbPush.SaveChangesAsync();
+
+                return Ok(solicitacao);
+            }
+        }
+
         // PUT: api/Solicitacao/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

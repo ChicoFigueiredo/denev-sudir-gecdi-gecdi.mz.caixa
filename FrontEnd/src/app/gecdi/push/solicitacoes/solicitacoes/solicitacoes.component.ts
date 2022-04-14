@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NbToastrService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
 import { PushService } from '../../../services/push/push.service';
@@ -14,6 +15,7 @@ export class SolicitacoesComponent implements OnInit {
 
   constructor(
     private pushService:PushService,
+    private serviceSticker: NbToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -29,8 +31,26 @@ export class SolicitacoesComponent implements OnInit {
     return '';
   }
 
+
+  rowClick(s){
+
+  }
+
   refreshSolicitacoes(recontar:boolean=false){
     this.solicitacao = this.pushService.getSolicitacoes(recontar);
+  }
+
+
+  changeCheckCancelado(s:Solicitacao,$event){
+    this.pushService.setSolicitacaoCancelado(s.idSolicitacao_PUSH,!s.cancelado).subscribe((e:Solicitacao) => {
+      if(e.cancelado == !s.cancelado){
+        s.cancelado = e.cancelado;
+        s = e;
+        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} marcado como ${e?.cancelado?'CANCELADO':'NÃO CANCELADO'}`,'',{ status: 'success' })
+      } else {
+        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de cancelamento`,'',{ status: 'danger', duration: 5000 })
+      }
+    })
   }
 
 }

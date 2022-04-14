@@ -62,4 +62,10 @@ export class PushService {
   getSolicitacoes(recontar:boolean=true){
       return this.http.get<Solicitacao>(`${API_PUSH}/solicitacao/lista?recount=${recontar}`);
   }
+
+  setSolicitacaoCancelado(idSolicitacao,enviado){
+    return this.http
+               .post(`${API_PUSH}/solicitacao/${idSolicitacao}/MarcarCancelado?MarcarCancelado=${enviado}`,{})
+  }
+
 }

@@ -8,8 +8,8 @@ namespace PushAPI.Models.Push
         public Curva_Envio()
         {
             Curva_Envio_Tranches = new HashSet<Curva_Envio_Tranches>();
+            SolicitacaoidCurvaNavigation = new HashSet<Solicitacao>();
             SolicitacaoidCurva_Envio_Dia_CheioNavigation = new HashSet<Solicitacao>();
-            SolicitacaoidCurva_Envio_Dia_NormalNavigation = new HashSet<Solicitacao>();
         }
 
         public int idCurva_Envio { get; set; }
@@ -17,7 +17,7 @@ namespace PushAPI.Models.Push
         public string Nome_Curva_Envio { get; set; } = null!;
 
         public virtual ICollection<Curva_Envio_Tranches> Curva_Envio_Tranches { get; set; }
+        public virtual ICollection<Solicitacao> SolicitacaoidCurvaNavigation { get; set; }
         public virtual ICollection<Solicitacao> SolicitacaoidCurva_Envio_Dia_CheioNavigation { get; set; }
-        public virtual ICollection<Solicitacao> SolicitacaoidCurva_Envio_Dia_NormalNavigation { get; set; }
     }
 }

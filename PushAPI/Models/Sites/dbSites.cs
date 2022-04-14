@@ -60,6 +60,8 @@ namespace PushAPI.Models.Sites
 
                 entity.ToTable("Usuario", "SITES");
 
+                entity.HasIndex(e => e.cUsuario, "IX_Usuario_cUsuario");
+
                 entity.Property(e => e.Nome)
                     .HasMaxLength(100)
                     .IsUnicode(false);

@@ -475,9 +475,9 @@ namespace PushAPI.Models.Push
 
                 entity.Property(e => e.REQ_WO_Aprovacao_Mensagem_Texto).IsUnicode(false);
 
-                entity.Property(e => e.idCurva_Envio_Dia_Cheio).HasDefaultValueSql("((27))");
+                entity.Property(e => e.idCurva).HasDefaultValueSql("((29))");
 
-                entity.Property(e => e.idCurva_Envio_Dia_Normal).HasDefaultValueSql("((29))");
+                entity.Property(e => e.idCurva_Envio_Dia_Cheio).HasDefaultValueSql("((27))");
 
                 entity.HasOne(d => d.CanalNavigation)
                     .WithMany(p => p.Solicitacao)
@@ -485,17 +485,17 @@ namespace PushAPI.Models.Push
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Solicitacao_Canais");
 
+                entity.HasOne(d => d.idCurvaNavigation)
+                    .WithMany(p => p.SolicitacaoidCurvaNavigation)
+                    .HasForeignKey(d => d.idCurva)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Solicitacao_Curva_Envio");
+
                 entity.HasOne(d => d.idCurva_Envio_Dia_CheioNavigation)
                     .WithMany(p => p.SolicitacaoidCurva_Envio_Dia_CheioNavigation)
                     .HasForeignKey(d => d.idCurva_Envio_Dia_Cheio)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Solicitacao_Curva_Envio1");
-
-                entity.HasOne(d => d.idCurva_Envio_Dia_NormalNavigation)
-                    .WithMany(p => p.SolicitacaoidCurva_Envio_Dia_NormalNavigation)
-                    .HasForeignKey(d => d.idCurva_Envio_Dia_Normal)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Solicitacao_Curva_Envio");
 
                 entity.HasOne(d => d.idEnvio_MensagemNavigation)
                     .WithMany(p => p.Solicitacao)
@@ -535,7 +535,6 @@ namespace PushAPI.Models.Push
                 entity.HasOne(d => d.idSolicitacao_PUSHNavigation)
                     .WithMany(p => p.Solicitacao_Clientes)
                     .HasForeignKey(d => d.idSolicitacao_PUSH)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Solicitacao_Clientes_Solicitacao");
 
                 entity.HasOne(d => d.idSolicitacao_Simulacao_EnvioNavigation)

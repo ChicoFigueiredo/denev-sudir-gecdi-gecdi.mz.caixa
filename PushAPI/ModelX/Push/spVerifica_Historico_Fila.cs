@@ -10,7 +10,7 @@
         public int IDM { get; set; }
         public string Mensagem { get; set; }
         public string Canal { get; set; }
-        public int CN { get; set; }
+        public int Curva { get; set; }
         public int CR { get; set; }
         public int Total { get; set; }
         public int Enviada { get; set; }
