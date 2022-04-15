@@ -25,7 +25,7 @@ namespace PushAPI.Models.Push
         public string Nome_Campo4 { get; set; } = null!;
         public string Nome_Campo5 { get; set; } = null!;
         public int idCurva { get; set; }
-        public int idCurva_Envio_Dia_Cheio { get; set; }
+        public int Quantidade_Maxima_Autorizada { get; set; }
         public DateTime? Enviar_a_partir_de { get; set; }
         public DateTime? Enviar_no_maximo_ate { get; set; }
         public bool? Enviar_SEG { get; set; }
@@ -60,8 +60,8 @@ namespace PushAPI.Models.Push
         public int? Quantidade_Total_Restante { get; set; }
 
         public virtual Canais CanalNavigation { get; set; } = null!;
+        public virtual Curva_Envio Quantidade_Maxima_AutorizadaNavigation { get; set; } = null!;
         public virtual Curva_Envio idCurvaNavigation { get; set; } = null!;
-        public virtual Curva_Envio idCurva_Envio_Dia_CheioNavigation { get; set; } = null!;
         public virtual Mensagem? idEnvio_MensagemNavigation { get; set; }
         public virtual ICollection<Solicitacao_Clientes> Solicitacao_Clientes { get; set; }
         public virtual ICollection<Solicitacao_Simulacao_Envio> Solicitacao_Simulacao_Envio { get; set; }

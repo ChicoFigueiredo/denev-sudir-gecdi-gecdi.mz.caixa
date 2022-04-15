@@ -115,7 +115,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             }
         }
 
-        // GET: api/Solicitacao/5/MarcarCancelado
+        // GET: api/Solicitacao/5/Autorizar
         [HttpPost("{id}/Autorizar")]
         public async Task<ActionResult<Solicitacao>> GetSolicitacao_MarcarAutorizado(int id, bool MarcarAutorizado = true)
         {

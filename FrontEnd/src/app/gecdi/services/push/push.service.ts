@@ -68,4 +68,9 @@ export class PushService {
                .post(`${API_PUSH}/solicitacao/${idSolicitacao}/MarcarCancelado?MarcarCancelado=${enviado}`,{})
   }
 
+  setSolicitacaoAutorizado(idSolicitacao,autorizado){
+    return this.http
+               .post(`${API_PUSH}/solicitacao/${idSolicitacao}/Autorizar?MarcarAutorizado=${autorizado}`,{})
+  }
+
 }
