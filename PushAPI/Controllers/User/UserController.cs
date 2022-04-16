@@ -13,13 +13,13 @@ namespace PushAPI.Controllers.User
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly dbSites _context;
+        private readonly dbSites _dbSites;
         private IUserService _userService;
         private readonly HttpClient _client;
 
         public UserController(dbSites context, IUserService userService)
         {
-            _context = context;
+            _dbSites = context;
             _userService = userService;
             _client = new HttpClient(new HttpClientHandler(){ AllowAutoRedirect = false });
         }
@@ -40,16 +40,27 @@ namespace PushAPI.Controllers.User
         // GET: api/User
         [Authorize(Role.Admin)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario(int lim = -1, string busca = "")
         {
-            return await _context.Usuario.ToListAsync();
+            _dbSites.ChangeTracker.LazyLoadingEnabled = false;
+            if (lim == -1) { 
+                if ((busca??"").Trim() == "")
+                    return await _dbSites.Usuario.IgnoreAutoIncludes().ToListAsync();
+                else
+                    return await _dbSites.Usuario.IgnoreAutoIncludes().Where(w => w.cUsuario.Contains(busca) || w.Nome.Contains(busca)).ToListAsync();
+            } else { 
+                if ((busca ?? "").Trim() == "")
+                    return await _dbSites.Usuario.IgnoreAutoIncludes().Take(lim).ToListAsync();
+                else
+                    return await _dbSites.Usuario.IgnoreAutoIncludes().Where(w => w.cUsuario.Contains(busca) || w.Nome.Contains(busca)).Take(lim).ToListAsync();
+            }
         }
 
         // GET: api/User/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
-            var usuario = await _context.Usuario.FindAsync(id);
+            var usuario = await _dbSites.Usuario.FindAsync(id);
 
             if (usuario == null)
             {
@@ -57,6 +68,14 @@ namespace PushAPI.Controllers.User
             }
 
             return usuario;
+        }
+
+
+        // GET: api/User/Roles
+        [HttpGet("Roles")]
+        public async Task<IEnumerable<Roles>> GetRoles()
+        {
+            return await _dbSites.Roles.ToListAsync();
         }
 
 
@@ -78,6 +97,29 @@ namespace PushAPI.Controllers.User
             }
         }
 
+
+        // GET: api/User/register
+        [HttpPost("register", Name = "PostRegister")]
+        [Authorize(Role.Admin)]
+        public async Task<IActionResult> PostRegister(RequestNewUser newUser)
+        {
+            try
+            {
+                Usuario u = _userService.GetByMatricula(newUser.matricula);
+                if (u != null)
+                    return Ok(u);
+                newUser.matricula = newUser.matricula.ToLower();
+                u = await _userService.RegisterUser(newUser.matricula, newUser.role);
+                if (u == null)
+                    return NotFound(new { matricula = newUser.matricula, role = newUser.role, message =  "Usuário não encontrado no LDAP/Rede NT" });
+                return Ok(u);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         // PUT: api/User/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -88,11 +130,11 @@ namespace PushAPI.Controllers.User
                 return BadRequest();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
+            _dbSites.Entry(usuario).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbSites.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -114,8 +156,8 @@ namespace PushAPI.Controllers.User
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
-            _context.Usuario.Add(usuario);
-            await _context.SaveChangesAsync();
+            _dbSites.Usuario.Add(usuario);
+            await _dbSites.SaveChangesAsync();
 
             return CreatedAtAction("GetUsuario", new { id = usuario.idUsuario }, usuario);
         }
@@ -124,21 +166,21 @@ namespace PushAPI.Controllers.User
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
-            var usuario = await _context.Usuario.FindAsync(id);
+            var usuario = await _dbSites.Usuario.FindAsync(id);
             if (usuario == null)
             {
                 return NotFound();
             }
 
-            _context.Usuario.Remove(usuario);
-            await _context.SaveChangesAsync();
+            _dbSites.Usuario.Remove(usuario);
+            await _dbSites.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool UsuarioExists(int id)
         {
-            return _context.Usuario.Any(e => e.idUsuario == id);
+            return _dbSites.Usuario.Any(e => e.idUsuario == id);
         }
     }
 }

@@ -9,7 +9,7 @@ import { CacheParametros } from '../services/cache-parametros/cache-parametros.i
 import { CacheParametrosService } from '../services/cache-parametros/cache-parametros.service';
 import { Chamado, ChamadoMinimo } from '../services/chamados/chamados';
 import { ChamadosService } from '../services/chamados/chamados.service';
-import { User } from '../services/user/user';
+import { User } from '../services/user/classes/User';
 import { UserService } from '../services/user/user.service';
 import { openWindowWithPost } from '../services/window-post';
 import { DialogChamadoComponent } from './chamados/dialog-chamado/dialog-chamado.component';

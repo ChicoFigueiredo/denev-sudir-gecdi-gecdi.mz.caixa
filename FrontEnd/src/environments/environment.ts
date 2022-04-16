@@ -12,5 +12,6 @@ export const environment = {
   production: false,
   authname: 'email',
   urlAPI: 'https://localhost:7116',
-  nomeSite: 'GECDI / Gestão'
+  nomeSite: 'GECDI / Gestão',
+  itemsPadrao: 25
 };

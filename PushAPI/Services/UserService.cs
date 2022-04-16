@@ -19,6 +19,8 @@ namespace PushAPI.Services
         AuthenticateResponse Authenticate(AuthenticateRequest model);
         IEnumerable<Usuario> GetAll();
         Usuario GetById(int id);
+        Usuario GetByMatricula(string matricula);
+        Task<Usuario> RegisterUser(string matricula, Role role = Role.User);
     }
 
     public class UserService : IUserService
@@ -30,6 +32,8 @@ namespace PushAPI.Services
         private dbAtendimento _dbAtendimento;
 
         private readonly AppSettings _appSettings;
+
+        private DirectoryEntry xDE, xDE_User;
 
         public UserService(IOptions<AppSettings> appSettings, dbSites __dbSites, dbAtendimento __dbAtendimento)
         {
@@ -66,6 +70,32 @@ namespace PushAPI.Services
 
         }
 
+        public async Task<Usuario> RegisterUser(string matricula, Role role = Role.User)
+        {
+            xDE = new DirectoryEntry(_appSettings.LDAP_User_Manager);
+            xDE_User = BuscaUsuarioDominio(matricula, xDE);
+
+            if (xDE_User != null)
+            {
+                SearchResult UserData = Get_UserData(matricula.ToUpper());
+                Usuario usuario = new()
+                {
+                    cUsuario = matricula.ToUpper(),
+                    Nome = (UserData.Properties.Contains("no-usuario") ? (String)UserData.Properties["no-usuario"][0] : "").ToUpper(),
+                    CGC = Convert.ToInt16(UserData.Properties.Contains("nu-lotacaofisica") ? UserData.Properties["nu-lotacaofisica"][0].ToString() : "0"),
+                    idRole = (int)role,
+                };
+
+                _dbSites.Usuario.Add(usuario);
+                _ = _dbSites.SaveChangesAsync();
+
+                return usuario;
+            }
+            else
+                return null;
+
+        }
+
         public IEnumerable<Usuario> GetAll()
         {
             return _users;
@@ -74,6 +104,11 @@ namespace PushAPI.Services
         public Usuario GetById(int id)
         {
             return _dbSites.Usuario.Include(b => b.idRoleNavigation).SingleOrDefault<Usuario>(u => u.idUsuario == id); // _users.FirstOrDefault(x => x.iID_Matriz_Permissao == id);
+        }
+
+        public Usuario GetByMatricula(string matricula)
+        {
+            return _dbSites.Usuario.Include(b => b.idRoleNavigation).SingleOrDefault<Usuario>(u => u.cUsuario == matricula); // _users.FirstOrDefault(x => x.iID_Matriz_Permissao == id);
         }
 
         // helper methods
@@ -105,7 +140,6 @@ namespace PushAPI.Services
         }
 
 
-        private DirectoryEntry xDE, xDE_User;
         private DirectoryEntry BuscaUsuarioDominio(string UsName, DirectoryEntry root)
         {
             try

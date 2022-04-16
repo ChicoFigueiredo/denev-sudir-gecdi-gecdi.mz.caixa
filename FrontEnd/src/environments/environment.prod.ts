@@ -7,5 +7,6 @@ export const environment = {
   production: true,
   authname: 'email',
   urlAPI: '',
-  nomeSite: 'GECDI / Gestão'
+  nomeSite: 'GECDI / Gestão',
+  itemsPadrao: 25
 };

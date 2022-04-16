@@ -1,0 +1,35 @@
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.mensagem-limite30 {
+  width: 30%;
+}
+
+.mensagem-limite10 {
+  width: 10%;
+}
+
+.dir {
+  text-align: right !important;
+}
+
+
+.row-title {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+.hand {
+  cursor: pointer;
+}
+
+tbody > tr:nth-child(odd) {background: #F4EEFF}
+tbody > tr:nth-child(even) {background: #FFF}
+
+tr > td, tr > th {
+  vertical-align: middle;
+}
+

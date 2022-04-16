@@ -16,7 +16,8 @@ import { DetalheEnvioComponent } from './envios/detalhe-envio/detalhe-envio.comp
 import { DialogEnvioComponent } from './envios/dialog-envio/dialog-envio.component';
 import { DadosEnvioComponent } from './envios/dados-envio/dados-envio.component';
 import { DetalhesSolicitacaoComponent } from './solicitacoes/detalhes-solicitacao/detalhes-solicitacao.component';
-import { DialogSolicitacaoComponent } from './solicitacoes/dialog-solicitacao/dialog-solicitacao.component'
+import { DialogSolicitacaoComponent } from './solicitacoes/dialog-solicitacao/dialog-solicitacao.component';
+import { WhatsappComponent } from './resumo/whatsapp/whatsapp.component'
 
 const configToastr: NbToastrConfig =  <NbToastrConfig> {
   duration: 1500,
@@ -39,6 +40,7 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     DialogEnvioComponent,
     DetalhesSolicitacaoComponent,
     DialogSolicitacaoComponent,
+    WhatsappComponent,
   ],
   imports: [
     CommonModule,

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GecdiComponent } from './gecdi.component';
 import { AuthGuard } from './security/guard/auth-guard.service';
+import { CadastroUsuariosComponent } from './security/cadastro-usuarios/cadastro-usuarios.component';
 
 const routes: Routes = [{
   path: '',
@@ -29,6 +30,10 @@ const routes: Routes = [{
         pathMatch: 'full',
       },
     ]
+  },
+  {
+    path: 'cadastro-usuarios',
+    component: CadastroUsuariosComponent
   }
 ];
 

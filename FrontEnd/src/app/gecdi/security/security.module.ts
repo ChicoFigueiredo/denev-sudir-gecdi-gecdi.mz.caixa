@@ -2,18 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbInputModule, NbLayoutModule } from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbSelectModule } from '@nebular/theme';
 
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { SecurityComponent } from './security.component';
 import { AuthComponent } from './auth/auth/auth.component';
 import { NbAuthModule } from '@nebular/auth';
+import { CadastroUsuariosComponent } from './cadastro-usuarios/cadastro-usuarios.component';
 
 
 @NgModule({
   declarations: [
     SecurityComponent,
+    CadastroUsuariosComponent,
     AuthComponent
   ],
   imports: [
@@ -27,10 +29,14 @@ import { NbAuthModule } from '@nebular/auth';
     NbCheckboxModule,
     NbCardModule,
     NbLayoutModule,
+    NbSelectModule,
 
     SecurityRoutingModule,
 
     NbAuthModule,
+
+    NbIconModule,
+    NbFormFieldModule,
 
   ],
 })

@@ -43,11 +43,15 @@ namespace PushAPI.Controllers.PUSH.Envio
                     return await _dbPush.Solicitacao_Simulacao_Envio
                                         .Include(r => r.idSolicitacao_PUSHNavigation)
                                         .Where(x => (x.Data >= xDe && x.Data <= xAte || (x.Data < xAte && x.Enviado == false)))
+                                        .OrderBy(o => o.Data)
+                                        .ThenBy(o => o.Hora)
                                         .ToListAsync();
                 else
                     return await _dbPush.Solicitacao_Simulacao_Envio
                                         .Include(r => r.idSolicitacao_PUSHNavigation)
                                         .Where(x => (x.Data >= xDe && x.Data <= xAte))
+                                        .OrderBy(o => o.Data)
+                                        .ThenBy(o => o.Hora)
                                         .ToListAsync();
             }
             else
@@ -58,11 +62,15 @@ namespace PushAPI.Controllers.PUSH.Envio
                     return await _dbPush.Solicitacao_Simulacao_Envio
                                         .Include(r => r.idSolicitacao_PUSHNavigation)
                                         .Where(x => (x.Data >= xDe && x.Data <= xAte) || (x.Data < xAte && x.Enviado == bEnvio))
+                                        .OrderBy(o => o.Data)
+                                        .ThenBy(o => o.Hora)
                                         .ToListAsync();
                 else
                     return await _dbPush.Solicitacao_Simulacao_Envio
                                         .Include(r => r.idSolicitacao_PUSHNavigation)
                                         .Where(x => x.Data >= xDe && x.Data <= xAte)
+                                        .OrderBy(o => o.Data)
+                                        .ThenBy(o => o.Hora)
                                         .ToListAsync();
             }
             

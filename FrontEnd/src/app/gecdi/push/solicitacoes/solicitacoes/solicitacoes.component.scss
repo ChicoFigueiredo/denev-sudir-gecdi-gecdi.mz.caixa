@@ -11,6 +11,16 @@
 }
 
 
+.row-title {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+.hand {
+  cursor: pointer;
+}
+
 tbody > tr:nth-child(odd) {background: #F4EEFF}
 tbody > tr:nth-child(even) {background: #FFF}
 
@@ -30,15 +40,6 @@ tbody > tr.row-green:nth-child(even) {background: #79c97c}
   color: white;
 }
 
-.row-title {
-  background-color: black;
-  color: white;
-  font-weight: bold;
-}
-
-.hand {
-  cursor: pointer;
-}
 
 :host-context(.user-name) {
   font-weight: bold;

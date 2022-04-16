@@ -1,0 +1,115 @@
+
+  <div class="row">
+    <div class="col-md-3 col-lg-3 col-xxxl-3">
+
+      <nb-card>
+        <nb-card-header>
+          Busca de Usuário
+        </nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <nb-form-field>
+              <input #q nbInput id="searchQuery" placeholder="Busca por matricula ou nome" width="30"
+                [(ngModel)]="searchText"
+                (keyup.enter)="Search(q.value)"
+              >
+              <button nbSuffix nbButton ghost (click)="Search(q.value)">
+                <nb-icon [icon]="'search-outline'"
+                         pack="eva"
+                         >
+                </nb-icon>
+              </button>
+            </nb-form-field>
+            <BR><BR>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+    </div>
+    <div class="col-md-9 col-lg-9 col-xxxl-9">
+
+      <nb-card>
+        <nb-card-header>
+          Cadastro Rápido de Usuário
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <nb-form-field>
+                  <div class="form-group">
+                    <label for="Matricula" class="label">Matricula:</label>
+                    <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)">
+                  </div>
+                </nb-form-field>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="role" class="label">Role:</label>
+                  <nb-select fullWidth id="role" name="role" [(ngModel)]="role">
+                    <nb-option *ngFor="let r of userService.roles;" [value]="r.idRole">{{r.nome_Role}}</nb-option>
+                  </nb-select>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="btnCadastrar" class="label">&nbsp;</label>
+                <button fullWidth nbButton (click)="Cadastrar()" id="btnCadastrar" ><i class="fas fa-user"></i>&nbsp;Cadastrar </button>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <nb-card>
+        <nb-card-header>
+          Lista de Usuários
+        </nb-card-header>
+        <nb-card-body>
+
+          <table class="table">
+            <thead class="row-title">
+              <tr class="row-title">
+                <td scope="col">ID</td>
+                <td scope="col">Matricula</td>
+                <td scope="col">Nome</td>
+                <td scope="col">CGC</td>
+                <td scope="col">Role</td>
+                <td scope="col">Excluir</td>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let u of usuariosSelecionados | async; let i = index ;" [ngClass]="checkRow(u) + ' hand'">
+                <th scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{u?.idUsuario}}</th>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{u?.cUsuario}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{u?.nome}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{u?.cgc}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">
+                  <nb-select fullWidth id="role" name="role" [(ngModel)]="u.idRole">
+                    <nb-option *ngFor="let r of userService.roles;" [value]="r.idRole">{{r.nome_Role}}</nb-option>
+                  </nb-select>
+                </td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">
+                  <button nbButton ghost (click)="excluirUsuario(u);"><nb-icon icon="trash" pack="eva" class="danger"></nb-icon></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+
+        </nb-card-body>
+      </nb-card>
+
+    </div>
+  </div>
+

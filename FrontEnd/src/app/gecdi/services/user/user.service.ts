@@ -1,11 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
-import { BehaviorSubject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 import { MenuService } from '../menu/menu.service';
-import { User } from './User';
+import { Role } from './classes/Role';
+import { User } from './classes/User';
+import { Usuario } from './classes/Usuario';
 
+const API_PUSH = environment.urlAPI + '/api'
 @Injectable({
   providedIn: 'root'
 })
@@ -17,10 +22,13 @@ export class UserService {
     return this._changeUser.asObservable();
   }
 
+  public roles:Role[];
+
 
   constructor(
     private authService: NbAuthService,
     private menuService: MenuService,
+    private http: HttpClient,
     private router:Router
   ) {
 
@@ -47,5 +55,29 @@ export class UserService {
         localStorage.setItem('gecdi.url.route',event.url);
     });
 
+    this.getRoles().subscribe(e => this.roles = e)
+  }
+
+  getRoles() {
+    return this.http
+               .get<Role[]>(`${API_PUSH}/user/roles`);
+  }
+
+
+  getUsers(lim:number=25,q:string=''):Observable<Usuario[]> {
+    return this.http
+               .get<Usuario[]>(`${API_PUSH}/user?lim=${lim}&busca=${q}`);
+  }
+
+
+  deleteUser(id:number){
+    return this.http
+               .delete(`${API_PUSH}/user/${id}`);
+  }
+
+
+  postNewUser(_matricula, _role){
+    return this.http
+               .post(`${API_PUSH}/User/register`,{ matricula:_matricula, role:_role });
   }
 }

@@ -4,10 +4,8 @@ import { CommonModule } from '@angular/common';
 import { GecdiRoutingModule } from './gecdi-routing.module';
 import { GecdiComponent } from './gecdi.component';
 
-
-import { NbMenuModule } from '@nebular/theme';
 import { ThemeModule } from '../@theme/theme.module';
-
+import { NbMenuModule } from '@nebular/theme';
 @NgModule({
   declarations: [
     GecdiComponent
