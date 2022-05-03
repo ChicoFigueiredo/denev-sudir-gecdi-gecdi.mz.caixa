@@ -78,4 +78,19 @@ export class CadastroUsuariosComponent implements OnInit {
     );
   }
 
+  ChangeRole(_idUsuario, $event){
+    this.userService.postChangeRole(_idUsuario,$event.role).subscribe(
+      (res:Usuario) => {
+        this.serviceSticker.show(`Usuario ${res?.cUsuario} (${res?.nome}) alterado para role ${res?.idRole}`,'',{ status: 'success', duration: 2000})
+        this.Search(this.matricula);
+      },
+      (err) => {
+        if (err.status != 200){
+          this.serviceSticker.show(`Erro ao alterar a role ${this.matricula} - ${err.message}`,'',{ status: 'danger', duration: 5000})
+          this.Search(this.searchText);
+        }
+      }
+    );
+  }
+
 }

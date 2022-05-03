@@ -72,12 +72,17 @@ export class UserService {
 
   deleteUser(id:number){
     return this.http
-               .delete(`${API_PUSH}/user/${id}`);
+               .post(`${API_PUSH}/user/${id}/delete`,{});
   }
 
 
   postNewUser(_matricula, _role){
     return this.http
                .post(`${API_PUSH}/User/register`,{ matricula:_matricula, role:_role });
+  }
+
+  postChangeRole(_idUsuario, _role){
+    return this.http
+               .post(`${API_PUSH}/user/${_idUsuario}/alter?role=${_role}`,{});
   }
 }

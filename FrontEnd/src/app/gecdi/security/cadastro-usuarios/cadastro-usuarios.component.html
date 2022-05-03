@@ -95,7 +95,7 @@
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{u?.nome}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{u?.cgc}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">
-                  <nb-select fullWidth id="role" name="role" [(ngModel)]="u.idRole">
+                  <nb-select fullWidth id="role" name="role" [(ngModel)]="u.idRole" (selectedChange)="ChangeRole(u.idUsuario,$event)">
                     <nb-option *ngFor="let r of userService.roles;" [value]="r.idRole">{{r.nome_Role}}</nb-option>
                   </nb-select>
                 </td>

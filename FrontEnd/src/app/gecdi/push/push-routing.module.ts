@@ -21,6 +21,10 @@ const routes: Routes = [{
     component: SolicitacoesComponent,
     canActivate: [AuthGuard], //Chama a rotina de autenticação
   }, {
+    path: 'minhas-solicitacoes',
+    component: SolicitacaoComponent,
+    canActivate: [AuthGuard], //Chama a rotina de autenticação
+  }, {
     path: 'fila',
     component: FilaComponent,
     canActivate: [AuthGuard], //Chama a rotina de autenticação

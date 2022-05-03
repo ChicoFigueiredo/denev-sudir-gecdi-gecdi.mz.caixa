@@ -163,7 +163,7 @@ namespace PushAPI.Controllers.User
         }
 
         // DELETE: api/User/5
-        [HttpDelete("{id}")]
+        [HttpPost("{id}/delete")]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
             var usuario = await _dbSites.Usuario.FindAsync(id);
@@ -176,6 +176,21 @@ namespace PushAPI.Controllers.User
             await _dbSites.SaveChangesAsync();
 
             return NoContent();
+        }
+
+
+        // POST: api/User/5
+        [HttpPost("{id}/alter")]
+        public async Task<IActionResult> AlterUsuario(int id, Role role)
+        {
+            var usuario = await _dbSites.Usuario.FindAsync(id);
+            if (usuario == null)
+                return NotFound();
+
+            usuario.idRole = (int)role;
+            await _dbSites.SaveChangesAsync();
+
+            return Ok(usuario);
         }
 
         private bool UsuarioExists(int id)

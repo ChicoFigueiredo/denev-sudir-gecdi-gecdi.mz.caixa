@@ -1,12 +1,6 @@
-import {
-  NbMenuItem
-} from '@nebular/theme';
-import {
-  environment
-} from '../../../../environments/environment';
-import {
-  MENU_ITEMS
-} from '../../../pages/pages-menu';
+import { NbMenuItem  } from '@nebular/theme';
+import { environment } from '../../../../environments/environment';
+import { MENU_ITEMS  } from '../../../pages/pages-menu';
 import { MENU_ITENS_ORIGINAL } from '../../../pages/pages-menu.original';
 
 interface OpcoesDaRole {
@@ -67,6 +61,11 @@ const MENU_PUSH_BASE: NbMenuItem[] = [{
     title: 'Solicitações/Fila',
     icon: {icon:'cubes', pack:'font-awesome'},
     link: '/gecdi/push/solicitacoes',
+  },
+  {
+    title: 'Minhas Solicitações',
+    icon: {icon:'clipboard-list', pack:'font-awesome'},
+    link: '/gecdi/push/minhas-solicitacoes',
   },
   {
     title: 'Resumo',
