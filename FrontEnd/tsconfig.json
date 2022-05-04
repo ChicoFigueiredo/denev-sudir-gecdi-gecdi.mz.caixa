@@ -1,5 +1,6 @@
 {
   "compileOnSave": false,
+    "strictTemplates": true,
   "compilerOptions": {
     "importHelpers": true,
     "module": "es2020",

@@ -1,1 +1,15 @@
-<p>dialog-solicitacao works!</p>
+<ng-template #dialog let-data let-ref="dialogRef" class="template-chamado">
+  <nb-card class="dialog-card">
+      <nb-card-header>
+        SOLICITAÇÃO
+      </nb-card-header>
+      <nb-card-body>
+        <ngx-detalhes-solicitacao [solicitacao]="solicitacao"></ngx-detalhes-solicitacao>
+      </nb-card-body>
+      <nb-card-footer>
+          <div class="float-right">
+              <button nbButton (click)="ref.close()">Fechar</button>
+          </div>
+      </nb-card-footer>
+  </nb-card>
+</ng-template>

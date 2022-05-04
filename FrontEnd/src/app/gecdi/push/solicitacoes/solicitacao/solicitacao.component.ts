@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NbToastrService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
 import { PushService } from '../../../services/push/push.service';
+import { User } from '../../../services/user/classes/User';
+import { DialogSolicitacaoComponent } from '../dialog-solicitacao/dialog-solicitacao.component';
 
 
 @Component({
@@ -13,6 +15,7 @@ import { PushService } from '../../../services/push/push.service';
 export class SolicitacaoComponent implements OnInit {
 
   public solicitacao:Observable<Solicitacao>;
+  @ViewChild('diag') dialog: ElementRef<DialogSolicitacaoComponent>;
 
   constructor(
     private pushService:PushService,
@@ -39,8 +42,13 @@ export class SolicitacaoComponent implements OnInit {
 
   }
 
+  novaSolicitacao(novo:boolean){
+    (<any> this.dialog).openDialog();
+  }
+
   refreshSolicitacoes(recontar:boolean=false){
-    this.solicitacao = this.pushService.getSolicitacoes(recontar);
+    const usuario:User = <User> JSON.parse(localStorage.getItem("gecdi.user.data"));
+    this.solicitacao = this.pushService.getSolicitacoes(recontar,usuario.lotacaoFisica);
   }
 
 

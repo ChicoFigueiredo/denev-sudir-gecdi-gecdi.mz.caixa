@@ -1,4 +1,4 @@
-a<ng-template #dialog let-data let-ref="dialogRef" class="template-chamado">
+<ng-template #dialog let-data let-ref="dialogRef" class="template-chamado">
     <nb-card class="dialog-card">
         <nb-card-header>
             <a *ngIf="chamado?.vOrigem == 'ATENDER'" class="no-wrap hand" (click)="openAtender(chamado?.iIdentificacaoChamado)" ><i class="fas fa-external-link-alt"></i> Chamado {{chamado?.vOrigem}} Nº {{ chamado?.iIdentificacaoChamado }} </a>

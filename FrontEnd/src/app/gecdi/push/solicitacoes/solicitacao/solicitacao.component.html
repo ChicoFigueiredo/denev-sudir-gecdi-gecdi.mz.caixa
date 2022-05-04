@@ -9,8 +9,8 @@
         </nb-card-header>
 
         <nb-card-body>
+          &nbsp;&nbsp;<button nbButton (click)="novaSolicitacao(true)" ><i class="fas fa-new"></i>&nbsp;Nova Solicitação &nbsp;&nbsp;<span #atu></span></button> -->
           <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>
-          &nbsp;&nbsp;<button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>
           <BR><BR>
 
           <table class="table">
@@ -81,4 +81,4 @@
 </div>
 
 
-<!-- <ngx-dialog-envio #diag [envio]="EnvioSelecionado" [position]="posicao" [listaEnvios]="envios | async"></ngx-dialog-envio> -->
+<ngx-dialog-solicitacao #diag></ngx-dialog-solicitacao>
