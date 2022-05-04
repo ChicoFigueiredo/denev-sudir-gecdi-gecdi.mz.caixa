@@ -1,1 +1,235 @@
-<p>detalhes-solicitacao works!</p>
+<form [formGroup]="formSolicitacao">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="idSolicitacao_PUSH" class="label">N° Solicitação:</label>
+            <input type="text" nbInput fullWidth id="idSolicitacao_PUSH" placeholder="Numeração automática" disabled>
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+    <div class="col-md-10">
+        <div class="form-group">
+          <label for="Nome_Solicitacao" class="label">Nome/Assunto Solicitação:</label>
+          <input type="text" nbInput fullWidth id="Nome_Solicitacao" placeholder="Descreva suscintamente o objetivo do envio dessa mensagem"
+                 formControlName="nome" [status]="(f.nome.touched && f.nome.errors) ? 'danger': ''"
+          >
+        </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="REQ_WO_Aprovacao_Mensagem" class="label">REQ Aprovação Mensagem:</label>
+            <input type="text" nbInput fullWidth id="REQ_WO_Aprovacao_Mensagem" placeholder="Número da REQ da aprovação da mensagem"
+                   formControlName="req" [status]="(f.req.touched && f.req.errors) ? 'danger': ''"
+            >
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="WF_GECRM" class="label">WF GECRM (N° Workflow da Base de Dados):</label>
+            <input type="text" nbInput fullWidth id="WF_GECRM" placeholder="N° do WF da base fornecida pela GECRM">
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="Mensagem" class="label">Mensagem:</label>
+        <div class="container">
+          <textarea #message type="text" nbInput fullWidth id="Mensagem" height="4em" placeholder="Mensagem a ser enviada ao cliente, aprovada conforme MN CO 303"
+                    formControlName="msg" [status]="(f.msg.touched && f.msg.errors) ? 'danger': ''"
+          ></textarea>
+          <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible;">😀</button>
+        </div>
+        <div class="meio"><emoji-mart class="emoji-mart" *ngIf="isEmojiPickerVisible" (emojiSelect)="addEmoji($event)" title="Esolha o emoji" [i18n]="I8N_TRADUCAO"></emoji-mart></div>
+      <!-- <nb-select fullWidth id="role" name="role" [(ngModel)]="role">
+          <nb-option *ngFor="let r of userService.roles;" [value]="r.idRole">{{r.nome_Role}}</nb-option>
+        </nb-select> -->
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Canal" class="label">Canal destino:</label>
+            <nb-select fullWidth id="Canal" name="Canal" >
+              <!-- [(ngModel)]="role" -->
+              <nb-option value="ibc">IBC</nb-option>
+              <nb-option value="caixatem" selected>CAIXA Tem</nb-option>
+              <nb-option value="cartao">App Cartões</nb-option>
+            </nb-select>
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Quantidade_Total" class="label">Quantidade de Mensagens:</label>
+            <input type="text" nbInput fullWidth id="Quantidade_Total" placeholder="Estimativa da quantidade de PUSH a ser enviados aos clientes "
+                   formControlName="qtdMsg" [status]="(f.qtdMsg.touched && f.qtdMsg.errors) ? 'danger': ''"
+            >
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Limitacao_Tranche" class="label">Limite por tranche (a cada 30min):</label>
+            <input type="text" nbInput fullWidth id="Limitacao_Tranche" placeholder="Qtd. acordada com a GEPTI"
+                   formControlName="qtdLimTranche" [status]="(f.qtdLimTranche.touched && f.qtdLimTranche.errors) ? 'danger': ''"
+            >
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Impactos_Previstos" class="label">Impactos previstos ao enviar essa mensagem (em serviços / API / Canais / Sistemas):</label>
+            <textarea type="text" nbInput fullWidth id="Impactos_Previstos"  height="4.5em" placeholder="Descrever possíveis impactos caso uma quantidade muito grande de clientes acessar o app simultaneamente para procurar/aderir/comprar o objeto da mensagem. Ex.: É experado quando se manda uma mensagem sobre saque FGTS que isso cause busca no app CAIXA Tem aos serviços de FGTS, impactando o canal CAIXA Tem e à API FGTS."
+                      formControlName="impactos" [status]="(f.impactos.touched && f.impactos.errors) ? 'danger': ''"
+            ></textarea>
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Enviar_a_partir_de" class="label">Enviar a partir de (Data):</label>
+            <input type="text" nbInput fullWidth id="Enviar_a_partir_de" placeholder="Não enviar antes de">
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Enviar_no_maximo_ate" class="label">Enviar até no máximo (Data):</label>
+            <input type="text" nbInput fullWidth id="Enviar_no_maximo_ate" placeholder="Não enviar depois de">
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Enviar_Horario_Inicial" class="label">Janela horária - a partir de (Hora início):</label>
+            <input type="text" nbInput fullWidth id="Enviar_Horario_Inicial" placeholder="Hora ideal de iniciar">
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Enviar_Horario_Inicial" class="label">Janela horária - no máximo até (Hora final):</label>
+            <input type="text" nbInput fullWidth id="Enviar_Horario_Inicial" placeholder="Hora máxima de enviar">
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Dias_da_semana" class="label">Dias da semana para envio:</label>
+            <input type="text" nbInput fullWidth id="Enviar_Horario_Inicial" placeholder="" hidden> <BR>
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+            <nb-toggle status="success">Seg</nb-toggle>&nbsp;
+            <nb-toggle status="success">Ter</nb-toggle>&nbsp;
+            <nb-toggle status="success">Qua</nb-toggle>&nbsp;
+            <nb-toggle status="success">Qui</nb-toggle>&nbsp;
+            <nb-toggle status="success">Sex</nb-toggle>&nbsp;
+            <nb-toggle status="success">Sáb</nb-toggle>&nbsp;
+            <nb-toggle status="success">Dom</nb-toggle>&nbsp;
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Limite_Mensagens_Por_Dia" class="label">Limite de mensagens por dia:</label>
+            <input type="text" nbInput fullWidth id="Limite_Mensagens_Por_Dia" placeholder="Qtd. Máxima por Dia">
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="idTipoMensagem" class="label">Tipo de Mensagem:</label>
+            <nb-select fullWidth id="Canal" name="idTipoMensagem" value="1" >
+              <!-- [(ngModel)]="role" -->
+              <nb-option value="1" selected>Mensagem única / estática</nb-option>
+              <!-- <nb-option value="2">Mensagem Dinâmica</nb-option> -->
+            </nb-select>
+            <!-- <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+  </div>
+
+</form>

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
-import { NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbGlobalLogicalPosition, NbInputModule, NbSelectModule, NbToastrConfig, NbToastrModule, NbToggleModule, NbUserModule } from '@nebular/theme';
+import { NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbFormFieldModule, NbGlobalLogicalPosition, NbInputModule, NbSelectModule, NbToastrConfig, NbToastrModule, NbToggleModule, NbUserModule } from '@nebular/theme';
 
 import { PushRoutingModule } from './push-routing.module';
 import { PushComponent } from './push.component';
@@ -18,6 +18,7 @@ import { DadosEnvioComponent } from './envios/dados-envio/dados-envio.component'
 import { DetalhesSolicitacaoComponent } from './solicitacoes/detalhes-solicitacao/detalhes-solicitacao.component';
 import { DialogSolicitacaoComponent } from './solicitacoes/dialog-solicitacao/dialog-solicitacao.component';
 import { WhatsappComponent } from './resumo/whatsapp/whatsapp.component'
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 const configToastr: NbToastrConfig =  <NbToastrConfig> {
   duration: 1500,
@@ -45,6 +46,7 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
   imports: [
     CommonModule,
     PushRoutingModule,
+    PickerModule,
 
     NbMomentDateModule,
 
@@ -55,12 +57,14 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     NbButtonModule,
     NbCheckboxModule,
     NbUserModule,
+    NbFormFieldModule,
     NbToastrModule.forRoot(configToastr),
 
     NbDatepickerModule.forRoot(),
     NbToggleModule,
 
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
 
   ],
   exports:[
