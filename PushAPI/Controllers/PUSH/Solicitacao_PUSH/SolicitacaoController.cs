@@ -206,8 +206,8 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             
         }
 
-        // DELETE: api/Solicitacao/5
-        [HttpDelete("{id}")]
+        // DELETE: api/Solicitacao/5/delete
+        [HttpPost("{id}/delete")]
         [Authorize(Role.Admin)]
         public async Task<IActionResult> DeleteSolicitacao(int id)
         {

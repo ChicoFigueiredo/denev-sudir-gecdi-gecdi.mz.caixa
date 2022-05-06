@@ -65,7 +65,9 @@
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 
-                <td *ngIf="e_admin">Excluir</td>
+                <td *ngIf="e_admin">
+                  <button nbButton ghost (click)="excluirSolicitacao(s,dialogExcluir);"><nb-icon icon="trash" pack="eva" class="danger"></nb-icon></button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -82,5 +84,15 @@
 
 </div>
 
+<ng-template #dialogExcluir let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Confirmar Exclusão</nb-card-header>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="primary" (click)="ref.close()"  >Não</button> &nbsp;&nbsp;
+      <button nbButton status="danger" (click)="deletarSolicitacao(dialogExcluir);ref.close();"   >Sim</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
 
 <!-- <ngx-dialog-envio #diag [envio]="EnvioSelecionado" [position]="posicao" [listaEnvios]="envios | async"></ngx-dialog-envio> -->

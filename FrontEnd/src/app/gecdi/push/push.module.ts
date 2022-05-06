@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
-import { NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbFormFieldModule, NbGlobalLogicalPosition, NbInputModule, NbSelectModule, NbTimepickerModule, NbToastrConfig, NbToastrModule, NbToggleModule, NbUserModule } from '@nebular/theme';
+import { NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbFormFieldModule, NbGlobalLogicalPosition, NbIconModule, NbInputModule, NbSelectModule, NbTimepickerModule, NbToastrConfig, NbToastrModule, NbToggleModule, NbUserModule } from '@nebular/theme';
 
 import { PushRoutingModule } from './push-routing.module';
 import { PushComponent } from './push.component';
@@ -63,6 +63,8 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     NbDatepickerModule.forRoot(),
     NbTimepickerModule.forRoot(),
     NbToggleModule,
+
+    NbIconModule,
 
     FormsModule,
     ReactiveFormsModule

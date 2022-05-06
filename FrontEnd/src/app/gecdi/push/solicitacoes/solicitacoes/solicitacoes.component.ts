@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NbToastrService } from '@nebular/theme';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
 import { PushService } from '../../../services/push/push.service';
 import { User } from '../../../services/user/classes/User';
@@ -19,7 +20,8 @@ export class SolicitacoesComponent implements OnInit {
   constructor(
     private pushService:PushService,
     private serviceSticker: NbToastrService,
-    private userService: UserService
+    private userService: UserService,
+    private dialogService: NbDialogService
   ) {
     this.userService.changeUser().subscribe(u => this.usuario=u );
   }
@@ -45,8 +47,10 @@ export class SolicitacoesComponent implements OnInit {
 
   }
 
-  refreshSolicitacoes(recontar:boolean=false){
-    this.solicitacao = this.pushService.getSolicitacoes(recontar);
+  refreshSolicitacoes(recontar:boolean=false, callback = null){
+    this.solicitacao = this.pushService.getSolicitacoes(recontar).pipe(map((u,i) => {
+      callback && callback();
+      return u; }));
   }
 
 
@@ -74,5 +78,18 @@ export class SolicitacoesComponent implements OnInit {
       }
     })
   }
+
+  solicitacaoASerExcluida:Solicitacao
+  excluirSolicitacao(s:Solicitacao,dialog: TemplateRef<any>){
+    this.solicitacaoASerExcluida = s;
+    this.dialogService.open(dialog, { context : `Deseja excluir Solicitação ID ${s.idSolicitacao_PUSH} - ${s.nome_Solicitacao} ` });
+  }
+
+  deletarSolicitacao(dialog: TemplateRef<any>){
+    this.pushService.deletarSolicitacao(this.solicitacaoASerExcluida).subscribe(s => {
+      this.refreshSolicitacoes(false, () => this.serviceSticker.show(`Solicitação ID ${this.solicitacaoASerExcluida.idSolicitacao_PUSH} - ${this.solicitacaoASerExcluida.nome_Solicitacao} EXCLUIDO!`,'',{ status: 'success', duration: 5000 }));
+    })
+  }
+
 
 }
