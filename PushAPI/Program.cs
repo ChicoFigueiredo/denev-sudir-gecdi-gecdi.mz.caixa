@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PushAPI.Helpers;
@@ -48,6 +51,13 @@ builder.Services.AddSwaggerGen(setup =>
 
 // configure strongly typed settings object
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory =
+        AllowingServerSideValidationToBeDisabledInvalidModelStateResponseFactoryHelper.InvalidModelStateResponseFactory;
+});
+
 builder.Services.AddDbContext<dbSites>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBSites")));
 builder.Services.AddDbContext<dbPUSH>(options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("WebApiDBPUSH"),
@@ -97,3 +107,62 @@ app.MapControllers();
 
 
 app.Run();
+
+
+// Code taken from https://github.com/dotnet/aspnetcore/blob/5747cb36f2040d12e75c4b5b3f49580ef7aac5fa/src/Mvc/Mvc.Core/src/DependencyInjection/ApiBehaviorOptionsSetup.cs#L23
+// and is modified to optionally disable validation for controller action methods decorated with OptionalValidationAttribute
+public static class AllowingServerSideValidationToBeDisabledInvalidModelStateResponseFactoryHelper
+{
+    public static Func<ActionContext, IActionResult> InvalidModelStateResponseFactory => actionContext =>
+    {
+        var shouldEnableDataValidationarameterName = ((OptionalValidationAttribute)((ControllerActionDescriptor)actionContext.ActionDescriptor)
+            .MethodInfo.GetCustomAttributes(typeof(OptionalValidationAttribute), true)
+            .SingleOrDefault())?.ShouldEnableDataValidationParameterName;
+
+        var isValidationEnabled = false; // true habilita a validação de modelos
+
+        if (shouldEnableDataValidationarameterName != null)
+        {
+            var httpContextRequest = actionContext.HttpContext.Request;
+            var shouldEnableDataValidationValue = httpContextRequest.Form[shouldEnableDataValidationarameterName]
+                .Union(httpContextRequest.Query[shouldEnableDataValidationarameterName]).FirstOrDefault();
+            isValidationEnabled = shouldEnableDataValidationValue?.ToLower() == bool.TrueString.ToLower();
+        }
+
+        if (!isValidationEnabled)
+        {
+            return null;
+        }
+
+        var problemDetailsFactory = actionContext.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
+        var problemDetails = problemDetailsFactory.CreateValidationProblemDetails(actionContext.HttpContext, actionContext.ModelState);
+        ObjectResult result;
+        if (problemDetails.Status == 400)
+        {
+            // For compatibility with 2.x, continue producing BadRequestObjectResult instances if the status code is 400.
+            result = new BadRequestObjectResult(problemDetails);
+        }
+        else
+        {
+            result = new ObjectResult(problemDetails)
+            {
+                StatusCode = problemDetails.Status,
+            };
+        }
+        result.ContentTypes.Add("application/problem+json");
+        result.ContentTypes.Add("application/problem+xml");
+
+        return result;
+    };
+}
+
+[AttributeUsage(AttributeTargets.Method)]
+public class OptionalValidationAttribute : Attribute
+{
+    public OptionalValidationAttribute(string shouldEnableDataValidationParameterName)
+    {
+        ShouldEnableDataValidationParameterName = shouldEnableDataValidationParameterName;
+    }
+
+    public string ShouldEnableDataValidationParameterName { get; }
+}

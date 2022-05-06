@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PushAPI.Helpers;
 using PushAPI.Models.Push;
+using PushAPI.Models.Sites;
 
 namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 {
@@ -171,10 +173,37 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
         [HttpPost]
         public async Task<ActionResult<Solicitacao>> PostSolicitacao(Solicitacao solicitacao)
         {
-            _dbPush.Solicitacao.Add(solicitacao);
-            await _dbPush.SaveChangesAsync();
+            if (solicitacao.idSolicitacao_PUSH <= 0)
+            {
+                solicitacao.idSolicitacao_PUSH = 0;
 
-            return CreatedAtAction("GetSolicitacao", new { id = solicitacao.idSolicitacao_PUSH }, solicitacao);
+                if (solicitacao.idEnvio_Mensagem == -1)
+                {
+                    Mensagem msg = await _dbPush.Mensagem.FirstOrDefaultAsync(f => f.Mensagem1 == solicitacao.Mensagem.Trim());
+                    if (msg == null)
+                    {
+                        msg = new();
+                        msg.Mensagem1 = solicitacao.Mensagem;
+                        var msgAdd = await _dbPush.Mensagem.AddAsync(msg);
+                        await _dbPush.SaveChangesAsync();
+                    }
+                    solicitacao.idEnvio_Mensagem = msg.idEnvio_Mensagem;
+                }
+
+                solicitacao.Data_Cadastramento = DateTime.Now;
+                solicitacao.CGCExecutora = 5135;
+                Usuario u = HttpContext.Items["User"] as Usuario;
+                solicitacao.Matricula_Cadastramento = u.cUsuario;
+                solicitacao.CGCDemandante = (short)u.CGC;
+
+                _dbPush.Solicitacao.Add(solicitacao);
+                await _dbPush.SaveChangesAsync();
+
+                return CreatedAtAction("GetSolicitacao", new { id = solicitacao.idSolicitacao_PUSH }, solicitacao);
+            }
+            
+            return BadRequest(new { error = 1002, message = "Solicitação de criação/atualização de Solicitação com problemas" });
+            
         }
 
         // DELETE: api/Solicitacao/5

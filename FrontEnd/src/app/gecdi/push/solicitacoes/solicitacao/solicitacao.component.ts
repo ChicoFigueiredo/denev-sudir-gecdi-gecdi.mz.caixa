@@ -15,6 +15,7 @@ import { DialogSolicitacaoComponent } from '../dialog-solicitacao/dialog-solicit
 export class SolicitacaoComponent implements OnInit {
 
   public solicitacao:Observable<Solicitacao>;
+  public solicitacaoAtual:Solicitacao;
   @ViewChild('diag') dialog: ElementRef<DialogSolicitacaoComponent>;
 
   constructor(
@@ -43,6 +44,7 @@ export class SolicitacaoComponent implements OnInit {
   }
 
   novaSolicitacao(novo:boolean){
+    this.solicitacaoAtual = new Solicitacao();
     (<any> this.dialog).openDialog();
   }
 

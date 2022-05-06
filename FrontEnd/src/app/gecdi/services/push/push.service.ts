@@ -76,4 +76,9 @@ export class PushService {
                .post(`${API_PUSH}/solicitacao/${idSolicitacao}/Autorizar?MarcarAutorizado=${autorizado}`,{})
   }
 
+  postNewSolicitacao(solicitacao:Solicitacao){
+    return this.http
+               .post(`${API_PUSH}/solicitacao`,solicitacao)
+  }
+
 }

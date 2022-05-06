@@ -3,6 +3,8 @@ import { NbToastrService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
 import { PushService } from '../../../services/push/push.service';
+import { User } from '../../../services/user/classes/User';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'ngx-solicitacoes',
@@ -12,16 +14,21 @@ import { PushService } from '../../../services/push/push.service';
 export class SolicitacoesComponent implements OnInit {
 
   public solicitacao:Observable<Solicitacao>;
+  public usuario:User;
 
   constructor(
     private pushService:PushService,
     private serviceSticker: NbToastrService,
-  ) { }
+    private userService: UserService
+  ) {
+    this.userService.changeUser().subscribe(u => this.usuario=u );
+  }
+
+  get e_admin() { return this.usuario.user.role == 1 }
 
   ngOnInit(): void {
     this.refreshSolicitacoes(false);
   }
-
 
   checkRow(e:Solicitacao){
     if (e.cancelado)

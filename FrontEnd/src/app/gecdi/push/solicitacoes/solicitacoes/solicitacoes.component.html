@@ -33,6 +33,7 @@
                 <td scope="col">Impactos</td>
                 <td scope="col">Autori-zado</td>
                 <td scope="col">Cance-lado</td>
+                <td *ngIf="e_admin">Excluir</td>
               </tr>
             </thead>
 
@@ -64,6 +65,7 @@
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 
+                <td *ngIf="e_admin">Excluir</td>
               </tr>
             </tbody>
           </table>
