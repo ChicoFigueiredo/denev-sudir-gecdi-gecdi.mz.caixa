@@ -1,11 +1,13 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NbToastrService } from '@nebular/theme';
+import { Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { Observable, Subscription, timer } from 'rxjs';
 import { EnviosResponse } from '../../../services/push/classes/envios';
 import { PushService } from '../../../services/push/push.service';
 import * as moment from 'moment';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { DialogEnvioComponent } from '../dialog-envio/dialog-envio.component';
+import { UserService } from '../../../services/user/user.service';
+import { User } from '../../../services/user/classes/User';
 
 
 @Component({
@@ -29,11 +31,16 @@ export class EnviosComponent implements OnInit, OnDestroy {
 
   @ViewChild('atu') relogio: ElementRef<any>;
   @ViewChild('diag') dialog: ElementRef<DialogEnvioComponent>;
+  public usuario:User;
 
   constructor(
     private pushService: PushService,
     private serviceSticker: NbToastrService,
-  ) { }
+    private userService: UserService,
+    private dialogService: NbDialogService,
+  ) {
+    this.userService.changeUser().subscribe(u => this.usuario=u );
+  }
 
   ngOnInit(): void {
     moment.locale('pt-br');
@@ -47,9 +54,12 @@ export class EnviosComponent implements OnInit, OnDestroy {
     })
   }
 
+  get e_admin() { return this.usuario.user.role == 1 }
+
   ngOnDestroy(){
     this.timerSubscription.unsubscribe();
   }
+
 
   checkRow(e){
     if (e?.cancelado)
@@ -103,10 +113,22 @@ export class EnviosComponent implements OnInit, OnDestroy {
     this.refreshEnvios();
   }
 
-  refreshEnvios(){
+  refreshEnvios(callback=null){
     const dt = moment(this.dataSelecionada).format("YYYY-MM-DD");
-    this.envios = this.pushService.getSolicitacoesEnvio(dt,dt,-1,true);
+    this.envios = this.pushService.getSolicitacoesEnvio(dt,dt,-1,true).pipe(map(u => { callback && callback(); return u; }));
     this.timer = this.timerSlip;
   }
 
+
+  envioASerExcluido:EnviosResponse
+  excluirEnvio(e:EnviosResponse,dialog: TemplateRef<any>){
+    this.envioASerExcluido = e;
+    this.dialogService.open(dialog, { context : `Deseja excluir o Envio ${e?.idSolicitacao_Simulacao_Envio} - ${e?.data } às ${e?.horaFormatado} - ${e?.nome_Arquivo} ` });
+  }
+
+  deletarEnvio(dialog: TemplateRef<any>){
+    this.pushService.deletarEnvio(this.envioASerExcluido).subscribe(s => {
+      this.refreshEnvios(() => this.serviceSticker.show(`Solicitação ID ${this.envioASerExcluido.idSolicitacao_Simulacao_Envio} - ${this.envioASerExcluido.horaFormatado} EXCLUIDO! (${this.envioASerExcluido?.idSolicitacao_PUSHNavigation?.mensagem})`,'',{ status: 'success', duration: 5000 }));
+    })
+  }
 }

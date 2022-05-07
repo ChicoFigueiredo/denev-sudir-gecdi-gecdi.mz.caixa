@@ -19,6 +19,7 @@
           <table class="table">
             <thead class="row-title">
               <tr class="row-title">
+                <td scope="col">Hom</td>
                 <td scope="col">ID<BR>Envio</td>
                 <td scope="col">ID<BR>Sol.</td>
                 <td scope="col">WF</td>
@@ -30,11 +31,13 @@
                 <td scope="col">Enviado</td>
                 <td scope="col">Extras</td>
                 <td scope="col">Cancelado</td>
+                <td scope="col" *ngIf="e_admin">Excluir</td>
               </tr>
             </thead>
 
             <tbody>
               <tr *ngFor="let e of envios | async; let i = index ;" [ngClass]="checkRow(e) + ' hand'">
+                <th scope="row" class="no-wrap"         (click)="rowClick(e,i)"><nb-icon *ngIf="e?.homologado" icon="checkmark-square-outline" pack="eva" status="primary"></nb-icon></th>
                 <th scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.idSolicitacao_Simulacao_Envio}}</th>
                 <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.idSolicitacao_PUSH}}</td>
                 <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.idSolicitacao_PUSHNavigation.wF_GECRM}}</td>
@@ -51,6 +54,10 @@
                 <td scope="row"                         (click)="rowClick(e)">
                   <nb-toggle [ngModel]="e?.cancelado" (ngModelChange)="changeCheckCancelado(e,$event)" status="warning"></nb-toggle>
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
+                </td>
+
+                <td *ngIf="e_admin">
+                  <button nbButton ghost (click)="excluirEnvio(e,dialogExcluir);"><nb-icon icon="trash" pack="eva" status="danger"></nb-icon></button>
                 </td>
               </tr>
             </tbody>
@@ -69,4 +76,15 @@
 </div>
 
 
-<ngx-dialog-envio #diag [envio]="EnvioSelecionado" [position]="posicao" [listaEnvios]="envios | async"></ngx-dialog-envio> -->
+<ngx-dialog-envio #diag [envio]="EnvioSelecionado" [position]="posicao" [listaEnvios]="envios | async"></ngx-dialog-envio>
+
+<ng-template #dialogExcluir let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Confirmar Exclusão</nb-card-header>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="primary" (click)="ref.close()"  >Não</button> &nbsp;&nbsp;
+      <button nbButton status="danger" (click)="deletarEnvio(dialogExcluir);ref.close();"   >Sim</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

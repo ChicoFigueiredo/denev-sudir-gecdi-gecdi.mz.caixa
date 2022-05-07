@@ -86,4 +86,9 @@ export class PushService {
                .post(`${API_PUSH}/solicitacao/${solicitacao.idSolicitacao_PUSH}/delete`,{})
   }
 
+  deletarEnvio(envio:EnviosResponse){
+    return this.http
+               .post(`${API_PUSH}/envios/${envio?.idSolicitacao_Simulacao_Envio}/delete`,{})
+  }
+
 }

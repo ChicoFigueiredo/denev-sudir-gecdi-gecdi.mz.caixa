@@ -165,6 +165,7 @@ namespace PushAPI.Controllers.PUSH.Envio
         // POST: api/Envios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Role.Admin)]
         public async Task<ActionResult<Solicitacao_Simulacao_Envio>> PostSolicitacao_Simulacao_Envio(Solicitacao_Simulacao_Envio solicitacao_Simulacao_Envio)
         {
             _dbPush.Solicitacao_Simulacao_Envio.Add(solicitacao_Simulacao_Envio);
@@ -173,16 +174,14 @@ namespace PushAPI.Controllers.PUSH.Envio
             return CreatedAtAction("GetSolicitacao_Simulacao_Envio", new { id = solicitacao_Simulacao_Envio.idSolicitacao_Simulacao_Envio }, solicitacao_Simulacao_Envio);
         }
 
-        // DELETE: api/Envios/5
-        [HttpDelete("{id}")]
+        // DELETE: api/Envios/5/delete
+        [HttpPost("{id}/delete")]
         [Authorize(Role.Admin)]
         public async Task<IActionResult> DeleteSolicitacao_Simulacao_Envio(long id)
         {
             var solicitacao_Simulacao_Envio = await _dbPush.Solicitacao_Simulacao_Envio.FindAsync(id);
             if (solicitacao_Simulacao_Envio == null)
-            {
                 return NotFound();
-            }
 
             _dbPush.Solicitacao_Simulacao_Envio.Remove(solicitacao_Simulacao_Envio);
             await _dbPush.SaveChangesAsync();
