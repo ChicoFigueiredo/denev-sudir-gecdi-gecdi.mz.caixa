@@ -213,9 +213,10 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
         {
             var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
             if (solicitacao == null)
-            {
                 return NotFound();
-            }
+
+            if (solicitacao.Quantidade_Enviada > 0)
+                return StatusCode(418,new { error = 1003, message = "Solicitações com envios não podem ser apagadas em virtude de preservação de histórico." });
 
             _dbPush.Solicitacao.Remove(solicitacao);
             await _dbPush.SaveChangesAsync();

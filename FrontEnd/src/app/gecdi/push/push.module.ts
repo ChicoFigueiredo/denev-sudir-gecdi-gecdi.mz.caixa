@@ -9,7 +9,7 @@ import { PushRoutingModule } from './push-routing.module';
 import { PushComponent } from './push.component';
 import { EnviosComponent } from './envios/envios/envios.component';
 import { SolicitacoesComponent } from './solicitacoes/solicitacoes/solicitacoes.component';
-import { SolicitacaoComponent } from './solicitacoes/solicitacao/solicitacao.component';
+import { MinhasSolicitacoesComponent } from './solicitacoes/minhas-solicitacoes/minhas-solicitacoes.component';
 import { FilaComponent } from './fila/fila/fila.component';
 import { NbMomentDateModule } from '@nebular/moment';
 import { DetalheEnvioComponent } from './envios/detalhe-envio/detalhe-envio.component';
@@ -33,7 +33,7 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     PushComponent,
     EnviosComponent,
     SolicitacoesComponent,
-    SolicitacaoComponent,
+    MinhasSolicitacoesComponent,
     FilaComponent,
     DetalheEnvioComponent,
     DialogEnvioComponent,

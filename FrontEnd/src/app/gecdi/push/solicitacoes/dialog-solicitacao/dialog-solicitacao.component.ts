@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
 import { PushService } from '../../../services/push/push.service';
 import { DetalhesSolicitacaoComponent } from '../detalhes-solicitacao/detalhes-solicitacao.component';
@@ -19,6 +19,7 @@ export class DialogSolicitacaoComponent implements OnInit {
   constructor(
     private dialogService: NbDialogService,
     private pushService: PushService,
+    private serviceSticker: NbToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +30,7 @@ export class DialogSolicitacaoComponent implements OnInit {
     this.dialogService.open(this.dialog, { hasScroll: true, dialogClass: 'dialog-class' });
   }
 
-  salvarSolicitacao(){
+  salvarSolicitacao(ref:any){
       const detal:any = this.detalhes; //.elementRef.nativeElement;
       detal.formSolicitacao.markAllAsTouched();
       console.log(detal.formSolicitacao.value)
@@ -53,8 +54,10 @@ export class DialogSolicitacaoComponent implements OnInit {
       if (errosDados){
         alert('ainda tem erros!');
       } else {
-        this.pushService.postNewSolicitacao(detal.formSolicitacao.value).subscribe(sol => {
-          detal.formSolicitacao.patchValue(sol);
+        this.pushService.postNewSolicitacao(detal.formSolicitacao.value).subscribe((sol:Solicitacao) => {
+          try { detal.formSolicitacao.patchValue(sol) } catch(e) {};
+          ref.close();
+          this.serviceSticker.show(`Nova Solicitação Criada - ID ${sol?.idSolicitacao_PUSH} aguardar autorização da GECDI`,'',{ status: 'danger', duration: 15000 })
         })
       }
 

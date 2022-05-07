@@ -8,11 +8,11 @@ import { DialogSolicitacaoComponent } from '../dialog-solicitacao/dialog-solicit
 
 
 @Component({
-  selector: 'ngx-solicitacao',
-  templateUrl: './solicitacao.component.html',
-  styleUrls: ['./solicitacao.component.scss']
+  selector: 'ngx-minhas-solicitacoes',
+  templateUrl: './minhas-solicitacoes.component.html',
+  styleUrls: ['./minhas-solicitacoes.component.scss']
 })
-export class SolicitacaoComponent implements OnInit {
+export class MinhasSolicitacoesComponent implements OnInit {
 
   public solicitacao:Observable<Solicitacao>;
   public solicitacaoAtual:Solicitacao;

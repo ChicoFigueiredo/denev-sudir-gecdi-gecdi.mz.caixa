@@ -5,7 +5,7 @@ import { EnviosComponent } from './envios/envios/envios.component';
 import { FilaComponent } from './fila/fila/fila.component';
 import { PushComponent } from './push.component';
 import { WhatsappComponent } from './resumo/whatsapp/whatsapp.component';
-import { SolicitacaoComponent } from './solicitacoes/solicitacao/solicitacao.component';
+import { MinhasSolicitacoesComponent } from './solicitacoes/minhas-solicitacoes/minhas-solicitacoes.component';
 import { SolicitacoesComponent } from './solicitacoes/solicitacoes/solicitacoes.component';
 
 const routes: Routes = [{
@@ -22,7 +22,7 @@ const routes: Routes = [{
     canActivate: [AuthGuard], //Chama a rotina de autenticação
   }, {
     path: 'minhas-solicitacoes',
-    component: SolicitacaoComponent,
+    component: MinhasSolicitacoesComponent,
     canActivate: [AuthGuard], //Chama a rotina de autenticação
   }, {
     path: 'fila',
