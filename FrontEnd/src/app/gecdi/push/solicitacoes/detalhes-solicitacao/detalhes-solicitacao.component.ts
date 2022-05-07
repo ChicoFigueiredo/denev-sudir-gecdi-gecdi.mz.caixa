@@ -77,7 +77,12 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     enviar_Horario_InicialFormatado        : new FormControl(new Date('1980-01-01 07:00:00') ,[]),
     enviar_Horario_FinalFormatado          : new FormControl(new Date('1980-01-01 21:00:00') ,[]),
     Limite_Mensagens_Por_Dia               : new FormControl(null                            ,[]),
-    idTipoMensagem                         : new FormControl('1'                             ,[]),
+    idTipoMensagem                         : new FormControl(1                               ,[]),
+    CanalNavigation                        : new FormControl(null                            ,[]),
+    Quantidade_Maxima_AutorizadaNavigation : new FormControl(null                            ,[]),
+    Solicitacao_Clientes                   : new FormControl(null                            ,[]),
+    Solicitacao_Simulacao_Envio            : new FormControl(null                            ,[]),
+    idCurvaNavigation                      : new FormControl(null                            ,[]),
   })
 
 

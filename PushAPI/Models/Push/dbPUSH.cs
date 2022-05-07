@@ -617,11 +617,11 @@ namespace PushAPI.Models.Push
 
                 entity.HasIndex(e => e.idSolicitacao_PUSH, "IX_Solicitacao_Upload_idSolicitacao_PUSH");
 
-                entity.Property(e => e.idSolicitacao_Upload).ValueGeneratedNever();
-
                 entity.Property(e => e.Arquivo).HasDefaultValueSql("('')");
 
-                entity.Property(e => e.Data_Upload).HasColumnType("date");
+                entity.Property(e => e.Data_Processamento).HasColumnType("datetime");
+
+                entity.Property(e => e.Data_Upload).HasColumnType("datetime");
 
                 entity.Property(e => e.Matricula_Upload)
                     .HasMaxLength(7)

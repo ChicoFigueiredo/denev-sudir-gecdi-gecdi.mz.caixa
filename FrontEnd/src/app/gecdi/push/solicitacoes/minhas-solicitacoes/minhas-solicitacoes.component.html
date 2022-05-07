@@ -33,6 +33,7 @@
                 <td scope="col">Impactos</td>
                 <td scope="col">Autori-zado</td>
                 <td scope="col">Cance-lado</td>
+                <td scope="col">Upload</td>
               </tr>
             </thead>
 
@@ -54,14 +55,18 @@
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.cgcDemandante}} / {{s?.cgcExecutora}}</td>
                 <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td>
 
-                <td scope="row"                         (click)="rowClick(e)">
+                <td scope="row"                         (click)="rowClick(se)">
                   <nb-toggle [ngModel]="s?.autorizacao_Gestor_PUSH" disabled status="success"></nb-toggle>
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 
-                <td scope="row"                         (click)="rowClick(e)">
+                <td scope="row"                         (click)="rowClick(s)">
                   <nb-toggle [ngModel]="s?.cancelado" disabled status="warning"></nb-toggle>
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
+                </td>
+
+                <td scope="row"                         (click)="rowClick(se)">
+                  <button nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>
                 </td>
 
               </tr>

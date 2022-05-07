@@ -60,7 +60,7 @@ namespace PushAPI.Models.Push
         public int Quantidade_Agendada { get; set; }
         public int? Quantidade_Total_Restante { get; set; }
         public int? Limite_Mensagens_Por_Dia { get; set; }
-        public byte idTipoMensagem { get; set; }
+        public short idTipoMensagem { get; set; }
         public string? Titulo { get; set; }
         public string? URL_Acao { get; set; }
         public string? URL_Imagem { get; set; }

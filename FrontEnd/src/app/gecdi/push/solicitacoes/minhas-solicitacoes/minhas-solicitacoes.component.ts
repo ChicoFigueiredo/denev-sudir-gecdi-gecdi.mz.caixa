@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
@@ -21,6 +22,7 @@ export class MinhasSolicitacoesComponent implements OnInit {
   constructor(
     private pushService:PushService,
     private serviceSticker: NbToastrService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -79,4 +81,7 @@ export class MinhasSolicitacoesComponent implements OnInit {
     })
   }
 
+  uploadFile(s:Solicitacao,$event){
+    this.router.navigateByUrl(`/gecdi/push/minhas-solicitacoes/${s.idSolicitacao_PUSH}/upload`);
+  }
 }

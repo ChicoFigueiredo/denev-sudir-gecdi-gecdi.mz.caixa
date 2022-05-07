@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using PushAPI.Helpers;
 using PushAPI.Models.Push;
 using PushAPI.Models.Sites;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 {
@@ -171,8 +173,9 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
         // POST: api/Solicitacao
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Solicitacao>> PostSolicitacao(Solicitacao solicitacao)
+        public async Task<ActionResult<Solicitacao>> PostSolicitacao([FromBody] object _solicitacao)
         {
+            Solicitacao solicitacao = JsonSerializer.Deserialize<Solicitacao>(_solicitacao.ToString(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true, NumberHandling = JsonNumberHandling.AllowReadingFromString  }) ; 
             if (solicitacao.idSolicitacao_PUSH <= 0)
             {
                 solicitacao.idSolicitacao_PUSH = 0;
@@ -228,8 +231,9 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
         // DELETE: api/Solicitacao/5/delete
         [HttpPost("{id}/upload")]
         [Authorize(Role.Admin,Role.Solicitante,Role.GECDI)]
-        public async Task<IActionResult> UploadFileOnSolicitacao(int id)
+        public async Task<IActionResult> UploadFileOnSolicitacao(int id, int idPUSH) //([FromRoute]  int ID, [FromForm] IFormFile file0, [FromQuery] int idPUSH)
         {
+            //ID = ID > 0 ? ID : idPUSH;
             var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
             if (solicitacao == null)
                 return NotFound();
@@ -240,27 +244,37 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 var docfiles = new List<string>();
                 foreach (var file in httpRequest.Form.Files)
                 {
-                    Solicitacao_Upload su = new();
-                    su.idSolicitacao_PUSH = id;
-                    su.Data_Upload = DateTime.Now;
-                    _dbPush.Solicitacao_Upload.Add(su);
-                    _ = await _dbPush.SaveChangesAsync();
-                    var filePath = @$"\\arquivos.caixa\br\df5325fs201\SUESC\Publico\!PUSH_Upload\upload_id{su.idSolicitacao_Upload.ToString("000000000000")}_" + file.FileName;
-                    su.Arquivo = filePath;
-                    _ = await _dbPush.SaveChangesAsync();
-                    using (var stream = System.IO.File.Create(filePath))
+                    if (file != null)
                     {
-                        await file.CopyToAsync(stream);
+                        Solicitacao_Upload su = await _dbPush.Solicitacao_Upload.FirstOrDefaultAsync(a => a.idSolicitacao_PUSH == id) ?? new();
+                        if (su.idSolicitacao_PUSH == 0) 
+                            _dbPush.Solicitacao_Upload.Add(su);
+                        su.idSolicitacao_PUSH = id;
+                        su.Data_Upload = DateTime.Now;
+                        su.Processado = false;
+                        su.Registros_Aceitos = 0;
+                        su.Registros_Rejeitados = 0;
+                        su.Registros_Total = 0;
+                        _ = await _dbPush.SaveChangesAsync();
+                        var filePath = @$"\\arquivos.caixa\br\df5325fs201\SUESC\Publico\!PUSH_Upload\upload_id{su.idSolicitacao_Upload.ToString("000000000000")}_" + file.FileName;
+                        su.Arquivo = filePath;
+                        _ = await _dbPush.SaveChangesAsync();
+                        using (var stream = System.IO.File.Create(filePath))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                        return Created(filePath, su); // CreatedAtAction($"id={id}", new { });
                     }
-                    docfiles.Add(filePath);
+                    else
+                        return BadRequest();
                 }
-                return CreatedAtAction($"id={id}",docfiles);
+                return BadRequest();
             }
             else
             {
                 return BadRequest();
             }
-            
+
         }
 
         private bool SolicitacaoExists(int id)

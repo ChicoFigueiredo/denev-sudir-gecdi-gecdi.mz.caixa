@@ -8,6 +8,7 @@ import { PushComponent } from './push.component';
 import { WhatsappComponent } from './resumo/whatsapp/whatsapp.component';
 import { MinhasSolicitacoesComponent } from './solicitacoes/minhas-solicitacoes/minhas-solicitacoes.component';
 import { SolicitacoesComponent } from './solicitacoes/solicitacoes/solicitacoes.component';
+import { UploadArquivoComponent } from './solicitacoes/upload-arquivo/upload-arquivo.component';
 
 const routes: Routes = [{
     path: '',
@@ -24,6 +25,10 @@ const routes: Routes = [{
   }, {
     path: 'minhas-solicitacoes',
     component: MinhasSolicitacoesComponent,
+    canActivate: [AuthGuard], //Chama a rotina de autenticação
+  }, {
+    path: 'minhas-solicitacoes/:id/upload',
+    component: UploadArquivoComponent,
     canActivate: [AuthGuard], //Chama a rotina de autenticação
   }, {
     path: 'fila',

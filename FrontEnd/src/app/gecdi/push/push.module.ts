@@ -22,6 +22,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ManutencaoCurvasComponent } from './curvas/manutencao-curvas/manutencao-curvas.component';
 import { UploadArquivoComponent } from './solicitacoes/upload-arquivo/upload-arquivo.component';
 
+import { AngularFileUploaderModule } from "angular-file-uploader";
+
 const configToastr: NbToastrConfig =  <NbToastrConfig> {
   duration: 1500,
   position: NbGlobalLogicalPosition.BOTTOM_END,
@@ -71,7 +73,8 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     NbIconModule,
 
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFileUploaderModule,
 
   ],
   exports:[
