@@ -19,6 +19,7 @@ import { DetalhesSolicitacaoComponent } from './solicitacoes/detalhes-solicitaca
 import { DialogSolicitacaoComponent } from './solicitacoes/dialog-solicitacao/dialog-solicitacao.component';
 import { WhatsappComponent } from './resumo/whatsapp/whatsapp.component'
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { ManutencaoCurvasComponent } from './curvas/manutencao-curvas/manutencao-curvas.component';
 
 const configToastr: NbToastrConfig =  <NbToastrConfig> {
   duration: 1500,
@@ -42,6 +43,7 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     DetalhesSolicitacaoComponent,
     DialogSolicitacaoComponent,
     WhatsappComponent,
+    ManutencaoCurvasComponent,
   ],
   imports: [
     CommonModule,

@@ -36,7 +36,7 @@ export class SolicitacoesComponent implements OnInit {
     if (e.cancelado)
       return 'row-orange'
     if (!e.autorizacao_Gestor_PUSH)
-      return 'row-orange'
+      return 'row-lavanda'
     if (e.finalizado)
       return 'row-green'
     return '';

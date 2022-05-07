@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../security/guard/auth-guard.service';
+import { ManutencaoCurvasComponent } from './curvas/manutencao-curvas/manutencao-curvas.component';
 import { EnviosComponent } from './envios/envios/envios.component';
 import { FilaComponent } from './fila/fila/fila.component';
 import { PushComponent } from './push.component';
@@ -27,6 +28,10 @@ const routes: Routes = [{
   }, {
     path: 'fila',
     component: FilaComponent,
+    canActivate: [AuthGuard], //Chama a rotina de autenticação
+  }, {
+    path: 'manutencao-curvas',
+    component: ManutencaoCurvasComponent,
     canActivate: [AuthGuard], //Chama a rotina de autenticação
   }, {
     path: 'resumo-whatsapp',

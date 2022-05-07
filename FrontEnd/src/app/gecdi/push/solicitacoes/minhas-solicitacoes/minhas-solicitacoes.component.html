@@ -55,12 +55,12 @@
                 <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td>
 
                 <td scope="row"                         (click)="rowClick(e)">
-                  <nb-toggle [ngModel]="s?.autorizacao_Gestor_PUSH" (ngModelChange)="changeCheckAutorizado(s,$event)" status="success"></nb-toggle>
+                  <nb-toggle [ngModel]="s?.autorizacao_Gestor_PUSH" disabled status="success"></nb-toggle>
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 
                 <td scope="row"                         (click)="rowClick(e)">
-                  <nb-toggle [ngModel]="s?.cancelado" (ngModelChange)="changeCheckCancelado(s,$event)" status="warning"></nb-toggle>
+                  <nb-toggle [ngModel]="s?.cancelado" disabled status="warning"></nb-toggle>
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 

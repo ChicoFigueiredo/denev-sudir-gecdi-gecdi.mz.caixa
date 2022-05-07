@@ -17,7 +17,8 @@ const MENU_LOGIN: NbMenuItem[] = [{
   home: true,
 }]
 
-const MENU_USER: NbMenuItem[] = [{
+const MENU_USER: NbMenuItem[] = [
+  {
     title: 'GECDI',
     group: true,
   },
@@ -42,13 +43,21 @@ const MENU_GECDI_BASE: NbMenuItem[] = [
 
 const MENU_GECDI_ADMIN: NbMenuItem[] = [
   {
+    title: 'GECDI Administração',
+    group: true,
+  },{
     title: 'Cadastro Usuários',
     icon: 'person-add-outline',
     link: '/gecdi/security/cadastro-usuarios',
+  },{
+    title: 'Manutenção Curvas',
+    icon: 'person-add-outline',
+    link: '/gecdi/push/manutencao-curvas',
   },
 ]
 
-const MENU_PUSH_BASE: NbMenuItem[] = [{
+const MENU_PUSH_BASE: NbMenuItem[] = [
+  {
     title: 'PUSH',
     group: true,
   },
@@ -84,9 +93,9 @@ export const MENU_DA_ROLE: MenuMap = {
   1: { // Role Admin
     rota: '/gecdi/dashboard',
     menu: [
+      ...MENU_LOGIN,
       ...MENU_GECDI_BASE,
       ...MENU_GECDI_ADMIN,
-      ...MENU_LOGIN,
       ...MENU_PUSH_BASE,
       ...MENU_PUSH_ADMIN,
       ...((!environment.production) ? MENU_ITENS_ORIGINAL : [])

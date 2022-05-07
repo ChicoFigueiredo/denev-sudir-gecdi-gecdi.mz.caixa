@@ -57,7 +57,7 @@ export class DialogSolicitacaoComponent implements OnInit {
         this.pushService.postNewSolicitacao(detal.formSolicitacao.value).subscribe((sol:Solicitacao) => {
           try { detal.formSolicitacao.patchValue(sol) } catch(e) {};
           ref.close();
-          this.serviceSticker.show(`Nova Solicitação Criada - ID ${sol?.idSolicitacao_PUSH} aguardar autorização da GECDI`,'',{ status: 'danger', duration: 15000 })
+          this.serviceSticker.show(`Nova Solicitação Criada - ID ${sol?.idSolicitacao_PUSH} aguardar autorização da GECDI`,'',{ status: 'sucess', duration: 15000 })
         })
       }
 

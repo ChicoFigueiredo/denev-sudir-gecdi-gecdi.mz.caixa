@@ -34,6 +34,12 @@ tbody > tr.row-orange:nth-child(even) {background: #ffb348}
   color: white;
 }
 
+tbody > tr.row-lavanda:nth-child(odd) {background: #7E94BF}
+tbody > tr.row-lavanda:nth-child(even) {background: #A7CBD9}
+.row-lavanda {
+  color: white;
+}
+
 tbody > tr.row-green:nth-child(odd) {background: #4caf50}
 tbody > tr.row-green:nth-child(even) {background: #79c97c}
 .row-green {
