@@ -24,8 +24,8 @@
                 <td scope="col">ID<BR>Msg</td>
                 <td scope="col">Mensagem</td>
                 <td scope="col">Canal</td>
-                <td scope="col dir">Qtd. / Qtd.<BR>Env.</td>
-                <td scope="col dir">Qtd.<BR>Ag. / Fila</td>
+                <td scope="col dir">Qtd. / Qtd.Env.</td>
+                <td scope="col dir">Qtd. Ag. / Fila</td>
                 <td scope="col">Curvas</td>
                 <td scope="col">De/Ate</td>
                 <td scope="col">Horário</td>
@@ -66,7 +66,7 @@
                 </td>
 
                 <td *ngIf="e_admin">
-                  <button nbButton ghost (click)="excluirSolicitacao(s,dialogExcluir);"><nb-icon icon="trash" pack="eva" class="danger"></nb-icon></button>
+                  <button nbButton ghost (click)="excluirSolicitacao(s,dialogExcluir);"><nb-icon icon="trash" pack="eva" status="danger"></nb-icon></button>
                 </td>
               </tr>
             </tbody>

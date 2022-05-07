@@ -44,7 +44,7 @@
                 <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.data  | date:'dd/MMM/yyyy'}}</td>
                 <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.horaFormatado}}</td>
                 <td scope="row" class="mensagem-limite" (click)="rowClick(e,i)">{{e?.idSolicitacao_PUSHNavigation?.mensagem}}</td>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.quantidade}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.quantidade | number:'0.':'pt-BR'}}</td>
                 <td scope="row" class="mensagem-limite" (click)="rowClick(e,i)">{{e?.nome_Arquivo}}</td>
                 <td scope="row"                         (click)="rowClick(e,i)">
                   <nb-toggle [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="success"></nb-toggle>

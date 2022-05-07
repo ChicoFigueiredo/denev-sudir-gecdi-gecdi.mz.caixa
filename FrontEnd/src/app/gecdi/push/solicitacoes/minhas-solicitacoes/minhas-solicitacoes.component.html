@@ -9,7 +9,7 @@
         </nb-card-header>
 
         <nb-card-body>
-          &nbsp;&nbsp;<button nbButton (click)="novaSolicitacao(true)" ><i class="fas fa-new"></i>&nbsp;Nova Solicitação &nbsp;&nbsp;<span #atu></span></button> -->
+          &nbsp;&nbsp;<button nbButton (click)="novaSolicitacao(true)" ><i class="fas fa-new"></i>&nbsp;Nova Solicitação &nbsp;&nbsp;<span #atu></span></button>
           <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>
           <BR><BR>
 
@@ -71,7 +71,7 @@
         </nb-card-body>
 
         <nb-card-footer>
-          Footer
+          Legenda:
         </nb-card-footer>
       </nb-card>
 
@@ -81,4 +81,4 @@
 </div>
 
 
-<ngx-dialog-solicitacao #diag  width="90%" [solicitacao]="solicitacaoAtual"></ngx-dialog-solicitacao>
+<ngx-dialog-solicitacao #diag  width="90%" [solicitacao]="solicitacaoAtual" (onadd)="refreshSolicitacoes(false)"></ngx-dialog-solicitacao>

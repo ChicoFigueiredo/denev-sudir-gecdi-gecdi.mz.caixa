@@ -9,6 +9,7 @@ namespace PushAPI.Models.Push
         {
             Solicitacao_Clientes = new HashSet<Solicitacao_Clientes>();
             Solicitacao_Simulacao_Envio = new HashSet<Solicitacao_Simulacao_Envio>();
+            Solicitacao_Upload = new HashSet<Solicitacao_Upload>();
         }
 
         public int idSolicitacao_PUSH { get; set; }
@@ -58,6 +59,11 @@ namespace PushAPI.Models.Push
         public byte Prioridade { get; set; }
         public int Quantidade_Agendada { get; set; }
         public int? Quantidade_Total_Restante { get; set; }
+        public int? Limite_Mensagens_Por_Dia { get; set; }
+        public byte idTipoMensagem { get; set; }
+        public string? Titulo { get; set; }
+        public string? URL_Acao { get; set; }
+        public string? URL_Imagem { get; set; }
 
         public virtual Canais CanalNavigation { get; set; } = null!;
         public virtual Curva_Envio Quantidade_Maxima_AutorizadaNavigation { get; set; } = null!;
@@ -65,5 +71,6 @@ namespace PushAPI.Models.Push
         public virtual Mensagem? idEnvio_MensagemNavigation { get; set; }
         public virtual ICollection<Solicitacao_Clientes> Solicitacao_Clientes { get; set; }
         public virtual ICollection<Solicitacao_Simulacao_Envio> Solicitacao_Simulacao_Envio { get; set; }
+        public virtual ICollection<Solicitacao_Upload> Solicitacao_Upload { get; set; }
     }
 }

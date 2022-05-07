@@ -216,12 +216,51 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 return NotFound();
 
             if (solicitacao.Quantidade_Enviada > 0)
-                return StatusCode(418,new { error = 1003, message = "Solicitações com envios não podem ser apagadas em virtude de preservação de histórico." });
+                return StatusCode(418, new { error = 1003, message = "Solicitações com envios não podem ser apagadas em virtude de preservação de histórico." });
 
             _dbPush.Solicitacao.Remove(solicitacao);
             await _dbPush.SaveChangesAsync();
 
             return NoContent();
+        }
+
+
+        // DELETE: api/Solicitacao/5/delete
+        [HttpPost("{id}/upload")]
+        [Authorize(Role.Admin,Role.Solicitante,Role.GECDI)]
+        public async Task<IActionResult> UploadFileOnSolicitacao(int id)
+        {
+            var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
+            if (solicitacao == null)
+                return NotFound();
+
+            HttpRequest httpRequest = HttpContext.Request;
+            if (httpRequest.Form.Files.Count > 0)
+            {
+                var docfiles = new List<string>();
+                foreach (var file in httpRequest.Form.Files)
+                {
+                    Solicitacao_Upload su = new();
+                    su.idSolicitacao_PUSH = id;
+                    su.Data_Upload = DateTime.Now;
+                    _dbPush.Solicitacao_Upload.Add(su);
+                    _ = await _dbPush.SaveChangesAsync();
+                    var filePath = @$"\\arquivos.caixa\br\df5325fs201\SUESC\Publico\!PUSH_Upload\upload_id{su.idSolicitacao_Upload.ToString("000000000000")}_" + file.FileName;
+                    su.Arquivo = filePath;
+                    _ = await _dbPush.SaveChangesAsync();
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    docfiles.Add(filePath);
+                }
+                return CreatedAtAction($"id={id}",docfiles);
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
         }
 
         private bool SolicitacaoExists(int id)

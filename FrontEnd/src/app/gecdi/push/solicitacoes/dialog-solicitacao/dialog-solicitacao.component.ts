@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
 import { PushService } from '../../../services/push/push.service';
@@ -12,6 +12,7 @@ import { DetalhesSolicitacaoComponent } from '../detalhes-solicitacao/detalhes-s
 export class DialogSolicitacaoComponent implements OnInit {
 
   @Input('solicitacao') public solicitacao: Solicitacao;
+  @Output('onadd') onadd: EventEmitter<any> = new EventEmitter();
   @ViewChild('dialog') dialog: TemplateRef<any>;
   @ViewChild('detalhes') detalhes: TemplateRef<DetalhesSolicitacaoComponent>;
 
@@ -58,6 +59,7 @@ export class DialogSolicitacaoComponent implements OnInit {
           try { detal.formSolicitacao.patchValue(sol) } catch(e) {};
           ref.close();
           this.serviceSticker.show(`Nova Solicitação Criada - ID ${sol?.idSolicitacao_PUSH} aguardar autorização da GECDI`,'',{ status: 'sucess', duration: 15000 })
+          this.onadd.emit();
         })
       }
 

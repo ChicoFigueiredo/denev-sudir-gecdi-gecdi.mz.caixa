@@ -33,6 +33,7 @@ namespace PushAPI.Models.Push
         public virtual DbSet<Solicitacao> Solicitacao { get; set; } = null!;
         public virtual DbSet<Solicitacao_Clientes> Solicitacao_Clientes { get; set; } = null!;
         public virtual DbSet<Solicitacao_Simulacao_Envio> Solicitacao_Simulacao_Envio { get; set; } = null!;
+        public virtual DbSet<Solicitacao_Upload> Solicitacao_Upload { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -412,6 +413,8 @@ namespace PushAPI.Models.Push
 
                 entity.Property(e => e.Limitacao_Tranche).HasDefaultValueSql("((200000))");
 
+                entity.Property(e => e.Limite_Mensagens_Por_Dia).HasDefaultValueSql("((-1))");
+
                 entity.Property(e => e.Matricula_Autorizacao_Gestor_PUSH)
                     .HasMaxLength(7)
                     .IsUnicode(false)
@@ -477,7 +480,17 @@ namespace PushAPI.Models.Push
 
                 entity.Property(e => e.REQ_WO_Aprovacao_Mensagem_Texto).IsUnicode(false);
 
+                entity.Property(e => e.Titulo)
+                    .HasMaxLength(70)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.URL_Acao).IsUnicode(false);
+
+                entity.Property(e => e.URL_Imagem).IsUnicode(false);
+
                 entity.Property(e => e.idCurva).HasDefaultValueSql("((29))");
+
+                entity.Property(e => e.idTipoMensagem).HasDefaultValueSql("((1))");
 
                 entity.HasOne(d => d.CanalNavigation)
                     .WithMany(p => p.Solicitacao)
@@ -552,6 +565,10 @@ namespace PushAPI.Models.Push
 
                 entity.HasComment("0");
 
+                entity.HasIndex(e => e.idSolicitacao_Simulacao_Envio, "IX_Solicitacao_Simulacao_Envio_1");
+
+                entity.HasIndex(e => e.idSolicitacao_PUSH, "IX_Solicitacao_Simulacao_Envio_Data_idSolicitacao_PUSH");
+
                 entity.Property(e => e.Data).HasColumnType("date");
 
                 entity.Property(e => e.Data_Hora_Atualizacao).HasColumnType("datetime");
@@ -590,6 +607,30 @@ namespace PushAPI.Models.Push
                     .HasForeignKey(d => d.idSolicitacao_PUSH)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Solicitacao_Simulacao_Envio_Solicitacao");
+            });
+
+            modelBuilder.Entity<Solicitacao_Upload>(entity =>
+            {
+                entity.HasKey(e => e.idSolicitacao_Upload);
+
+                entity.ToTable("Solicitacao_Upload", "FILA");
+
+                entity.HasIndex(e => e.idSolicitacao_PUSH, "IX_Solicitacao_Upload_idSolicitacao_PUSH");
+
+                entity.Property(e => e.idSolicitacao_Upload).ValueGeneratedNever();
+
+                entity.Property(e => e.Arquivo).HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Data_Upload).HasColumnType("date");
+
+                entity.Property(e => e.Matricula_Upload)
+                    .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.idSolicitacao_PUSHNavigation)
+                    .WithMany(p => p.Solicitacao_Upload)
+                    .HasForeignKey(d => d.idSolicitacao_PUSH)
+                    .HasConstraintName("FK_Solicitacao_Upload_Solicitacao");
             });
 
             OnModelCreatingPartial(modelBuilder);
