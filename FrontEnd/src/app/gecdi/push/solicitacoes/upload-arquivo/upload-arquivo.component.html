@@ -1,6 +1,40 @@
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="/assets/css/css.bootstrap.3.3.7-upload-mod.min.css">
-<p>upload-arquivo for id {{idSolicitacao_PUSH}} works!</p>
-<angular-file-uploader
-      [config]="afuConfig">
-</angular-file-uploader>
+
+<nb-card>
+  <nb-card-header><h3>Upload de arquivo para solicitação de PUSH {{idSolicitacao_PUSH}}</h3></nb-card-header>
+  <nb-card-body>
+    <p>Aqui você irá carregar os CPF dos clientes para a solicitação de envio de PUSH</p>
+    <p>Instruções:</p>
+    <ul>
+      <li>Prepare o arquivo conforme o layout e o compacte o conteúdo no formato ZIP</li>
+      <li>Com o mouse clique e arraste para o retangulo pontilhado o arquivo ou use o botão [Selecione o arquivo de CPF/Variáveis para carregar] e navegue até o arquivo e clique em OK</li>
+      <li>Clique no botão [Upload]</li>
+      <li>Aguarde o carregamento e o feedback do sistema de que o 'Upload realizado com sucesso !'</li>
+      <li>Caso ocorram erros, de forma persistente, envie cópias de tela para o CPE GECDI02</li>
+    </ul>
+    <p>Layouts permitidos:</p>
+    <ul>
+      <li>Só CPF:</li>
+      <ul>
+        <li>Arquivo ZIP contendo um único arquivo texto com enconding UTF-8</li>
+        <li>1 CPF válido por linha, somente números e com as 11 posições numéricas</li>
+        <li>Sem espaços nem pontuações</li>
+        <li>Sem cabeçalho</li>
+      </ul>
+    </ul>
+    <angular-file-uploader
+          [config]="afuConfig">
+    </angular-file-uploader>
+
+
+  </nb-card-body>
+  <nb-card-footer>
+    <!-- <button nbButton status="primary" (click)="ref.close()"  >Não</button> &nbsp;&nbsp;
+    <button nbButton status="danger" (click)="deletarSolicitacao(dialogExcluir);ref.close();"   >Sim</button> -->
+    <div class="float-right">
+      <button nbButton status="primary" (click)="voltar()">Voltar</button>
+    </div>
+  </nb-card-footer>
+</nb-card>
+

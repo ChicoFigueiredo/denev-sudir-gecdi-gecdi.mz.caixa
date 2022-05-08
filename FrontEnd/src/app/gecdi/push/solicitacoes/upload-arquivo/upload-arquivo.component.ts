@@ -1,5 +1,5 @@
 import { Component,  OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../services/user/classes/User';
 import { UserService } from '../../../services/user/user.service';
@@ -17,6 +17,7 @@ export class UploadArquivoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private userService: UserService
   ) {
     this.route.params.subscribe(params => {
@@ -56,7 +57,7 @@ export class UploadArquivoComponent implements OnInit {
       autoUpload: false,
       replaceTexts: {
         selectFileBtn: 'Selecione o arquivo de CPF/Variáveis para carregar',
-        resetBtn: 'Reset',
+        resetBtn: 'Reiniciar',
         uploadBtn: 'Upload',
         dragNDropBox: 'Arrastar e Soltar',
         attachPinBtn: 'Anexar Arquivo...',
@@ -65,6 +66,10 @@ export class UploadArquivoComponent implements OnInit {
         sizeLimit: 'Limite de tamanho'
       }
     }
+  }
+
+  voltar(){
+    this.router.navigate(['..']);
   }
 
 }

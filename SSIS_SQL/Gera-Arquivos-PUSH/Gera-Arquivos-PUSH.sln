@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1758
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Gera-Arquivos-PUSH", "Gera-Arquivos-PUSH.dtproj", "{098DABE0-7C3A-46B8-A86F-11A36F348D06}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{098DABE0-7C3A-46B8-A86F-11A36F348D06}.Development|Default.ActiveCfg = Development
+		{098DABE0-7C3A-46B8-A86F-11A36F348D06}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C255FED-8FD2-40C9-BFB5-A0E1DE95C9FE}
+	EndGlobalSection
+EndGlobal

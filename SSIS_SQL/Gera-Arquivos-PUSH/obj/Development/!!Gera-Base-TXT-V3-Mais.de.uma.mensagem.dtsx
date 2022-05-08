@@ -1,0 +1,916 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/27/2021 12:32:26 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DF5138NB223"
+  DTS:CreatorName="CORPCAIXA\c051431"
+  DTS:DTSID="{37A89209-1C71-45CD-8481-B425853A31E2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="1046"
+  DTS:ObjectName="Gera-Base-TXT-V2"
+  DTS:PackageType="5"
+  DTS:VersionBuild="99"
+  DTS:VersionGUID="{A05D1D70-A412-4CAA-B90D-A33F3416CDC7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Saida-PUSH]"
+      DTS:CreationName="FLATFILE"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{5E6E69E9-A9C4-4C9B-9CCE-52C3971D2CD5}"
+      DTS:ObjectName="Saida-PUSH">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::Nome_Arquivo_Tranche_Completo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1046"
+          DTS:Unicode="True"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="65001"
+          DTS:ConnectionString="\\Cr7260nt036\sicpu\GECDI\GECDI\2021-06-07\PUSH_Msg0001-Tranche02-D20210527-H093000-QTD0001000000.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="SAIDA"
+              DTS:DTSID="{A2E8D490-C928-4B92-9EEB-382E4A9EE3BA}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SQL-SR671-PUSH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{04869DC3-4D58-4B9E-9F89-E9D8A46F18CA}"
+      DTS:ObjectName="SQL-SR671-PUSH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=df7436sr671;Initial Catalog=DB5138_PUSH;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="7"
+      DTS:DTSID="{D508D26D-7140-40A3-AC21-EF9FC5EA31C3}"
+      DTS:ObjectName="Data_Envio_Filtro">
+      <DTS:Property
+        DTS:DataType="7"
+        DTS:Name="ParameterValue">9/23/2021</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{7BD7F70F-C85D-4FF1-AC92-EB0270BE91C3}"
+      DTS:ObjectName="ID_Mensagem">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">24</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:Description="\\Cr7260nt036\sicpu\GECDI\_descartados_nao_usar\novo  |   \\arquivos.caixa\BR\df5325fs201\SUESC\!Push"
+      DTS:DTSID="{1972EE3D-5085-49F7-B4C2-5B2412BE46A8}"
+      DTS:ObjectName="InitialPath">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">\\Cr7260nt036\sicpu\GECDI\GECDI</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{B95669DE-475D-47D9-BA9D-254B05C9B7F8}"
+      DTS:ObjectName="MinCountIfNotGenerate">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">0</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B661B8DF-406B-48F9-A581-B1EA3E0FECD1}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DataEnvio">
+      <DTS:VariableValue
+        DTS:DataType="7">6/7/2021</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{75B5A19C-F2F0-4366-B5C5-4D8ACD9C4E58}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ID_Tranche">
+      <DTS:VariableValue
+        DTS:DataType="3">60</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{675E48E7-1917-4006-BC74-BBC6028D6FDE}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::InitialPath] + &quot;\\&quot; +  (DT_WSTR, 4) year( @[User::DataEnvio]) + &quot;-&quot; + RIGHT(&quot;00&quot;+(DT_WSTR, 4) month(@[User::DataEnvio]),2) + &quot;-&quot; + RIGHT(&quot;00&quot;+(DT_WSTR, 4) day(@[User::DataEnvio]),2)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="InitialPathDate">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Cr7260nt036\sicpu\GECDI\GECDI\2021-06-07</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CD979A2D-E21A-4EF0-A35E-5A3E01764812}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ListaArquivos">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D5BDC82D-1512-418C-903A-018D85050158}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Nome_Arquivo_Tranche">
+      <DTS:VariableValue
+        DTS:DataType="8">PUSH_Msg0001-Tranche02-D20210527-H093000-QTD0001000000.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{20AA1F8E-3E6C-4412-AF33-195E22822791}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::InitialPathDate] + &quot;\\&quot; +  @[User::Nome_Arquivo_Tranche]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Nome_Arquivo_Tranche_Completo">
+      <DTS:VariableValue
+        DTS:DataType="8">\\Cr7260nt036\sicpu\GECDI\GECDI\2021-06-07\PUSH_Msg0001-Tranche02-D20210527-H093000-QTD0001000000.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0B9C166E-0924-4CF6-8E9E-7FD059E028ED}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Quantidade_Existente">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BF36C1B3-C203-4D84-8D37-94C6EF2314CE}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;EXEC PUSH.Gera_Tranche &quot; + (DT_WSTR, 50)@[$Package::ID_Mensagem]  + &quot;  , &quot; + (DT_WSTR, 50) @[User::ID_Tranche]  +  &quot;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_GERA_PUBLICO">
+      <DTS:VariableValue
+        DTS:DataType="8">EXEC PUSH.Gera_Tranche 24  , 60</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1CBA9206-E238-4875-B57F-D2F64708E3A8}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;&#xA;DECLARE&#xA;&#x9;@idEnvio_Mensagem INT = &quot; + (DT_WSTR, 200) @[$Package::ID_Mensagem]   + &quot;,&#xA;&#x9;@idEnvio_Tranche  INT = &quot; + (DT_WSTR, 200) @[User::ID_Tranche] + &quot;&#xA;&#xA;&#x9;SELECT &#xA;&#x9;&#x9;SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem])&#xA;&#x9;FROM &#xA;&#x9;&#x9;[DB5138_PUSH].[PUSH].[CPF_Controles] E WITH (NOLOCK),&#xA;&#x9;&#x9;[PUSH].[Mensagem]                    M WITH (NOLOCK)&#xA;&#x9;WHERE&#xA;&#x9;&#x9;&#x9;M.idEnvio_Mensagem = @idEnvio_Mensagem&#xA;&#xA;&#xA;UNION ALL&#xA;&#xA;&#x9;SELECT &#xA;&#x9;&#x9;SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem])&#xA;&#x9;FROM &#xA;&#x9;&#x9;[DB5138_PUSH].[PUSH].[Envio_CPF] E WITH (NOLOCK) INNER JOIN&#xA;&#x9;&#x9;[PUSH].[Mensagem]                M ON E.idEnvio_Mensagem = M.idEnvio_Mensagem&#xA;&#x9;WHERE&#xA;                                E.idEnvio_Tranche  = @idEnvio_Tranche&#xA;&#xA;UNION ALL&#xA;&#xA;&#x9;SELECT &#xA;&#x9;&#x9;SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem])&#xA;&#x9;FROM &#xA;&#x9;&#x9;[DB5138_PUSH].[PUSH].[CPF_Controles] E WITH (NOLOCK),&#xA;&#x9;&#x9;[PUSH].[Mensagem]                    M WITH (NOLOCK)&#xA;&#x9;WHERE&#xA;&#x9;&#x9;&#x9;M.idEnvio_Mensagem = @idEnvio_Mensagem&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_ORIGEM">
+      <DTS:VariableValue
+        DTS:DataType="8">
+DECLARE
+	@idEnvio_Mensagem INT = 24,
+	@idEnvio_Tranche  INT = 60
+
+	SELECT 
+		SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem])
+	FROM 
+		[DB5138_PUSH].[PUSH].[CPF_Controles] E WITH (NOLOCK),
+		[PUSH].[Mensagem]                    M WITH (NOLOCK)
+	WHERE
+			M.idEnvio_Mensagem = @idEnvio_Mensagem
+
+
+UNION ALL
+
+	SELECT 
+		SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem])
+	FROM 
+		[DB5138_PUSH].[PUSH].[Envio_CPF] E WITH (NOLOCK) INNER JOIN
+		[PUSH].[Mensagem]                M ON E.idEnvio_Mensagem = M.idEnvio_Mensagem
+	WHERE
+                                E.idEnvio_Tranche  = @idEnvio_Tranche
+
+UNION ALL
+
+	SELECT 
+		SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem])
+	FROM 
+		[DB5138_PUSH].[PUSH].[CPF_Controles] E WITH (NOLOCK),
+		[PUSH].[Mensagem]                    M WITH (NOLOCK)
+	WHERE
+			M.idEnvio_Mensagem = @idEnvio_Mensagem
+</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Captura Lista de Tarefas"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarefa Executar SQL"
+      DTS:DTSID="{3BF6A9DA-B003-4BD0-859A-0EEBE9B7890E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Captura Lista de Tarefas"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04869DC3-4D58-4B9E-9F89-E9D8A46F18CA}"
+          SQLTask:SqlStatementSource="DECLARE&#xA;&#x9;@idEnvio_Mensagem INT = ? ,&#xA;&#x9;@Data_Envio       DATE = ?&#xA;&#xA;SELECT &#xA;       [idEnvio_Tranche]&#xA;      ,[Nome_Do_Arquivo]&#xA;      ,Data_Envio&#xA;FROM &#xA;       [DB5138_PUSH].[PUSH].[Envio_Tranche]&#xA;&#xA;WHERE&#xA;       idEnvio_Mensagem = @idEnvio_Mensagem&#xA;       AND [Enviado] = 0&#xA;       AND Data_Envio &gt;= @Data_Envio&#xA;&#xA;ORDER BY&#xA;&#x9;Data_Envio, Hora_Envio, [idEnvio_Tranche]&#xA;"
+          SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::ListaArquivos" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Package::ID_Mensagem"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="$Package::Data_Envio_Filtro"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Criar Lista de Tarefas na Fila"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Criar Lista de Tarefas na Fila"
+      DTS:Disabled="True"
+      DTS:DTSID="{66B8645C-BAEE-4F3A-9592-73D8AA438C5B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Criar Lista de Tarefas na Fila"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04869DC3-4D58-4B9E-9F89-E9D8A46F18CA}"
+          SQLTask:SqlStatementSource="EXEC [PUSH].[Inicializa_Envio_Tranche_V3] ?,?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Package::ID_Mensagem"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="$Package::Data_Envio_Filtro"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Para cada ID Tranche"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Contêiner do Loop Foreach"
+      DTS:DTSID="{045D161A-9018-4720-A7BD-88CD7AB92571}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Para cada ID Tranche">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachADOEnumerator"
+        DTS:DTSID="{F55CF4F9-D9FA-4763-B052-BCDB59C32758}"
+        DTS:ObjectName="{F55CF4F9-D9FA-4763-B052-BCDB59C32758}">
+        <DTS:ObjectData>
+          <FEEADO
+            EnumType="EnumerateRowsInFirstTable"
+            VarName="User::ListaArquivos" />
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Para cada ID Tranche\CriarPasta"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="Tarefa Sistema de Arquivos"
+          DTS:DTSID="{FFDD3E6E-DE41-4B41-80A0-DA918F33F2FC}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="CriarPasta"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="CreateDirectory"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::InitialPathDate"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="User::InitialPathDate"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Para cada ID Tranche\ExportarArquivos"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Tarefa Fluxo de Dados"
+          DTS:DTSID="{6A476E28-30F2-45E9-8659-434E5E152EBC}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="ExportarArquivos"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Para cada ID Tranche\ExportarArquivos\Destino de Arquivo Simples"
+                  componentClassID="Microsoft.FlatFileDestination"
+                  contactInfo="Destino de Arquivo Simples;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;1"
+                  description="Destino de Arquivo Simples"
+                  localeId="1046"
+                  name="Destino de Arquivo Simples">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Especifica se os dados substituirão o arquivo de destino ou serão anexados a ele."
+                      name="Overwrite">true</property>
+                    <property
+                      dataType="System.Null"
+                      description="Especifica o texto a ser gravado no arquivo de destino antes da gravação de quaisquer dados."
+                      expressionType="Notify"
+                      name="Header" />
+                    <property
+                      dataType="System.Boolean"
+                      description="Quando o qualificador de texto está habilitado, ele especifica se o qualificador de texto nos dados gravados no arquivo de destino serão de saída ou não."
+                      name="EscapeQualifier">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Para cada ID Tranche\ExportarArquivos\Destino de Arquivo Simples.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Saida-PUSH]"
+                      connectionManagerRefId="Package.ConnectionManagers[Saida-PUSH]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Para cada ID Tranche\ExportarArquivos\Destino de Arquivo Simples.Inputs[Entrada de Destino de Arquivo Simples]"
+                      hasSideEffects="true"
+                      name="Entrada de Destino de Arquivo Simples">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Para cada ID Tranche\ExportarArquivos\Destino de Arquivo Simples.Inputs[Entrada de Destino de Arquivo Simples].Columns[SAIDA]"
+                          cachedDataType="wstr"
+                          cachedLength="2000"
+                          cachedName="SAIDA"
+                          externalMetadataColumnId="Package\Para cada ID Tranche\ExportarArquivos\Destino de Arquivo Simples.Inputs[Entrada de Destino de Arquivo Simples].ExternalColumns[SAIDA]"
+                          lineageId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Origem OLE DB].Columns[SAIDA]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Para cada ID Tranche\ExportarArquivos\Destino de Arquivo Simples.Inputs[Entrada de Destino de Arquivo Simples].ExternalColumns[SAIDA]"
+                          codePage="65001"
+                          dataType="str"
+                          length="50"
+                          name="SAIDA" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                </component>
+                <component
+                  refId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="Origem OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos os Direitos Reservados; http://www.microsoft.com/sql/support;7"
+                  description="Origem OLE DB"
+                  name="Mensagens"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="O tempo em segundos antes que um comando expire. Zero indica uma expiração infinita."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Especifica a variável que contém o nome do objeto de banco de dados usado para abrir um conjunto de linhas."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="O comando SQL a ser executado."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.String"
+                      description="A variável que contém o comando SQL a ser executado."
+                      name="SqlCommandVariable">User::SQL_ORIGEM</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica a página de código de coluna a ser usada quando não há informações de página de código disponíveis a partir da fonte de dados."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forca o uso do valor da propriedade DefaultCodePage durante a descrição dos dados de caractere."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica o modo usado para acessar o banco de dados."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.String"
+                      description="Os mapeamentos entre os parâmetros no comando SQL e as variáveis."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[SQL-SR671-PUSH]"
+                      connectionManagerRefId="Package.ConnectionManagers[SQL-SR671-PUSH]"
+                      description="A conexão de tempo de execução OLE DB usada para acessar o banco de dados."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Origem OLE DB]"
+                      name="Saída de Origem OLE DB">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Origem OLE DB].Columns[SAIDA]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversão"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Origem OLE DB].ExternalColumns[SAIDA]"
+                          length="2000"
+                          lineageId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Origem OLE DB].Columns[SAIDA]"
+                          name="SAIDA"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Origem OLE DB].ExternalColumns[SAIDA]"
+                          dataType="wstr"
+                          length="2000"
+                          name="SAIDA" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Erro de Origem OLE DB]"
+                      isErrorOut="true"
+                      name="Saída de Erro de Origem OLE DB">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Erro de Origem OLE DB].Columns[SAIDA]"
+                          dataType="wstr"
+                          length="2000"
+                          lineageId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Erro de Origem OLE DB].Columns[SAIDA]"
+                          name="SAIDA" />
+                        <outputColumn
+                          refId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Erro de Origem OLE DB].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Para cada ID Tranche\ExportarArquivos.Paths[Saída de Origem OLE DB]"
+                  endId="Package\Para cada ID Tranche\ExportarArquivos\Destino de Arquivo Simples.Inputs[Entrada de Destino de Arquivo Simples]"
+                  name="Saída de Origem OLE DB"
+                  startId="Package\Para cada ID Tranche\ExportarArquivos\Mensagens.Outputs[Saída de Origem OLE DB]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Para cada ID Tranche\Gera Publico"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Tarefa Executar SQL"
+          DTS:Disabled="True"
+          DTS:DTSID="{E106BE1C-D646-4AC9-BBDC-2594A5EA5814}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Gera Publico"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{04869DC3-4D58-4B9E-9F89-E9D8A46F18CA}"
+              SQLTask:SqlStmtSourceType="Variable"
+              SQLTask:SqlStatementSource="User::SQL_GERA_PUBLICO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Para cada ID Tranche\Já tem registros"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Tarefa Executar SQL"
+          DTS:Disabled="True"
+          DTS:DTSID="{3B85C92F-9E35-48DE-8512-9187D129FE34}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Já tem registros"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{04869DC3-4D58-4B9E-9F89-E9D8A46F18CA}"
+              SQLTask:SqlStatementSource="DECLARE &#xA;&#x9;@idEnvio_Mensagem INT = ?,&#xA;&#x9;@idEnvio_Tranche  INT = ?&#xA;&#xA;DECLARE&#xA;&#x9;@ID          INT = 0,&#xA;&#x9;@Qtd         INT = 0,&#xA;&#x9;@Limite_PUSH INT = 0&#xA;&#xA;SELECT TOP 1&#xA;       @ID          = EC.[idEnvio_Tranche]&#xA;      ,@Qtd         = SUM([Qtd])&#xA;      ,@Limite_PUSH = MAX([Limite_PUSH])&#xA;FROM&#x9;&#xA;&#x9;[DB5138_PUSH].[PUSH].[Envio_CPF] EC WITH (NOLOCK) INNER JOIN&#xA;&#x9;[PUSH].[Envio_Tranche]           ET WITH (NOLOCK) ON ET.idEnvio_Tranche = EC.idEnvio_Tranche&#xA;WHERE&#xA;&#x9;EC.[idEnvio_Tranche] = @idEnvio_Tranche &#xA;GROUP BY&#xA;&#x9;EC.[idEnvio_Tranche]&#xA;&#xA;SELECT&#xA;&#x9;idEnvio_Tranche = ISNULL(@ID,&#x9;&#x9;   0),&#xA;&#x9;Qtd             = ISNULL(@Qtd,&#x9;&#x9;   0),&#xA;&#x9;Limite_PUSH     = ISNULL(@Limite_PUSH, 0)"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="Qtd"
+                SQLTask:DtsVariableName="User::Quantidade_Existente" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Package::ID_Mensagem"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::ID_Tranche"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Para cada ID Tranche.PrecedenceConstraints[Restrição]"
+          DTS:CreationName=""
+          DTS:DTSID="{D5AC3076-A0A2-4780-9EB5-2741BA3B47D4}"
+          DTS:From="Package\Para cada ID Tranche\Gera Publico"
+          DTS:ObjectName="Restrição"
+          DTS:To="Package\Para cada ID Tranche\ExportarArquivos" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Para cada ID Tranche.PrecedenceConstraints[Restrição 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{28BB31BF-D5A7-424D-BE21-B1082DE82D07}"
+          DTS:EvalOp="1"
+          DTS:Expression="@[User::Quantidade_Existente] &lt;= @[$Package::MinCountIfNotGenerate]"
+          DTS:From="Package\Para cada ID Tranche\Já tem registros"
+          DTS:ObjectName="Restrição 1"
+          DTS:To="Package\Para cada ID Tranche\Gera Publico" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Para cada ID Tranche.PrecedenceConstraints[Restrição 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{7FCAAB22-BE1A-411E-8FC8-6ACDD84CB84B}"
+          DTS:EvalOp="1"
+          DTS:Expression="@[User::Quantidade_Existente] &gt;  @[$Package::MinCountIfNotGenerate]"
+          DTS:From="Package\Para cada ID Tranche\Já tem registros"
+          DTS:ObjectName="Restrição 2"
+          DTS:To="Package\Para cada ID Tranche\ExportarArquivos" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Para cada ID Tranche.PrecedenceConstraints[Restrição 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{C40637B3-CB6A-4E0F-B43D-396E2C97E5E7}"
+          DTS:From="Package\Para cada ID Tranche\CriarPasta"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Restrição 3"
+          DTS:To="Package\Para cada ID Tranche\Já tem registros" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{4E2F9B27-7410-48D6-BBF2-FD75D9729112}"
+          DTS:ObjectName="{4E2F9B27-7410-48D6-BBF2-FD75D9729112}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::ID_Tranche" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{E2FD4FE1-4158-4582-A6C1-849748A8C69F}"
+          DTS:ObjectName="{E2FD4FE1-4158-4582-A6C1-849748A8C69F}"
+          DTS:ValueIndex="1"
+          DTS:VariableName="User::Nome_Arquivo_Tranche" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{310BC3A1-A6AC-49E7-B946-1C1B18B420C7}"
+          DTS:ObjectName="{310BC3A1-A6AC-49E7-B946-1C1B18B420C7}"
+          DTS:ValueIndex="2"
+          DTS:VariableName="User::DataEnvio" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restrição]"
+      DTS:CreationName=""
+      DTS:DTSID="{8538CCFC-371D-440B-9D31-B03F99B7EC0E}"
+      DTS:From="Package\Captura Lista de Tarefas"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restrição"
+      DTS:To="Package\Para cada ID Tranche" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restrição 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{4E8C70C7-ABCB-4F1D-A1B8-C962FBDA3F2B}"
+      DTS:From="Package\Criar Lista de Tarefas na Fila"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restrição 1"
+      DTS:To="Package\Captura Lista de Tarefas" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta seção CDATA contém as informações de layout do pacote. A seção inclui informações como coordenadas (x,y), largura e altura.-->
+<!--Se você editar manualmente esta seção e cometer algum erro, poderá excluí-la. -->
+<!--O pacote ainda poderá ser carregado normalmente, mas as informações de layout anteriores serão perdidas e o designer reorganizará automaticamente os elementos na superfície de design.-->
+<Objects
+  Version="8">
+  <!--Cada nó abaixo conterá propriedades que não afetam o comportamento em tempo de execução.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="200,42"
+          Id="Package\Captura Lista de Tarefas"
+          TopLeft="564,48" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\Criar Lista de Tarefas na Fila"
+          TopLeft="295,52" />
+        <NodeLayout
+          Size="131,42"
+          Id="Package\Para cada ID Tranche\CriarPasta"
+          TopLeft="24,247" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Para cada ID Tranche\ExportarArquivos"
+          TopLeft="474,160.666666666667" />
+        <NodeLayout
+          Size="143,42"
+          Id="Package\Para cada ID Tranche\Gera Publico"
+          TopLeft="513,28.6666666666667" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Para cada ID Tranche\Já tem registros"
+          TopLeft="28,30" />
+        <EdgeLayout
+          Id="Package\Para cada ID Tranche.PrecedenceConstraints[Restrição]"
+          TopLeft="582.916666666667,70.6666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,90"
+              Start="0,0"
+              End="0,82.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,82.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Para cada ID Tranche.PrecedenceConstraints[Restrição 1]"
+          TopLeft="185,50.3333333333334">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="328,0"
+              Start="0,0"
+              End="320.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="320.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="152.25,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Para cada ID Tranche.PrecedenceConstraints[Restrição 2]"
+          TopLeft="106.5,72">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="423.166666666667,88.666666666667"
+              Start="0,0"
+              End="423.166666666667,81.166666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.6828675577159" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,48.6828675577159"
+                    Point2="0,52.6828675577159"
+                    Point3="4,52.6828675577159" />
+                  <mssgle:LineSegment
+                    End="419.166666666667,52.6828675577159" />
+                  <mssgle:CubicBezierSegment
+                    Point1="419.166666666667,52.6828675577159"
+                    Point2="423.166666666667,52.6828675577159"
+                    Point3="423.166666666667,56.6828675577159" />
+                  <mssgle:LineSegment
+                    End="423.166666666667,81.166666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="203.583333333333,57.6828675577159,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Para cada ID Tranche.PrecedenceConstraints[Restrição 3]"
+          TopLeft="85.5833333333333,247">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,-175"
+              Start="0,0"
+              End="0,-167.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-167.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Qtd &lt;= MinCountIfNotGenerate"
+          ParentId="Package\Para cada ID Tranche"
+          FontInfo="{assembly:Null}"
+          Size="200,40"
+          Id="570d679b-ec52-46ea-a9fc-982f31fb995c"
+          TopLeft="238,17" />
+        <AnnotationLayout
+          Text="Qtd &gt; MinCountIfNotGenerate"
+          ParentId="Package\Para cada ID Tranche"
+          FontInfo="{assembly:Null}"
+          Size="192,40"
+          Id="6f15e415-822a-42d2-b615-f4adec355fb1"
+          TopLeft="217,90" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="683,342"
+          Size="683,385"
+          Id="Package\Para cada ID Tranche"
+          TopLeft="321,158" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restrição]"
+          TopLeft="663.25,90">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68"
+              Start="0,0"
+              End="0,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restrição 1]"
+          TopLeft="477,71">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="87,0"
+              Start="0,0"
+              End="79.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="79.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Para cada ID Tranche\ExportarArquivos">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,42"
+          Id="Package\Para cada ID Tranche\ExportarArquivos\Mensagens"
+          TopLeft="237,112" />
+        <NodeLayout
+          Size="214,42"
+          Id="Package\Para cada ID Tranche\ExportarArquivos\Destino de Arquivo Simples"
+          TopLeft="561,117" />
+        <EdgeLayout
+          Id="Package\Para cada ID Tranche\ExportarArquivos.Paths[Saída de Origem OLE DB]"
+          TopLeft="373,135.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="188,0"
+              Start="0,0"
+              End="180.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="180.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Para cada ID Tranche\ExportarArquivos\Mensagens">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
