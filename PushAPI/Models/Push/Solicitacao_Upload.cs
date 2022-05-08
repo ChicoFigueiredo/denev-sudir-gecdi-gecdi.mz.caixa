@@ -16,6 +16,7 @@ namespace PushAPI.Models.Push
         public int Registros_Total { get; set; }
         public int Registros_Aceitos { get; set; }
         public int Registros_Rejeitados { get; set; }
+        public string? Resultado_Processamento { get; set; }
 
         public virtual Solicitacao idSolicitacao_PUSHNavigation { get; set; } = null!;
     }

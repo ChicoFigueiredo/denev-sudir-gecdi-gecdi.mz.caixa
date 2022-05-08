@@ -173,7 +173,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
         // POST: api/Solicitacao
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Solicitacao>> PostSolicitacao([FromBody] object _solicitacao)
+        public async Task<ActionResult<Solicitacao>> PostSolicitacao([FromBody] object _solicitacao) // _solicitacao virou object para que possa ser desserializado aqui no controle devido a 'erros' quando entregue ao core da webapi e suas validações
         {
             Solicitacao solicitacao = JsonSerializer.Deserialize<Solicitacao>(_solicitacao.ToString(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true, NumberHandling = JsonNumberHandling.AllowReadingFromString  }) ; 
             if (solicitacao.idSolicitacao_PUSH <= 0)
