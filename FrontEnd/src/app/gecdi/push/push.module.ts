@@ -23,6 +23,7 @@ import { ManutencaoCurvasComponent } from './curvas/manutencao-curvas/manutencao
 import { UploadArquivoComponent } from './solicitacoes/upload-arquivo/upload-arquivo.component';
 
 import { AngularFileUploaderModule } from "angular-file-uploader";
+import { ControleProcessamentoUploadArquivoComponent } from './solicitacoes/controle-processamento-upload-arquivo/controle-processamento-upload-arquivo.component';
 
 const configToastr: NbToastrConfig =  <NbToastrConfig> {
   duration: 1500,
@@ -48,6 +49,7 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     WhatsappComponent,
     ManutencaoCurvasComponent,
     UploadArquivoComponent,
+    ControleProcessamentoUploadArquivoComponent,
   ],
   imports: [
     CommonModule,

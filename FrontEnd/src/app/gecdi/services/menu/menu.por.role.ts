@@ -53,6 +53,10 @@ const MENU_GECDI_ADMIN: NbMenuItem[] = [
     title: 'Manutenção Curvas',
     icon: 'person-add-outline',
     link: '/gecdi/push/manutencao-curvas',
+  },{
+    title: 'Processamento Upload',
+    icon: 'person-add-outline',
+    link: '/gecdi/push/controle-processamento-upload-arquivo',
   },
 ]
 

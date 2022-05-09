@@ -6,6 +6,7 @@ import { EnviosComponent } from './envios/envios/envios.component';
 import { FilaComponent } from './fila/fila/fila.component';
 import { PushComponent } from './push.component';
 import { WhatsappComponent } from './resumo/whatsapp/whatsapp.component';
+import { ControleProcessamentoUploadArquivoComponent } from './solicitacoes/controle-processamento-upload-arquivo/controle-processamento-upload-arquivo.component';
 import { MinhasSolicitacoesComponent } from './solicitacoes/minhas-solicitacoes/minhas-solicitacoes.component';
 import { SolicitacoesComponent } from './solicitacoes/solicitacoes/solicitacoes.component';
 import { UploadArquivoComponent } from './solicitacoes/upload-arquivo/upload-arquivo.component';
@@ -25,6 +26,10 @@ const routes: Routes = [{
   }, {
     path: 'minhas-solicitacoes',
     component: MinhasSolicitacoesComponent,
+    canActivate: [AuthGuard], //Chama a rotina de autenticação
+  }, {
+    path: 'controle-processamento-upload-arquivo',
+    component: ControleProcessamentoUploadArquivoComponent,
     canActivate: [AuthGuard], //Chama a rotina de autenticação
   }, {
     path: 'minhas-solicitacoes/:id/upload',
