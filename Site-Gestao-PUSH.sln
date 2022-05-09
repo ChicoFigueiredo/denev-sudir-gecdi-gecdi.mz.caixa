@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushAPI", "PushAPI\PushAPI.csproj", "{8BA3CA6A-164B-4C86-BB73-29A10DA67238}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "z_experiment", "PushAPI\z_experiment\z_experiment.csproj", "{E6B2285B-2D7B-4579-B17F-8B938B6AC06A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{8BA3CA6A-164B-4C86-BB73-29A10DA67238}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BA3CA6A-164B-4C86-BB73-29A10DA67238}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BA3CA6A-164B-4C86-BB73-29A10DA67238}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6B2285B-2D7B-4579-B17F-8B938B6AC06A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6B2285B-2D7B-4579-B17F-8B938B6AC06A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6B2285B-2D7B-4579-B17F-8B938B6AC06A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6B2285B-2D7B-4579-B17F-8B938B6AC06A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

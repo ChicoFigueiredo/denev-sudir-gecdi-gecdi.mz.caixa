@@ -12,6 +12,7 @@ using PushAPI.Models.Push;
 using PushAPI.Models.Sites;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Options;
 
 namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 {
@@ -21,11 +22,12 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
     public class SolicitacaoController : ControllerBase
     {
         private readonly dbPUSH _dbPush;
+        private readonly AppSettings _appSettings;
 
-        public SolicitacaoController(dbPUSH context)
+        public SolicitacaoController(dbPUSH context, IOptions<AppSettings> appSettings)
         {
             _dbPush = context;
-
+            _appSettings = appSettings.Value;
         }
 
         // GET: api/Solicitacoes
@@ -256,7 +258,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                         su.Registros_Rejeitados = 0;
                         su.Registros_Total = 0;
                         _ = await _dbPush.SaveChangesAsync();
-                        var filePath = @$"\\arquivos.caixa\br\df5325fs201\SUESC\Publico\!PUSH_Upload\upload_id{su.idSolicitacao_Upload.ToString("000000000000")}_" + file.FileName;
+                        var filePath = @$"{_appSettings.UploadDir}\upload_id{su.idSolicitacao_Upload.ToString("000000000000")}_" + file.FileName;
                         su.Arquivo = filePath;
                         _ = await _dbPush.SaveChangesAsync();
                         using (var stream = System.IO.File.Create(filePath))

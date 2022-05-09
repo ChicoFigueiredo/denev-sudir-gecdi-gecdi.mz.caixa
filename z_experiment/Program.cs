@@ -1,8 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.IO.Compression;
 
-Console.WriteLine("Hello, World!");
-
 char[] separators = { '\u0009', ',', ';', '|' };
 string cpf = "";
 string v1 = "";
