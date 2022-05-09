@@ -10,7 +10,7 @@
         <WinAuthDomain />
         <ServerName>DF7436SR671</ServerName>
         <PathOnServer>/SSISDB/5325/Gera-Arquivos-PUSH</PathOnServer>
-        <StartObjectID>!!Gerar_Tranches_Arquivos.dtsx</StartObjectID>
+        <StartObjectID>!!Processar_Uploads_Site_GECDI.dtsx</StartObjectID>
         <UserIDs />
         <UserPasswords />
         <OfflineMode>false</OfflineMode>

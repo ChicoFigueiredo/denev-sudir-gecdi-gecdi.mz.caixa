@@ -2,7 +2,7 @@
 <BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProjectInfo>
     <Name>Gera-Arquivos-PUSH</Name>
-    <LastWriteTime>2022-04-06T00:11:06.3482356Z</LastWriteTime>
+    <LastWriteTime>2022-05-09T00:10:39.1420356Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
@@ -18,7 +18,7 @@
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>!Gera-Base-TXT.dtsx</Name>
-      <LastWriteTime>2022-04-05T22:27:12.2152502Z</LastWriteTime>
+      <LastWriteTime>2022-05-09T00:17:30.4316961Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
@@ -39,6 +39,11 @@
     <ProjectBuildItemInfo>
       <Name>!!Gerar_Tranches_Arquivos.dtsx</Name>
       <LastWriteTime>2022-04-06T00:30:09.7983831Z</LastWriteTime>
+      <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+    <ProjectBuildItemInfo>
+      <Name>!!Processar_Uploads_Site_GECDI.dtsx</Name>
+      <LastWriteTime>2022-05-09T01:19:14.2132524Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
   </LastBuildInfos>
