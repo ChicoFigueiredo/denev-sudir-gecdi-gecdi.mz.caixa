@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { User } from '../../../services/user/classes/User';
 import { UserService } from '../../../services/user/user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'ngx-upload-arquivo',
@@ -18,7 +19,8 @@ export class UploadArquivoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private location: Location
   ) {
     this.route.params.subscribe(params => {
       this.idSolicitacao_PUSH = params.id;
@@ -69,7 +71,7 @@ export class UploadArquivoComponent implements OnInit {
   }
 
   voltar(){
-    this.router.navigate(['..']);
+    this.location.back();
   }
 
 }

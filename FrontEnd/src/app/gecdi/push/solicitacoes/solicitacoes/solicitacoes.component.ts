@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { NbToastrService, NbDialogService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,7 +22,8 @@ export class SolicitacoesComponent implements OnInit {
     private pushService:PushService,
     private serviceSticker: NbToastrService,
     private userService: UserService,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private router: Router,
   ) {
     this.userService.changeUser().subscribe(u => this.usuario=u );
   }
@@ -91,5 +93,8 @@ export class SolicitacoesComponent implements OnInit {
     })
   }
 
+  uploadFile(s:Solicitacao,$event){
+    this.router.navigateByUrl(`/gecdi/push/minhas-solicitacoes/${s.idSolicitacao_PUSH}/upload`);
+  }
 
 }
