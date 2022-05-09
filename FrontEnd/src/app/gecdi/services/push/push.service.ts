@@ -15,6 +15,7 @@ const API_PUSH = environment.urlAPI + '/api'
 export class PushService {
 
   public Curvas:Curva[] = [];
+  public solicitacaoSelecionada:Solicitacao;
 
   constructor(
     private http: HttpClient

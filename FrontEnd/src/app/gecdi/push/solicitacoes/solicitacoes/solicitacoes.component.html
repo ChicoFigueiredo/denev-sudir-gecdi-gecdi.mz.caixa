@@ -57,7 +57,7 @@
                 <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td>
 
                 <td scope="row"                         (click)="rowClick(se)">
-                  <button nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>
+                  <button *ngIf="!s?.autorizacao_Gestor_PUSH" nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>
                 </td>
 
                 <td scope="row"                         (click)="rowClick(e)">

@@ -65,8 +65,8 @@
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 
-                <td scope="row"                         (click)="rowClick(se)">
-                  <button nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>
+                <td scope="row"  (click)="rowClick(se)">
+                  <button *ngIf="!s?.autorizacao_Gestor_PUSH" nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>
                 </td>
 
               </tr>

@@ -14,7 +14,6 @@ const MENU_LOGIN: NbMenuItem[] = [{
   title: 'Login',
   icon: 'log-in',
   link: '/gecdi/security/auth',
-  home: true,
 }]
 
 const MENU_USER: NbMenuItem[] = [
@@ -39,8 +38,6 @@ const MENU_GECDI_BASE: NbMenuItem[] = [
   },
 ]
 
-
-
 const MENU_GECDI_ADMIN: NbMenuItem[] = [
   {
     title: 'GECDI Administração',
@@ -51,11 +48,11 @@ const MENU_GECDI_ADMIN: NbMenuItem[] = [
     link: '/gecdi/security/cadastro-usuarios',
   },{
     title: 'Manutenção Curvas',
-    icon: 'person-add-outline',
+    icon: 'bar-chart-outline',
     link: '/gecdi/push/manutencao-curvas',
   },{
     title: 'Processamento Upload',
-    icon: 'person-add-outline',
+    icon: 'cloud-upload-outline',
     link: '/gecdi/push/controle-processamento-upload-arquivo',
   },
 ]
@@ -135,7 +132,6 @@ export const MENU_DA_ROLE: MenuMap = {
   6: { // Role user
     rota: '/gecdi/dashboard',
     menu: [
-
     ],
   },
 }
