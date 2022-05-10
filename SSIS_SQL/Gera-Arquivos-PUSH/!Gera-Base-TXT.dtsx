@@ -9,10 +9,10 @@
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="15.0.2000.170"
   DTS:LocaleID="1046"
-  DTS:ObjectName="Package1"
+  DTS:ObjectName="Processa_Uploads"
   DTS:PackageType="5"
-  DTS:VersionBuild="88"
-  DTS:VersionGUID="{4B8E7418-C3A2-44AF-BF47-2E111983B8CA}">
+  DTS:VersionBuild="89"
+  DTS:VersionGUID="{FCAF2F79-B011-4ADA-82AD-56B0A8BE1908}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>

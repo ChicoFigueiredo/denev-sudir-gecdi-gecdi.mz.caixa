@@ -22,9 +22,9 @@ export class DetalhesSolicitacaoComponent implements OnInit {
 
   public formSolicitacao:FormGroup = new FormGroup({
     idSolicitacao_PUSH                     : new FormControl(-1                              ,[]),
-    wF_GECRM                               : new FormControl(''                              ,[]),
+    wF_GECRM                               : new FormControl(null                            ,[]),
     nome_Solicitacao                       : new FormControl(''                              ,[Validators.required, Validators.minLength(10), Validators.pattern("^(?!.*(\\w)\\1{3,}).+$")]),
-    reQ_WO_Aprovacao_Mensagem              : new FormControl(''                              ,[Validators.required, Validators.pattern('REQ\\d{12,}$')]),
+    reQ_WO_Aprovacao_Mensagem              : new FormControl(''                              ,[Validators.required, Validators.pattern('REQ\\d{12,12}$')]),
     reQ_WO_Aprovacao_Mensagem_Texto        : new FormControl(''                              ,[]),
     idEnvio_Mensagem                       : new FormControl(-1                              ,[]),
     mensagem                               : new FormControl(''                              ,[Validators.required, Validators.minLength(20), Validators.pattern('^(?!.*(\\w)\\1{3,}).+$')]),

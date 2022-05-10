@@ -60,11 +60,11 @@ export class PushService {
                .get<Curva[]>(`${API_PUSH}/Curvas`)
   }
 
-  getSolicitacoes(recontar:boolean=true,cgc="-1"){
+  getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority"){
     if(cgc === "-1")
-      return this.http.get<Solicitacao>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}`);
+      return this.http.get<Solicitacao>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}`);
     else
-      return this.http.get<Solicitacao>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}`);
+      return this.http.get<Solicitacao>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&order=${order}`);
   }
 
   setSolicitacaoCancelado(idSolicitacao,enviado){

@@ -27,8 +27,9 @@
         <nb-form-field>
           <div class="form-group">
             <label for="REQ_WO_Aprovacao_Mensagem" class="label">REQ Aprovação Mensagem:</label>
-            <input formControlName="reQ_WO_Aprovacao_Mensagem" type="text" nbInput fullWidth
+            <input formControlName="reQ_WO_Aprovacao_Mensagem" #Ref_REQ_WO_Aprovacao_Mensagem type="text" nbInput fullWidth
               id="REQ_WO_Aprovacao_Mensagem" placeholder="Número da REQ da aprovação da mensagem"
+              (blur)="Ref_REQ_WO_Aprovacao_Mensagem.value = Ref_REQ_WO_Aprovacao_Mensagem.value.toUpperCase()"
               [status]="(f.reQ_WO_Aprovacao_Mensagem.touched && f.reQ_WO_Aprovacao_Mensagem.errors) ? 'danger': 'info'">
             <!-- <input type="text" nbInput fullWidth id="matricula"  placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
           </div>
@@ -229,7 +230,7 @@
             <nb-toggle formControlName="enviar_QUI" status="success">Qui</nb-toggle>&nbsp;
             <nb-toggle formControlName="enviar_SEX" status="success">Sex</nb-toggle>&nbsp;
             <nb-toggle formControlName="enviar_SAB" status="success">Sáb</nb-toggle>&nbsp;
-            <nb-toggle formControlName="enviar_DOM" status="success">Dom</nb-toggle>&nbsp;
+            <nb-toggle formControlName="enviar_DOM" status="success" disabled>Dom</nb-toggle>&nbsp;
           </div>
         </nb-form-field>
       </div>

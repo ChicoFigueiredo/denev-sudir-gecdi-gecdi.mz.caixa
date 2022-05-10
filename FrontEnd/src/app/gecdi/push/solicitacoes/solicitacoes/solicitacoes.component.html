@@ -5,7 +5,7 @@
 
       <nb-card>
         <nb-card-header>
-          <h1>Solicitações de PUSH</h1>
+          <h1><i class="fa fa-cubes"></i> Solicitações de PUSH</h1>
         </nb-card-header>
 
         <nb-card-body>
@@ -30,7 +30,7 @@
                 <td scope="col">De/Ate</td>
                 <td scope="col">Horário</td>
                 <td scope="col">Demand.<BR>Exec.</td>
-                <td scope="col">Impactos</td>
+                <!-- <td scope="col">Impactos</td> -->
                 <td scope="col">Upload</td>
                 <td scope="col">Autori-zado</td>
                 <td scope="col">Cance-lado</td>
@@ -54,7 +54,7 @@
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_a_partir_de  | date:'dd/MMM/yy'}} - {{s?.enviar_no_maximo_ate  | date:'dd/MMM/yy'}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_Horario_Inicial }} - {{s?.enviar_Horario_Final  }}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.cgcDemandante}} / {{s?.cgcExecutora}}</td>
-                <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td>
+                <!-- <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td> -->
 
                 <td scope="row"                         (click)="rowClick(se)">
                   <button *ngIf="!s?.autorizacao_Gestor_PUSH" nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>

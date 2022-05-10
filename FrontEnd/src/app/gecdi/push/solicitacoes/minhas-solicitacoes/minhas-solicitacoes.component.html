@@ -5,12 +5,13 @@
 
       <nb-card>
         <nb-card-header>
-          <h1>Solicitações de PUSH</h1>
+          <h1><i class="fa fa-clipboard-list"></i> Minhas Solicitações de PUSH</h1>
         </nb-card-header>
 
         <nb-card-body>
-          &nbsp;&nbsp;<button nbButton (click)="novaSolicitacao(true)" ><i class="fas fa-new"></i>&nbsp;Nova Solicitação &nbsp;&nbsp;<span #atu></span></button>
-          <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>
+          <button nbButton (click)="novaSolicitacao(true)" ><i class="fas fa-new"></i>&nbsp;Nova Solicitação &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
+          <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
+          <nb-toggle [ngModel]="OrdemSolicitacoes" status="primary">Ordenar pelo solicitação mais recente</nb-toggle>
           <BR><BR>
 
           <table class="table">

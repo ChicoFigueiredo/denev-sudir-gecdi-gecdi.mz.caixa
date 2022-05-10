@@ -19,6 +19,8 @@ export class MinhasSolicitacoesComponent implements OnInit {
   public solicitacaoAtual:Solicitacao;
   @ViewChild('diag') dialog: ElementRef<DialogSolicitacaoComponent>;
 
+  public OrdemSolicitacoes:boolean = true;
+
   constructor(
     private pushService:PushService,
     private serviceSticker: NbToastrService,
@@ -52,7 +54,7 @@ export class MinhasSolicitacoesComponent implements OnInit {
 
   refreshSolicitacoes(recontar:boolean=false){
     const usuario:User = <User> JSON.parse(localStorage.getItem("gecdi.user.data"));
-    this.solicitacao = this.pushService.getSolicitacoes(recontar,usuario.lotacaoFisica);
+    this.solicitacao = this.pushService.getSolicitacoes(recontar,usuario.lotacaoFisica,this.OrdemSolicitacoes ? "idDesc" : "priority");
   }
 
 

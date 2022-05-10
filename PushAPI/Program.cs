@@ -13,10 +13,24 @@ using PushAPI.Services;
 using Swashbuckle.AspNetCore;
 using System.Configuration;
 using System.Text.Json.Serialization;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+var config = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false)
+    .Build();
+
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+// Apply logging   https://stackoverflow.com/questions/67793589/asp-net-core-api-self-hosted-logging-to-file
+builder.Logging.ClearProviders();
+var path = config.GetValue<string>("Logging:FilePath");
+var logger = new LoggerConfiguration()
+    .WriteTo.File(path)
+    .CreateLogger();
+builder.Logging.AddSerilog(logger);
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -50,6 +64,8 @@ builder.Services.AddSwaggerGen(setup =>
 
 });
 
+
+
 // configure strongly typed settings object
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
@@ -59,6 +75,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     //    AllowingServerSideValidationToBeDisabledInvalidModelStateResponseFactoryHelper.InvalidModelStateResponseFactory;
 
 });
+
 
 
 builder.Services.Configure<IISServerOptions>(options =>
@@ -111,14 +128,20 @@ app.UseCors(x => x
     .AllowAnyHeader()
     );
 
-
 // custom jwt auth middleware
 app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 
+// Fallback SPA
+app.UseRouting();
+app.UseEndpoints(endpoints => {
+    endpoints.MapFallbackToFile("/index.html");
+});
 
 app.Run();
+
+
 
 
 // Code taken from https://github.com/dotnet/aspnetcore/blob/5747cb36f2040d12e75c4b5b3f49580ef7aac5fa/src/Mvc/Mvc.Core/src/DependencyInjection/ApiBehaviorOptionsSetup.cs#L23

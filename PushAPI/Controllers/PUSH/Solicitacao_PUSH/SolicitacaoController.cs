@@ -40,31 +40,59 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
         // GET: api/Solicitacoes/5325
         [HttpGet("lista/{cgc}")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int CGC, DateTime? De = null, bool prior = true, bool recount = true)
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int CGC, DateTime? De = null, bool prior = true, bool recount = true, string order = "priority", int limit = 100)
         {
             if (recount)
                 _ = await _dbPush.Database.ExecuteSqlRawAsync("EXEC DB5138_PUSH.FILA.Atualiza_Contagem_de_Solicitacoes -1");
 
             if (De == null)
                 De = DateTime.Now.AddDays(-90);
+            
+            System.Linq.Expressions.Expression<Func<Solicitacao, int>> orderFunc; //necessário para solicitar o ToListAsync encadeado
 
+            switch (order.ToLower())
+            {
+                case "registro":
+                case "id":
+                case "idsolicitacao_push":
+                    orderFunc = o => o.idSolicitacao_PUSH;
+                    break;
+
+                case "registrodesc":
+                case "iddesc":
+                case "idsolicitacao_pushdesc":
+                    orderFunc = o => -o.idSolicitacao_PUSH;
+                    break;
+
+                case "priority":
+                case "prioridade":
+                    orderFunc = o => (o.Quantidade_Agendada + o.Quantidade_Total_Restante == 0 || o.Cancelado) ? 1 : 0;
+                    break;
+
+                default:
+                    orderFunc = o => (o.Quantidade_Agendada + o.Quantidade_Total_Restante == 0 || o.Cancelado) ? 1 : 0;
+                    break;
+            }
 
             if (prior)
             {
                 if (CGC < 0)
                     return await _dbPush.Solicitacao
                         .Include(i => i.idEnvio_MensagemNavigation)
-                        .OrderBy(o => (o.Quantidade_Agendada + o.Quantidade_Total_Restante == 0 || o.Cancelado) ? 1 : 0)
+                        .OrderBy(orderFunc)
                         .ThenBy(o => o.Prioridade)
                         .ThenBy(o => o.Quantidade_Total_Restante)
-                        .Where(x => x.Data_Cadastramento >= (DateTime)De).ToListAsync();
+                        .Where(x => x.Data_Cadastramento >= (DateTime)De)
+                        .ToListAsync<Solicitacao>();
                 else
                     return await _dbPush.Solicitacao
                         .Include(i => i.idEnvio_MensagemNavigation)
-                        .OrderBy(o => (o.Quantidade_Agendada + o.Quantidade_Total_Restante == 0 || o.Cancelado) ? 1 : 0)
+                        .OrderBy(orderFunc)
                         .ThenBy(o => o.Prioridade)
                         .ThenBy(o => o.Quantidade_Total_Restante)
-                        .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De).ToListAsync();
+                        .Take(limit)
+                        .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De)
+                        .ToListAsync<Solicitacao>();
                 /*
                  
             CASE WHEN Quantidade_Agendada + Quantidade_Total_Restante > 0 OR Cancelado = 0 OR Finalizado=1 THEN 0 ELSE 1 END
@@ -222,6 +250,14 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
             if (solicitacao.Quantidade_Enviada > 0)
                 return StatusCode(418, new { error = 1003, message = "Solicitações com envios não podem ser apagadas em virtude de preservação de histórico." });
+
+            _ = await _dbPush.Database.ExecuteSqlRawAsync($"DELETE FROM [DB5138_PUSH].[FILA].[Solicitacao_Clientes] WHERE idSolicitacao_PUSH = {id} AND idSolicitacao_Simulacao_Envio IS NULL");
+
+            int quantidadeClientes = await _dbPush.Solicitacao_Clientes.CountAsync(c => c.idSolicitacao_PUSH == id);
+            if (quantidadeClientes > 0)
+                return StatusCode(418, new { error = 1004, message = "Solicitações com envios não podem ser apagadas em virtude de preservação de histórico." });
+            
+            _ = await _dbPush.Database.ExecuteSqlRawAsync($"DELETE FROM [DB5138_PUSH].[FILA].[Solicitacao_Simulacao_Envio] WHERE idSolicitacao_PUSH = {id}");
 
             _dbPush.Solicitacao.Remove(solicitacao);
             await _dbPush.SaveChangesAsync();
