@@ -6,7 +6,7 @@
 
       <nb-card>
         <nb-card-header>
-          <h1>Envios de PUSH</h1>
+          <h1><i class="fa fa-file-export"></i> Envios de PUSH</h1>
         </nb-card-header>
 
         <nb-card-body>
@@ -48,16 +48,14 @@
                 <td scope="row" class="mensagem-limite" (click)="rowClick(e,i)">{{e?.nome_Arquivo}}</td>
                 <td scope="row"                         (click)="rowClick(e,i)">
                   <nb-toggle [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="success"></nb-toggle>
-                  <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
                 <td scope="row" class="no-wrap" (click)="rowClick(e)">...</td>
                 <td scope="row"                         (click)="rowClick(e)">
                   <nb-toggle [ngModel]="e?.cancelado" (ngModelChange)="changeCheckCancelado(e,$event)" status="warning"></nb-toggle>
-                  <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 
                 <td *ngIf="e_admin">
-                  <button nbButton ghost (click)="excluirEnvio(e,dialogExcluir);"><nb-icon icon="trash" pack="eva" status="danger"></nb-icon></button>
+                  <button nbButton ghost *ngIf="!e?.enviado" (click)="excluirEnvio(e,dialogExcluir);"><nb-icon icon="trash" pack="eva" status="danger"></nb-icon></button>
                 </td>
               </tr>
             </tbody>
