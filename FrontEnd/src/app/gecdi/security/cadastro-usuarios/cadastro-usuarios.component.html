@@ -72,7 +72,7 @@
 
       <nb-card>
         <nb-card-header>
-          <h1><nb-icon icon="person-add-outline" pack="eva" class="font-2_25rem"></nb-icon> Lista de Usuários</h1>
+          <h1><nb-icon icon="person-add-outline" pack="eva" class="font-2_25rem"></nb-icon> Cadastramento de Usuários</h1>
         </nb-card-header>
         <nb-card-body>
 
@@ -95,12 +95,12 @@
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{u?.nome}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{u?.cgc}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">
-                  <nb-select fullWidth id="role" name="role" [(ngModel)]="u.idRole" (selectedChange)="ChangeRole(u.idUsuario,$event)">
+                  <nb-select #SelRole fullWidth id="role" name="role" [(ngModel)]="u.idRole" (selectedChange)="ChangeRole(u.idUsuario,$event)">
                     <nb-option *ngFor="let r of userService.roles;" [value]="r.idRole">{{r.nome_Role}}</nb-option>
                   </nb-select>
                 </td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">
-                  <button nbButton ghost (click)="excluirUsuario(u);"><nb-icon icon="trash" pack="eva" class="danger"></nb-icon></button>
+                  <button nbButton ghost (click)="excluirUsuario(u);"><nb-icon icon="trash" pack="eva" info="danger"></nb-icon></button>
                 </td>
               </tr>
             </tbody>

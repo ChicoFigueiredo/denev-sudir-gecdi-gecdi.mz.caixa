@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormsModule }   from '@angular/forms';
-import { NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbGlobalLogicalPosition, NbInputModule, NbSelectModule, NbToastrConfig, NbToastrModule, NbUserModule } from '@nebular/theme';
+import { NbAutocompleteModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbGlobalLogicalPosition, NbIconModule, NbInputModule, NbSelectModule, NbToastrConfig, NbToastrModule, NbUserModule } from '@nebular/theme';
 
 import { AtendimentoRoutingModule } from './atendimento-routing.module';
 import { AtendimentoComponent } from './atendimento.component';
@@ -38,6 +38,7 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     NbCheckboxModule,
     NbUserModule,
     NbToastrModule.forRoot(configToastr),
+    NbIconModule,
   ],
   exports: [DialogChamadoComponent,DadosChamadoComponent]
 })

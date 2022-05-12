@@ -96,9 +96,9 @@ export const MENU_DA_ROLE: MenuMap = {
     menu: [
       ...MENU_LOGIN,
       ...MENU_GECDI_BASE,
-      ...MENU_GECDI_ADMIN,
       ...MENU_PUSH_BASE,
       ...MENU_PUSH_ADMIN,
+      ...MENU_GECDI_ADMIN,
       ...((!environment.production) ? MENU_ITENS_ORIGINAL : [])
     ],
   },
@@ -106,9 +106,9 @@ export const MENU_DA_ROLE: MenuMap = {
     rota: '/gecdi/dashboard',
     menu: [
       ...MENU_GECDI_BASE,
-      ...MENU_LOGIN,
       ...MENU_PUSH_BASE,
       ...MENU_PUSH_ADMIN,
+      ...MENU_LOGIN,
     ],
   },
   3: { // Role Transmissor
