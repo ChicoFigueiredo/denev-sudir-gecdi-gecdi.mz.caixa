@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { NbToastrService, NbDialogService } from '@nebular/theme';
+import { NbToastrService, NbDialogService, NbGlobalPhysicalPosition } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
@@ -87,9 +87,13 @@ export class SolicitacoesComponent implements OnInit {
     this.dialogService.open(dialog, { context : `Deseja excluir Solicitação ID ${s.idSolicitacao_PUSH} - ${s.nome_Solicitacao} ` });
   }
 
-  deletarSolicitacao(dialog: TemplateRef<any>){
+  deletarSolicitacao(dialog: TemplateRef<any>,ref:any,BotaoExcluir:any){
+    BotaoExcluir.disabled = "disabled";
     this.pushService.deletarSolicitacao(this.solicitacaoASerExcluida).subscribe(s => {
-      this.refreshSolicitacoes(false, () => this.serviceSticker.show(`Solicitação ID ${this.solicitacaoASerExcluida.idSolicitacao_PUSH} - ${this.solicitacaoASerExcluida.nome_Solicitacao} EXCLUIDO!`,'',{ status: 'success', duration: 5000 }));
+      ref.close();
+      this.refreshSolicitacoes(false, () =>
+          this.serviceSticker.show(`Solicitação ID ${this.solicitacaoASerExcluida.idSolicitacao_PUSH} - ${this.solicitacaoASerExcluida.nome_Solicitacao} EXCLUIDO!`,'',{ status: 'success', duration: 5000 })
+      );
     })
   }
 

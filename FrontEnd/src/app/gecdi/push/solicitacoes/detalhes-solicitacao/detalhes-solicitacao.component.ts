@@ -22,7 +22,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
 
   public formSolicitacao:FormGroup = new FormGroup({
     idSolicitacao_PUSH                     : new FormControl(-1                              ,[]),
-    wF_GECRM                               : new FormControl(null                            ,[]),
+    wF_GECRM                               : new FormControl(null                            ,[Validators.pattern('^[0-9]*$')]),
     nome_Solicitacao                       : new FormControl(''                              ,[Validators.required, Validators.minLength(10), Validators.pattern("^(?!.*(\\w)\\1{3,}).+$")]),
     reQ_WO_Aprovacao_Mensagem              : new FormControl(''                              ,[Validators.required, Validators.pattern('REQ\\d{12,12}$')]),
     reQ_WO_Aprovacao_Mensagem_Texto        : new FormControl(''                              ,[]),
@@ -49,7 +49,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     enviar_Horario_Final                   : new FormControl(null                            ,[]), // Validators.required, Validators.pattern('\\d{2}:\\d{2}')
     limitacao_Tranche                      : new FormControl(null                            ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
     quantidade_Total                       : new FormControl(null                            ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
-    quantidade_Enviada                     : new FormControl(-1                              ,[]),
+    quantidade_Enviada                     : new FormControl(0                               ,[]),
     matricula_Cadastramento                : new FormControl(null                            ,[]),
     data_Cadastramento                     : new FormControl(null                            ,[]),
     autorizacao_Gestor_PUSH                : new FormControl(false                           ,[]),

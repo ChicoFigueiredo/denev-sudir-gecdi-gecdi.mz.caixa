@@ -27,7 +27,7 @@ import { ControleProcessamentoUploadArquivoComponent } from './solicitacoes/cont
 
 const configToastr: NbToastrConfig =  <NbToastrConfig> {
   duration: 1500,
-  position: NbGlobalLogicalPosition.BOTTOM_END,
+  position: NbGlobalLogicalPosition.TOP_END,
   destroyByClick: true,
   preventDuplicates: true,
   status: 'success'
