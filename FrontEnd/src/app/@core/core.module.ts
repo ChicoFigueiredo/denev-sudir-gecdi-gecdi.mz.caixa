@@ -11,7 +11,7 @@ import {
   PlayerService,
   SeoService,
   StateService,
-} from './utils';
+} from './utils';/*
 import { UserData } from './data/users';
 import { ElectricityData } from './data/electricity';
 import { SmartTableData } from './data/smart-table';
@@ -52,7 +52,7 @@ import { StatsProgressBarService } from './mock/stats-progress-bar.service';
 import { VisitorsAnalyticsService } from './mock/visitors-analytics.service';
 import { SecurityCamerasService } from './mock/security-cameras.service';
 import { MockDataModule } from './mock/mock-data.module';
-
+*/
 const socialLinks = [
   {
     url: 'https://github.com/akveo/nebular',
@@ -71,7 +71,7 @@ const socialLinks = [
   },
 ];
 
-const DATA_SERVICES = [
+const DATA_SERVICES = [/*
   { provide: UserData, useClass: UserService },
   { provide: ElectricityData, useClass: ElectricityService },
   { provide: SmartTableData, useClass: SmartTableService },
@@ -90,7 +90,7 @@ const DATA_SERVICES = [
   { provide: CountryOrderData, useClass: CountryOrderService },
   { provide: StatsProgressBarData, useClass: StatsProgressBarService },
   { provide: VisitorsAnalyticsData, useClass: VisitorsAnalyticsService },
-  { provide: SecurityCamerasData, useClass: SecurityCamerasService },
+  { provide: SecurityCamerasData, useClass: SecurityCamerasService },*/
 ];
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
@@ -101,7 +101,7 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 }
 
 export const NB_CORE_PROVIDERS = [
-  ...MockDataModule.forRoot().providers,
+  //...MockDataModule.forRoot().providers,
   ...DATA_SERVICES,
   ...NbAuthModule.forRoot({
 
