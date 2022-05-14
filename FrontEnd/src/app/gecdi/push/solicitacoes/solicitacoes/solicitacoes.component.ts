@@ -18,6 +18,8 @@ export class SolicitacoesComponent implements OnInit {
   public solicitacao:Observable<Solicitacao>;
   public usuario:User;
 
+  public OrdemSolicitacoes:boolean = false;
+
   constructor(
     private pushService:PushService,
     private serviceSticker: NbToastrService,
@@ -50,7 +52,7 @@ export class SolicitacoesComponent implements OnInit {
   }
 
   refreshSolicitacoes(recontar:boolean=false, callback = null){
-    this.solicitacao = this.pushService.getSolicitacoes(recontar).pipe(map((u,i) => {
+    this.solicitacao = this.pushService.getSolicitacoes(recontar,'-1',this.OrdemSolicitacoes ? "idDesc" : "priority").pipe(map((u,i) => {
       callback && callback();
       return u; }));
   }

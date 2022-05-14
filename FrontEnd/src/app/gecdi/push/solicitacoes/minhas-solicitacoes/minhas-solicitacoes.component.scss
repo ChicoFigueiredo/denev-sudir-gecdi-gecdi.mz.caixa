@@ -49,3 +49,7 @@ tbody > tr.row-lavanda:nth-child(even) {background: #A7CBD9}
 :host-context(.user-name) {
   font-weight: bold;
 }
+
+.row {
+  margin-bottom: 1rem;
+}

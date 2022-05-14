@@ -29,7 +29,8 @@ builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.Re
 builder.Logging.ClearProviders();
 var path = config.GetValue<string>("Logging:FilePath");
 var logger = new LoggerConfiguration()
-    .WriteTo.File(path)
+    .WriteTo
+    .File(path)
     .CreateLogger();
 builder.Logging.AddSerilog(logger);
 

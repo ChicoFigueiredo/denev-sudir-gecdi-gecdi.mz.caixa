@@ -126,9 +126,14 @@ export class EnviosComponent implements OnInit, OnDestroy {
     this.dialogService.open(dialog, { context : `Deseja excluir o Envio ${e?.idSolicitacao_Simulacao_Envio} - ${e?.data } às ${e?.horaFormatado} - ${e?.nome_Arquivo} ` });
   }
 
-  deletarEnvio(dialog: TemplateRef<any>){
+  deletarEnvio(dialog: TemplateRef<any>,ref:any,BotaoExcluir:any){
+    BotaoExcluir.disabled = "disabled";
     this.pushService.deletarEnvio(this.envioASerExcluido).subscribe(s => {
-      this.refreshEnvios(() => this.serviceSticker.show(`Solicitação ID ${this.envioASerExcluido.idSolicitacao_Simulacao_Envio} - ${this.envioASerExcluido.horaFormatado} EXCLUIDO! (${this.envioASerExcluido?.idSolicitacao_PUSHNavigation?.mensagem})`,'',{ status: 'success', duration: 5000 }));
+      ref.close();
+      this.refreshEnvios(() => {
+          this.serviceSticker.show(`Solicitação ID ${this.envioASerExcluido.idSolicitacao_Simulacao_Envio} - ${this.envioASerExcluido.horaFormatado} EXCLUIDO! (${this.envioASerExcluido?.idSolicitacao_PUSHNavigation?.mensagem})`,'',{ status: 'success', duration: 5000 })
+      });
     })
   }
+
 }

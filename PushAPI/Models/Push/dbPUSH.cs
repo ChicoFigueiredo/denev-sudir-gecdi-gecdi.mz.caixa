@@ -530,10 +530,9 @@ namespace PushAPI.Models.Push
 
                 entity.HasIndex(e => e.idSolicitacao_PUSH, "IX_Solicitacao_Clientes_idSolicitacao_PUSH");
 
-                entity.HasIndex(e => new { e.idSolicitacao_PUSH, e.CPF }, "IX_Solicitacao_Clientes_idSolicitacao_PUSH_CPF")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.idSolicitacao_Simulacao_Envio, "IX_Solicitacao_Clientes_idSolicitacao_Simulacao_Envio");
+
+                entity.HasIndex(e => e.idSolicitacao_PUSH, "idSolicitacao_PUSH_Simulacao");
 
                 entity.Property(e => e.Campo1).IsUnicode(false);
 
@@ -568,6 +567,10 @@ namespace PushAPI.Models.Push
                 entity.HasIndex(e => e.idSolicitacao_Simulacao_Envio, "IX_Solicitacao_Simulacao_Envio_1");
 
                 entity.HasIndex(e => e.idSolicitacao_PUSH, "IX_Solicitacao_Simulacao_Envio_Data_idSolicitacao_PUSH");
+
+                entity.Property(e => e.Comando_PowerShell)
+                    .HasMaxLength(4000)
+                    .HasComputedColumnSql("(((((('   '+format(isnull(CONVERT([datetime],[Hora]),''),'HH:mm'))+' > C:\\apps\\processacsv\\ProcessaCSV -a prd -l ')+format([ParametroLote],'0'))+' -L true -d ''Y:\\'' -f ''')+isnull([Nome_Arquivo],''))+'''')", false);
 
                 entity.Property(e => e.Data).HasColumnType("date");
 
@@ -625,6 +628,10 @@ namespace PushAPI.Models.Push
 
                 entity.Property(e => e.Matricula_Upload)
                     .HasMaxLength(7)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Tempo_Decorrido)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.idSolicitacao_PUSHNavigation)

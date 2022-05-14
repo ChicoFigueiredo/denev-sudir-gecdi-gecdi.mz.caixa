@@ -34,6 +34,7 @@ namespace PushAPI.Models.Push
         public bool Gerado { get; set; }
         public short ParametroLote { get; set; }
         public bool Cancelado { get; set; }
+        public string? Comando_PowerShell { get; set; }
 
         public virtual Requisicoes_Envio? REQ_EnvioNavigation { get; set; }
         public virtual Solicitacao idSolicitacao_PUSHNavigation { get; set; } = null!;

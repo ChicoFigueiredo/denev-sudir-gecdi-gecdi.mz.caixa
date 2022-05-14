@@ -46,6 +46,9 @@ tbody > tr.row-green:nth-child(even) {background: #79c97c}
   color: white;
 }
 
+.row {
+  margin-bottom: 1rem;
+}
 
 :host-context(.user-name) {
   font-weight: bold;

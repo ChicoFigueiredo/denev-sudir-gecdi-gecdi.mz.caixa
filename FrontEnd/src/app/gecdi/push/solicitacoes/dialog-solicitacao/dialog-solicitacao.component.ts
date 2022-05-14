@@ -56,6 +56,7 @@ export class DialogSolicitacaoComponent implements OnInit {
     console.log(detal.formSolicitacao.value)
     console.log(detal.formSolicitacao)
     let errosDados: boolean = false;
+    let erros:number = 0;
 
     // checando os erros, e ignorando as validações do date picker (por hora)
     Object.keys(detal.formSolicitacao.controls).forEach(key => {
@@ -66,13 +67,14 @@ export class DialogSolicitacaoComponent implements OnInit {
           if (!(/nbDatepicker/.test(keyError) || /nbTimepicker/.test(keyError))) {
             errosDados = true;
             console.log(controlErrors[keyError]);
+            erros++;
           }
         });
       }
     });
 
     if (errosDados) {
-      alert('ainda tem erros!');
+      alert(`Existem ${erros} erros de validação que impedem o cadastramento. Corrigam os campos marcados em vermelho e tente novamente.`);
     } else {
       detal.formSolicitacao.patchValue({
         wF_GECRM                 : detal.formSolicitacao.controls.wF_GECRM.value === "" ? null : detal.formSolicitacao.controls.wF_GECRM.value,

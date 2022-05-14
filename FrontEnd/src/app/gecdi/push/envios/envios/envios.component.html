@@ -82,7 +82,7 @@
     <nb-card-body>{{ data }}</nb-card-body>
     <nb-card-footer>
       <button nbButton status="primary" (click)="ref.close()"  >Não</button> &nbsp;&nbsp;
-      <button nbButton status="danger" (click)="deletarEnvio(dialogExcluir);ref.close();"   >Sim</button>
+      <button #BotaoExcluir nbButton status="danger" (click)="deletarEnvio(dialogExcluir,ref,BotaoExcluir);"   >Sim</button>
     </nb-card-footer>
   </nb-card>
 </ng-template>

@@ -9,9 +9,17 @@
         </nb-card-header>
 
         <nb-card-body>
-          <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>
-          &nbsp;&nbsp;<button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>
-          <BR><BR>
+          <div class="row">
+            <div class="col-md-2">
+              <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>
+            </div>
+            <div class="col-md-2">
+              <button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>
+            </div>
+            <div class="col-md-3">
+              <nb-toggle [ngModel]="OrdemSolicitacoes" status="primary" (change)="refreshSolicitacoes(true)">Ordenar pelo solicitação mais recente</nb-toggle>
+            </div>
+          </div>
 
           <table class="table">
             <thead class="row-title">
