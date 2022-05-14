@@ -1,7 +1,7 @@
 import { NbMenuItem  } from '@nebular/theme';
 import { environment } from '../../../../environments/environment';
-import { MENU_ITEMS  } from '../../../pages/pages-menu';
-import { MENU_ITENS_ORIGINAL } from '../../../pages/pages-menu.original';
+//import { MENU_ITEMS  } from '../../../pages/pages-menu';
+//import { MENU_ITENS_ORIGINAL } from '../../../pages/pages-menu.original';
 
 interface OpcoesDaRole {
   rota: string,
@@ -99,7 +99,7 @@ export const MENU_DA_ROLE: MenuMap = {
       ...MENU_PUSH_ADMIN,
       ...MENU_GECDI_ADMIN,
       ...MENU_LOGIN,
-      ...((!environment.production) ? MENU_ITENS_ORIGINAL : []),
+      //...((!environment.production) ? MENU_ITENS_ORIGINAL : []),
     ],
   },
   2: { // Role GECDI

@@ -42,7 +42,7 @@ export class AtendimentoComponent implements OnInit {
   ) {
     this.serviceUser.changeUser().subscribe( (u:User) => {
       if (u){
-          if (u.user.role == 1){
+          if (u.user.idRole == 1){
             this.apelidoAtendente = "<Todos>"
           }
           this.atendentes = serviceAtendentes.getAtendentes().pipe(

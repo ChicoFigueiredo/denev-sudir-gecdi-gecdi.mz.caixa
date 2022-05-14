@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { MENU_ITEMS } from '../../../pages/pages-menu';
+//import { MENU_ITEMS } from '../../../pages/pages-menu';
 import { MenuService } from '../../services/menu/menu.service';
 import { Role } from '../../services/user/classes/Role';
 import { User } from '../../services/user/classes/User';
@@ -16,7 +16,7 @@ import { UserService } from '../../services/user/user.service';
 })
 export class CadastroUsuariosComponent implements OnInit {
 
-  menu = MENU_ITEMS;
+  menu = [];//MENU_ITEMS;
 
   public matricula:string = null;
   public role:number = 6;
