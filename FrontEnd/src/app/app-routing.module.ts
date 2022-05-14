@@ -45,7 +45,7 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  { path: '', redirectTo: '/gecdi/dashboard', pathMatch: 'full' },
   { path: 'gecdi', loadChildren: () => import('./gecdi/gecdi.module').then(m => m.GecdiModule) },
   { path: '**', redirectTo: 'pages' },
 ];

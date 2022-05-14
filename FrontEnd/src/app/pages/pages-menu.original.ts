@@ -10,7 +10,7 @@ export const MENU_ITENS_ORIGINAL: NbMenuItem[] =[
     title: 'E-commerce',
     icon: 'shopping-cart-outline',
     link: '/pages/dashboard',
-    home: true,
+    //home: true,
   },
   {
     title: 'IoT Dashboard',

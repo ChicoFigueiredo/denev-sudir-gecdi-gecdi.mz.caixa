@@ -10,13 +10,15 @@ import { SecurityComponent } from './security.component';
 import { AuthComponent } from './auth/auth/auth.component';
 import { NbAuthModule } from '@nebular/auth';
 import { CadastroUsuariosComponent } from './cadastro-usuarios/cadastro-usuarios.component';
+import { LogoffComponent } from './auth/logoff/logoff.component';
 
 
 @NgModule({
   declarations: [
     SecurityComponent,
     CadastroUsuariosComponent,
-    AuthComponent
+    AuthComponent,
+    LogoffComponent
   ],
   imports: [
 

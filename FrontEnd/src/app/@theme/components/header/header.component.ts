@@ -90,11 +90,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(title => {
           if (title === "Sair") {
-              localStorage.removeItem('gecdi.user.data');
-              localStorage.removeItem('auth_app_token');
-              this.userService._changeUser.next(null);
-              this.route.navigateByUrl('/gecdi/security/login');
-              this.leftMenuService.SetMenu('-1');
+              this.userService.logoff();
           }
       });
   }

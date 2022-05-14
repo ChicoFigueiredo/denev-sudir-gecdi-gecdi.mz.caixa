@@ -4,7 +4,9 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { NbIconLibraries } from '@nebular/theme';
+import { environment } from '../environments/environment';
 import { AnalyticsService } from './@core/utils/analytics.service';
 import { SeoService } from './@core/utils/seo.service';
 import { GECDI_ICONS } from './gecdi/icons/custom-icons';
@@ -20,14 +22,16 @@ export class AppComponent implements OnInit {
   constructor(
     private analytics: AnalyticsService,
     private seoService: SeoService,
-    iconsLibrary: NbIconLibraries
+    iconsLibrary: NbIconLibraries,
+    private titleService: Title
   ) {
     this.evaIcons = Array.from(iconsLibrary.getPack('eva').icons.keys())
                         .filter(icon => icon.indexOf('outline') === -1);
 
     iconsLibrary.registerFontPack('font-awesome', { iconClassPrefix: 'fa', packClass: 'fa' });
     iconsLibrary.setDefaultPack('font-awesome');
-    iconsLibrary.registerSvgPack('gecdi-icons', GECDI_ICONS)
+    iconsLibrary.registerSvgPack('gecdi-icons', GECDI_ICONS);
+    titleService.setTitle(environment.nomeSite);
   }
 
   ngOnInit(): void {

@@ -29,7 +29,8 @@ export class UserService {
     private authService: NbAuthService,
     private menuService: MenuService,
     private http: HttpClient,
-    private router:Router
+    private router:Router,
+    private leftMenuService: MenuService,
   ) {
 
     this.authService.onTokenChange()
@@ -56,6 +57,14 @@ export class UserService {
     });
 
     this.getRoles().subscribe(e => this.roles = e)
+  }
+
+  public logoff(){
+    localStorage.removeItem('gecdi.user.data');
+    localStorage.removeItem('auth_app_token');
+    this._changeUser.next(null);
+    this.leftMenuService.SetMenu('-1');
+    this.router.navigateByUrl('/gecdi/security/login');
   }
 
   getRoles() {
