@@ -2,41 +2,62 @@
 <link rel="stylesheet" href="/assets/css/css.bootstrap.3.3.7-upload-mod.min.css">
 
 <nb-card>
-  <nb-card-header><h3>Upload de arquivo para solicitação de PUSH {{idSolicitacao_PUSH}}</h3></nb-card-header>
+  <nb-card-header>
+    <h3>Upload de arquivo para solicitação de PUSH {{idSolicitacao_PUSH}}</h3>
+  </nb-card-header>
   <nb-card-body>
-    <p>Aqui você irá carregar os CPF dos clientes para a solicitação de envio de PUSH</p>
-    <p>Instruções:</p>
-    <ul>
-      <li>Prepare o arquivo conforme o layout e o compacte o conteúdo no formato ZIP</li>
-      <li>Com o mouse clique e arraste para o retangulo pontilhado o arquivo ou use o botão [Selecione o arquivo de CPF/Variáveis para carregar] e navegue até o arquivo e clique em OK</li>
-      <li>Após aparecer o nome do arquivo acima do botão [Upload], clique no botão [Upload] para carregar o arquivo no sistema</li>
-      <li>Aguarde o carregamento e o feedback do sistema de que o 'Upload realizado com sucesso !'</li>
-      <li>Caso ocorram erros, de forma persistente, envie cópias de tela para o CPE GECDI02</li>
-    </ul>
-    <p>Layouts permitidos:</p>
-    <ul>
-      <li>Só CPF:</li>
-      <ul>
-        <li>Arquivo ZIP contendo um único arquivo texto com enconding UTF-8</li>
-        <li>1 CPF válido por linha, somente números e com as 11 posições numéricas</li>
-        <li>Sem espaços nem pontuações</li>
-        <li>Sem cabeçalho</li>
-      </ul>
-    </ul>
-    <ul>
-      <li>CPF + Campos para mensagens dinâmicas/variáveis:</li>
-      <ul>
-        <li>Arquivo ZIP contendo um único arquivo texto com enconding UTF-8</li>
-        <li>1 CPF válido por linha, somente números e com as 11 posições numéricas, mais 5 campos, separados por ; (ponto e virgula) ou | (pipe) ou \t (caracter tab)</li>
-        <li>Sem espaços nem pontuações nos campos (CPF ou campos)</li>
-        <li>Evitar que nos campos com valores contenham os caracteres ; (ponto e virgula) ou | (pipe) ou \t (caracter tab) para evitar perda de informação</li>
-        <li>Sem cabeçalho</li>
-      </ul>
-    </ul>
-    <angular-file-uploader
-          [config]="afuConfig">
-    </angular-file-uploader>
 
+    <nb-tabset>
+      <nb-tab tabTitle="Upload dos CPF da solicitação {{idSolicitacao_PUSH}}">
+        <p>Solicitação <b class="brown">{{ solicitacao.idSolicitacao_PUSH }} - {{ solicitacao.nome_Solicitacao }}</b></p>
+        <p>Mensagem: <b class="brown">{{ solicitacao.mensagem }}</b></p>
+        <p>Registros estimados: <b class="brown">{{ solicitacao.quantidade_Total }}</b> </p>
+        <p></p>
+        <BR><BR><BR>
+        <h6>Upload do arquivo:</h6>
+        <angular-file-uploader [config]="afuConfig">
+        </angular-file-uploader>
+
+      </nb-tab>
+      <nb-tab tabTitle="Ajuda e Instruções">
+        <p>Aqui você irá carregar os CPF dos clientes para a solicitação de envio de PUSH</p>
+        <p></p>
+        <p>Após o upload um robo irá capturar seu arquivo e processa-lo. O Robo irá capturar entre 00:30 e 14:30 sempre de hora em hora</p>
+        <p></p>
+        <p>Instruções para o arquivo:</p>
+        <ul>
+          <li>Prepare o arquivo conforme o layout e o compacte o conteúdo no formato ZIP</li>
+          <li>Com o mouse clique e arraste para o retangulo pontilhado o arquivo ou use o botão [Selecione o arquivo de
+            CPF/Variáveis para carregar] e navegue até o arquivo e clique em OK</li>
+          <li>Após aparecer o nome do arquivo acima do botão [Upload], clique no botão [Upload] para carregar o arquivo
+            no sistema</li>
+          <li>Aguarde o carregamento e o feedback do sistema de que o 'Upload realizado com sucesso !'</li>
+          <li>Caso ocorram erros, de forma persistente, envie cópias de tela para o CPE GECDI02</li>
+        </ul>
+        <p>Layouts permitidos:</p>
+        <ul>
+          <li>Só CPF:</li>
+          <ul>
+            <li>Arquivo ZIP contendo um único arquivo texto com enconding UTF-8</li>
+            <li>1 CPF válido por linha, somente números e com as 11 posições numéricas</li>
+            <li>Sem espaços nem pontuações</li>
+            <li>Sem cabeçalho</li>
+          </ul>
+        </ul>
+        <ul>
+          <li>CPF + Campos para mensagens dinâmicas/variáveis:</li>
+          <ul>
+            <li>Arquivo ZIP contendo um único arquivo texto com enconding UTF-8</li>
+            <li>1 CPF válido por linha, somente números e com as 11 posições numéricas, mais 5 campos, separados por ;
+              (ponto e virgula) ou | (pipe) ou \t (caracter tab)</li>
+            <li>Sem espaços nem pontuações nos campos (CPF ou campos)</li>
+            <li>Evitar que nos campos com valores contenham os caracteres ; (ponto e virgula) ou | (pipe) ou \t
+              (caracter tab) para evitar perda de informação</li>
+            <li>Sem cabeçalho</li>
+          </ul>
+        </ul>
+      </nb-tab>
+    </nb-tabset>
 
   </nb-card-body>
   <nb-card-footer>
@@ -47,4 +68,3 @@
     </div>
   </nb-card-footer>
 </nb-card>
-

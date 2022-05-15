@@ -36,16 +36,11 @@ export class UserService {
     this.authService.onTokenChange()
       .subscribe((token: NbAuthJWTToken) => {
         if (token.isValid()) {
-
           this.currentUser = <User> JSON.parse(localStorage.getItem("gecdi.user.data"));
-
           this._changeUser.next(this.currentUser);
-
           this.menuService.SetMenu(`${this.currentUser.user.idRole}`);
-
-          const lastUrl = localStorage.getItem('gecdi.url.route')
-
-          this.router.navigateByUrl(lastUrl ? lastUrl : this.menuService.GetRota(`${this.currentUser.user.idRole}`));
+          //const lastUrl = localStorage.getItem('gecdi.url.route')
+          //this.router.navigateByUrl(lastUrl ? lastUrl : this.menuService.GetRota(`${this.currentUser.user.idRole}`));
 
         }
     });

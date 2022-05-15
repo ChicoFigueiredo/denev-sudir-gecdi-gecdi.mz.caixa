@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -50,7 +51,8 @@ export class DialogSolicitacaoComponent implements OnInit {
     });
   }
 
-  salvarSolicitacao(ref: any) {
+  salvarSolicitacao(ref: any, btnSalvar:any) {
+    btnSalvar.disabled = true;
     const detal: any = this.detalhes; //.elementRef.nativeElement;
     detal.formSolicitacao.markAllAsTouched();
     console.log(detal.formSolicitacao.value)
@@ -74,7 +76,8 @@ export class DialogSolicitacaoComponent implements OnInit {
     });
 
     if (errosDados) {
-      alert(`Existem ${erros} erros de validação que impedem o cadastramento. Corrigam os campos marcados em vermelho e tente novamente.`);
+      alert(`Existem ${erros} erros de validação que impedem o cadastramento. Corrija os campos marcados em vermelho e tente novamente.`);
+      btnSalvar.disabled = false;
     } else {
       detal.formSolicitacao.patchValue({
         wF_GECRM                 : detal.formSolicitacao.controls.wF_GECRM.value === "" ? null : detal.formSolicitacao.controls.wF_GECRM.value,

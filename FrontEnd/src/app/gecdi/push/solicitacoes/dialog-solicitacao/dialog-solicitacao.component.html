@@ -8,11 +8,12 @@
       </nb-card-body>
       <nb-card-footer>
         <div class="float-right">
-            <button nbButton (click)="salvarSolicitacao(ref)">Salvar</button>
+            <button #btnSalvar nbButton (click)="salvarSolicitacao(ref,btnSalvar)">Salvar</button>
                &nbsp;&nbsp;
             <button nbButton (click)="ref.close()">Fechar</button>
         </div>
       </nb-card-footer>
   </nb-card>
 </ng-template>
+
 

@@ -1,5 +1,9 @@
-import { NbMenuItem  } from '@nebular/theme';
-import { environment } from '../../../../environments/environment';
+import {
+  NbMenuItem
+} from '@nebular/theme';
+import {
+  environment
+} from '../../../../environments/environment';
 //import { MENU_ITEMS  } from '../../../pages/pages-menu';
 //import { MENU_ITENS_ORIGINAL } from '../../../pages/pages-menu.original';
 
@@ -10,14 +14,19 @@ interface OpcoesDaRole {
 
 type MenuMap = Record < string, OpcoesDaRole > ;
 
-const MENU_LOGIN: NbMenuItem[] = [{
+export const MENU_LOGIN: NbMenuItem[] = [{
+  title: 'Login',
+  icon: 'log-in-outline',
+  link: '/gecdi/security/login',
+}]
+
+const MENU_LOGOFF: NbMenuItem[] = [{
   title: 'Logoff / Sair',
   icon: 'log-out-outline',
   link: '/gecdi/security/logoff',
 }]
 
-const MENU_USER: NbMenuItem[] = [
-  {
+const MENU_USER: NbMenuItem[] = [{
     title: 'GECDI',
     group: true,
   },
@@ -38,57 +47,70 @@ const MENU_GECDI_BASE: NbMenuItem[] = [
   },
 ]
 
-const MENU_GECDI_ADMIN: NbMenuItem[] = [
-  {
-    title: 'GECDI Administração',
-    group: true,
-  },{
-    title: 'Cadastro Usuários',
-    icon: 'person-add-outline',
-    link: '/gecdi/security/cadastro-usuarios',
-  },{
-    title: 'Manutenção Curvas',
-    icon: 'bar-chart-outline',
-    link: '/gecdi/push/manutencao-curvas',
-  },{
-    title: 'Processamento Upload',
-    icon: 'cloud-upload-outline',
-    link: '/gecdi/push/controle-processamento-upload-arquivo',
-  },
-]
+const MENU_GECDI_ADMIN: NbMenuItem[] = [{
+  title: 'GECDI Administração',
+  group: true,
+}, {
+  title: 'Cadastro Usuários',
+  icon: 'person-add-outline',
+  link: '/gecdi/security/cadastro-usuarios',
+}, {
+  title: 'Manutenção Curvas',
+  icon: 'bar-chart-outline',
+  link: '/gecdi/push/manutencao-curvas',
+}, {
+  title: 'Processamento Upload',
+  icon: 'cloud-upload-outline',
+  link: '/gecdi/push/controle-processamento-upload-arquivo',
+}, ]
 
-const MENU_PUSH_BASE: NbMenuItem[] = [
-  {
+const MENU_PUSH_BASE: NbMenuItem[] = [{
     title: 'PUSH',
     group: true,
   },
   {
     title: 'Envios do dia',
-    icon: {icon:'file-export', pack:'font-awesome'},
+    icon: {
+      icon: 'file-export',
+      pack: 'font-awesome'
+    },
     link: '/gecdi/push/envios',
   },
   {
-    title: 'Solicitações/Fila',
-    icon: {icon:'cubes', pack:'font-awesome'},
-    link: '/gecdi/push/solicitacoes',
-  },
-  {
     title: 'Minhas Solicitações',
-    icon: {icon:'clipboard-list', pack:'font-awesome'},
+    icon: {
+      icon: 'clipboard-list',
+      pack: 'font-awesome'
+    },
     link: '/gecdi/push/minhas-solicitacoes',
   },
   {
     title: 'Resumo',
-    icon: {icon:'newspaper', pack:'font-awesome'},
+    icon: {
+      icon: 'newspaper',
+      pack: 'font-awesome'
+    },
     link: '/gecdi/push/resumo',
   },
 ]
 
 const MENU_PUSH_ADMIN: NbMenuItem[] = [{
-  title: 'Informe Whatsapp',
-  icon: {icon:'whatsapp', pack:'gecdi-icons'},
-  link: '/gecdi/push/resumo-whatsapp',
-}, ]
+    title: 'Informe Whatsapp',
+    icon: {
+      icon: 'whatsapp',
+      pack: 'gecdi-icons'
+    },
+    link: '/gecdi/push/resumo-whatsapp',
+  },
+  {
+    title: 'Fila de Solicitações',
+    icon: {
+      icon: 'cubes',
+      pack: 'font-awesome'
+    },
+    link: '/gecdi/push/solicitacoes',
+  },
+]
 
 export const MENU_DA_ROLE: MenuMap = {
   1: { // Role Admin
@@ -98,7 +120,7 @@ export const MENU_DA_ROLE: MenuMap = {
       ...MENU_PUSH_BASE,
       ...MENU_PUSH_ADMIN,
       ...MENU_GECDI_ADMIN,
-      ...MENU_LOGIN,
+      ...MENU_LOGOFF,
       //...((!environment.production) ? MENU_ITENS_ORIGINAL : []),
     ],
   },
@@ -108,34 +130,34 @@ export const MENU_DA_ROLE: MenuMap = {
       ...MENU_GECDI_BASE,
       ...MENU_PUSH_BASE,
       ...MENU_PUSH_ADMIN,
-      ...MENU_LOGIN,
+      ...MENU_LOGOFF,
     ],
   },
   3: { // Role Transmissor
     rota: '/gecdi/push/envios',
     menu: [
       ...MENU_PUSH_BASE,
-      ...MENU_LOGIN,
+      ...MENU_LOGOFF,
     ],
   },
   4: { // Role GestorTI
     rota: '/gecdi/push/envios',
     menu: [
       ...MENU_PUSH_BASE,
-      ...MENU_LOGIN,
+      ...MENU_LOGOFF,
     ],
   },
   5: { // Solicitante (Gestor de produto)
     rota: '/gecdi/push/envios',
     menu: [
       ...MENU_PUSH_BASE,
-      ...MENU_LOGIN,
+      ...MENU_LOGOFF,
     ],
   },
   6: { // Role user
     rota: '/gecdi/dashboard',
     menu: [
-      ...MENU_LOGIN,
+      ...MENU_LOGOFF,
     ],
   },
 }

@@ -10,14 +10,11 @@
 
         <nb-card-body>
           <div class="row">
-            <div class="col-md-2">
-              <button nbButton (click)="novaSolicitacao(true)" ><i class="fas fa-new"></i>&nbsp;Nova Solicitação &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
-            </div>
-            <div class="col-md-2">
-              <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
-            </div>
-            <div class="col-md-3">
-              <nb-toggle [ngModel]="OrdemSolicitacoes" status="primary"  (change)="refreshSolicitacoes(true)">Ordenar pelo solicitação mais recente</nb-toggle>
+            <div class="col-md-12">
+              <button nbButton (click)="novaSolicitacao(true)" class="align-middle"><i class="fas fa-plus"></i>&nbsp;Nova Solicitação &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
+              <button nbButton (click)="refreshSolicitacoes(false)" class="align-middle"><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
+              <nb-toggle [ngModel]="OrdemSolicitacoes" status="primary"  (change)="refreshSolicitacoes(true)" class="align-bottom">Ordenar pelo solicitação mais recente</nb-toggle> &nbsp;&nbsp;
+              <nb-toggle [(ngModel)]="SoFila" status="primary" (change)="refreshSolicitacoes(true)" class="align-bottom">Só os não atendidos</nb-toggle>&nbsp;&nbsp;
             </div>
           </div>
 

@@ -98,14 +98,16 @@ export class SolicitacoesComponent implements OnInit {
   }
 
   deletarSolicitacao(dialog: TemplateRef<any>,ref:any,BotaoExcluir:any){
-    BotaoExcluir.disabled = "disabled";
+    BotaoExcluir.disabled = true;
     this.pushService.deletarSolicitacao(this.solicitacaoASerExcluida).subscribe(s => {
       ref.close();
-      this.refreshSolicitacoes(false, () =>
+      this.refreshSolicitacoes(false, () => {
           this.serviceSticker.show(`Solicitação ID ${this.solicitacaoASerExcluida.idSolicitacao_PUSH} - ${this.solicitacaoASerExcluida.nome_Solicitacao} EXCLUIDO!`,'',{ status: 'success', duration: 10000 })
-      );
+          BotaoExcluir.disabled = true;
+      });
     },(e) => {
         this.serviceSticker.show(`ERRO! Solicitação ID ${this.solicitacaoASerExcluida.idSolicitacao_PUSH} retornou erro ${e.message}`,'',{ status: 'danger', duration: 10000 })
+        BotaoExcluir.disabled = false;
      })
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 //import { MENU_ITEMS } from '../pages/pages-menu';
+import { MENU_LOGIN } from '../gecdi/services/menu/menu.por.role';
 import { MenuService } from './services/menu/menu.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { MenuService } from './services/menu/menu.service';
 })
 export class GecdiComponent implements OnInit {
 
-  menu = [];//MENU_ITEMS;
+  menu = MENU_LOGIN; // [];//MENU_ITEMS;
 
   constructor(
     menuService: MenuService

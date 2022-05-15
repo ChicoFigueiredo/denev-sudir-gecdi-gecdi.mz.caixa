@@ -32,6 +32,11 @@ export class PushService {
                .get<EnviosResponse[]>(`${API_PUSH}/envios/lista?De=${xDe.format("YYYY-MM-DD")}&Ate=${xAte.format("YYYY-MM-DD")}&Enviados=${enviados}&NaoEnviadosAntigos=${antigos}`)
   }
 
+  getSolicitacaoById(id){
+    return this.http
+               .get<Solicitacao>(`${API_PUSH}/solicitacao/${id}`)
+  }
+
   getEnvioById(id){
     return this.http
                .get<EnviosResponse>(`${API_PUSH}/envios/${id}`)

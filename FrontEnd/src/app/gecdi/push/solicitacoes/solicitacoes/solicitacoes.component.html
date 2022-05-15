@@ -5,16 +5,18 @@
 
       <nb-card>
         <nb-card-header>
-          <h1><i class="fa fa-cubes"></i> Solicitações de PUSH</h1>
+          <h1><i class="fa fa-cubes"></i> Fila de Solicitações PUSH</h1>
         </nb-card-header>
 
         <nb-card-body>
           <div class="row">
+            <div class="col-md-12">
               <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
               <button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
               <nb-toggle [(ngModel)]="OrdemSolicitacoes" status="primary" (change)="refreshSolicitacoes(true)">Ordenar pelo solicitação mais recente</nb-toggle>&nbsp;&nbsp;
               <nb-toggle [(ngModel)]="SoFila" status="primary" (change)="refreshSolicitacoes(true)">Só Fila para Envio</nb-toggle>&nbsp;&nbsp;
               <nb-toggle [(ngModel)]="AlteraPrioridade" status="primary">Altera Prioridade</nb-toggle>&nbsp;&nbsp;
+            </div>
           </div>
 
           <table class="table">

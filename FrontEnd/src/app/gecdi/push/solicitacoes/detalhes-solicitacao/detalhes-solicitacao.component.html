@@ -30,6 +30,7 @@
             <input formControlName="reQ_WO_Aprovacao_Mensagem" #Ref_REQ_WO_Aprovacao_Mensagem type="text" nbInput fullWidth
               id="REQ_WO_Aprovacao_Mensagem" placeholder="Número da REQ da aprovação da mensagem"
               (blur)="Ref_REQ_WO_Aprovacao_Mensagem.value = Ref_REQ_WO_Aprovacao_Mensagem.value.toUpperCase()"
+              (keyup)="Ref_REQ_WO_Aprovacao_Mensagem.value = Ref_REQ_WO_Aprovacao_Mensagem.value.toUpperCase()"
               [status]="(f.reQ_WO_Aprovacao_Mensagem.touched && f.reQ_WO_Aprovacao_Mensagem.errors) ? 'danger': 'info'">
             <!-- <input type="text" nbInput fullWidth id="matricula"  placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
           </div>
@@ -98,7 +99,9 @@
         <nb-form-field>
           <div class="form-group">
             <label for="Canal" class="label">Canal destino:</label>
-            <nb-select formControlName="canal" fullWidth id="Canal" name="Canal">
+            <nb-select formControlName="canal" fullWidth id="Canal" name="Canal"
+              [status]="(f.canal.touched && f.canal.errors) ? 'danger': 'info'"
+            >
               <!--  -->
               <nb-option value="ibc">IBC</nb-option>
               <nb-option value="caixatem" selected>CAIXA Tem</nb-option>

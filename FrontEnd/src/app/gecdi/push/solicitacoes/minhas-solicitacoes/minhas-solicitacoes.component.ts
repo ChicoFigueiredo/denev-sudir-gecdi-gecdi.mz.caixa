@@ -21,6 +21,7 @@ export class MinhasSolicitacoesComponent implements OnInit {
   @ViewChild('diag') dialog: ElementRef<DialogSolicitacaoComponent>;
 
   public OrdemSolicitacoes:boolean = true;
+  public SoFila:boolean = true;
 
   constructor(
     private pushService:PushService,
@@ -56,7 +57,7 @@ export class MinhasSolicitacoesComponent implements OnInit {
   refreshSolicitacoes(recontar:boolean=false){
     const usuario:User = <User> JSON.parse(localStorage.getItem("gecdi.user.data"));
     this.pushService
-        .getSolicitacoes(recontar,usuario.lotacaoFisica,this.OrdemSolicitacoes ? "idDesc" : "priority")
+        .getSolicitacoes(recontar,usuario.lotacaoFisica,this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila)
         .subscribe((u:Solicitacao[]) => this.solicitacao = u);
   }
 
