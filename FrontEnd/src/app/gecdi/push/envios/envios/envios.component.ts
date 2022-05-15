@@ -8,7 +8,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { DialogEnvioComponent } from '../dialog-envio/dialog-envio.component';
 import { UserService } from '../../../services/user/user.service';
 import { User } from '../../../services/user/classes/User';
-
+import clipboard from 'clipboardy';
 
 @Component({
   selector: 'ngx-envios',
@@ -17,8 +17,10 @@ import { User } from '../../../services/user/classes/User';
 })
 export class EnviosComponent implements OnInit, OnDestroy {
 
-  public envios: Observable<EnviosResponse> = new Observable<EnviosResponse>(null);
+  //public envios: Observable<EnviosResponse> = new Observable<EnviosResponse>(null);
+  public envios: EnviosResponse[] = [];
   public EnvioSelecionado: EnviosResponse = null;
+  public PosicaoSelecionada: number = 1;
   public posicao:number = 0;
 
   dataSelecionada:any = moment(); //.format("DD/MMM/YYYY");
@@ -39,12 +41,13 @@ export class EnviosComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private dialogService: NbDialogService,
   ) {
-    this.userService.changeUser().subscribe(u => this.usuario=u );
+    this.userService.changeUser().subscribe(u => this.usuario= <User>u );
   }
 
   ngOnInit(): void {
     moment.locale('pt-br');
-    this.envios = this.pushService.getSolicitacoesEnvio(null,null,-1,true);
+    //this.envios = this.pushService.getSolicitacoesEnvio(null,null,-1,true);
+    this.refreshEnvios();
 
     this.timerSubscription = this.everySecond.subscribe((seconds) => {
         this.timer--;
@@ -54,7 +57,16 @@ export class EnviosComponent implements OnInit, OnDestroy {
     })
   }
 
-  get e_admin() { return this.usuario.user.role == 1 }
+  refreshEnvios(callback=null){
+    const dt = moment(this.dataSelecionada).format("YYYY-MM-DD");
+    this.pushService.getSolicitacoesEnvio(dt,dt,-1,true)
+                    .pipe(map(u => { callback && callback(); return u; }))
+                    .subscribe(l => {
+                      this.envios = l;
+                      this.EnvioSelecionado = l[this.PosicaoSelecionada];
+                    });
+    this.timer = this.timerSlip;
+  }
 
   ngOnDestroy(){
     this.timerSubscription.unsubscribe();
@@ -71,8 +83,26 @@ export class EnviosComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  rowClick(e){
+  rowClick(e:EnviosResponse, p:number, dialog: TemplateRef<any> ){
+    this.EnvioSelecionado = e;
+    this.PosicaoSelecionada = p;
+    this.dialogService.open(dialog, { context : ''});
+  }
 
+  getPosition(delta){
+    if(this.PosicaoSelecionada + delta > this.envios.length-1)
+      this.PosicaoSelecionada = this.envios.length-1;
+    else if(this.PosicaoSelecionada + delta < 0)
+      this.PosicaoSelecionada = 0;
+    else
+      this.PosicaoSelecionada += delta;
+
+    this.EnvioSelecionado = this.envios[this.PosicaoSelecionada]
+  }
+
+  copiaTextoClipboard(text:string){
+    clipboard.write(text);
+    this.serviceSticker.show(`Texto '${text}' copiado para a área de transferência.`,'',{ status: 'success' })
   }
 
   detalheEnvio(envio:EnviosResponse, position){
@@ -112,13 +142,6 @@ export class EnviosComponent implements OnInit, OnDestroy {
     this.dataSelecionada = moment($event);
     this.refreshEnvios();
   }
-
-  refreshEnvios(callback=null){
-    const dt = moment(this.dataSelecionada).format("YYYY-MM-DD");
-    this.envios = this.pushService.getSolicitacoesEnvio(dt,dt,-1,true).pipe(map(u => { callback && callback(); return u; }));
-    this.timer = this.timerSlip;
-  }
-
 
   envioASerExcluido:EnviosResponse
   excluirEnvio(e:EnviosResponse,dialog: TemplateRef<any>){

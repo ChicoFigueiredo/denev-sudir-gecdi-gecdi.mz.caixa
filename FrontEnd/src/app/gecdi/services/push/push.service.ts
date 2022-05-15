@@ -29,7 +29,7 @@ export class PushService {
     const xDe = moment(de);
     const xAte = moment(ate);
     return this.http
-               .get<EnviosResponse>(`${API_PUSH}/envios/lista?De=${xDe.format("YYYY-MM-DD")}&Ate=${xAte.format("YYYY-MM-DD")}&Enviados=${enviados}&NaoEnviadosAntigos=${antigos}`)
+               .get<EnviosResponse[]>(`${API_PUSH}/envios/lista?De=${xDe.format("YYYY-MM-DD")}&Ate=${xAte.format("YYYY-MM-DD")}&Enviados=${enviados}&NaoEnviadosAntigos=${antigos}`)
   }
 
   getEnvioById(id){

@@ -28,10 +28,14 @@ builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.Re
 // Apply logging   https://stackoverflow.com/questions/67793589/asp-net-core-api-self-hosted-logging-to-file
 builder.Logging.ClearProviders();
 var path = config.GetValue<string>("Logging:FilePath");
-var logger = new LoggerConfiguration()
-    .WriteTo
-    .File(path)
-    .CreateLogger();
+var logger = IsDebug() ? new LoggerConfiguration()
+                                .WriteTo.Console()
+                                .WriteTo.File(path, rollingInterval: RollingInterval.Day)
+                                .CreateLogger()
+                       : new LoggerConfiguration()
+                                .WriteTo.File(path, rollingInterval: RollingInterval.Day)
+                                .CreateLogger()
+;
 builder.Logging.AddSerilog(logger);
 
 // Add services to the container, with JSON options.
@@ -153,7 +157,14 @@ app.UseEndpoints(endpoints => {
 
 app.Run();
 
-
+static bool IsDebug()
+{
+#if DEBUG
+    return true;
+#else
+    return false;
+#endif
+}
 
 
 // Code taken from https://github.com/dotnet/aspnetcore/blob/5747cb36f2040d12e75c4b5b3f49580ef7aac5fa/src/Mvc/Mvc.Core/src/DependencyInjection/ApiBehaviorOptionsSetup.cs#L23

@@ -78,3 +78,16 @@ tbody > tr.row-green:nth-child(even) {background: #79c97c}
 :host-context(.user-name) {
   font-weight: bold;
 }
+
+.dialogLarge {
+  width: 80vw;
+  height: 50vh;
+}
+
+b.brown {
+  color: brown;
+}
+
+.size2rem {
+  font-size: 2rem;
+}

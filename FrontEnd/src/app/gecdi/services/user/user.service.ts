@@ -67,6 +67,10 @@ export class UserService {
     this.router.navigateByUrl('/gecdi/security/login');
   }
 
+  public get e_admin():boolean {
+    return this.currentUser.user.idRole == 1
+  }
+
   getRoles() {
     return this.http
                .get<Role[]>(`${API_PUSH}/user/roles`);

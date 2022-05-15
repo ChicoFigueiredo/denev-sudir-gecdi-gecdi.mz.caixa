@@ -28,33 +28,35 @@
                 <td scope="col">Mensagem</td>
                 <td scope="col">Qtd</td>
                 <td scope="col">Arquivo</td>
-                <td scope="col">Enviado</td>
+                <td scope="col" *ngIf="[1,3].indexOf(usuario.user.idRole)>=0">Enviado</td>
                 <td scope="col">Extras</td>
-                <td scope="col">Cancelado</td>
-                <td scope="col" *ngIf="e_admin">Excluir</td>
+                <td scope="col" *ngIf="usuario.user.idRole===1">Cancelado</td>
+                <td scope="col" *ngIf="usuario.user.idRole===1">Excluir</td>
               </tr>
             </thead>
 
             <tbody>
-              <tr *ngFor="let e of envios | async; let i = index ;" [ngClass]="checkRow(e) + ' hand'">
-                <th scope="row" class="no-wrap"         (click)="rowClick(e,i)"><nb-icon *ngIf="e?.homologado" icon="checkmark-square-outline" pack="eva" status="primary"></nb-icon></th>
-                <th scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.idSolicitacao_Simulacao_Envio}}</th>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.idSolicitacao_PUSH}}</td>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.idSolicitacao_PUSHNavigation.wF_GECRM}}</td>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.data  | date:'dd/MMM/yyyy'}}</td>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.horaFormatado}}</td>
-                <td scope="row" class="mensagem-limite" (click)="rowClick(e,i)">{{e?.idSolicitacao_PUSHNavigation?.mensagem}}</td>
-                <td scope="row" class="no-wrap"         (click)="rowClick(e,i)">{{e?.quantidade | number:'0.':'pt-BR'}}</td>
-                <td scope="row" class="mensagem-limite" (click)="rowClick(e,i)">{{e?.nome_Arquivo}}</td>
-                <td scope="row"                         (click)="rowClick(e,i)">
+              <tr *ngFor="let e of envios; let i = index ;" [ngClass]="checkRow(e) + ' hand'">
+                <th scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)"><nb-icon *ngIf="e?.homologado" icon="checkmark-square-outline" pack="eva" status="primary"></nb-icon></th>
+                <th scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)">{{e?.idSolicitacao_Simulacao_Envio}}</th>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)">{{e?.idSolicitacao_PUSH}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)">{{e?.idSolicitacao_PUSHNavigation.wF_GECRM}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)">{{e?.data  | date:'dd/MMM/yyyy'}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)">{{e?.horaFormatado}}</td>
+                <td scope="row" class="mensagem-limite" (click)="rowClick(e,i,dialogDetalhes)">{{e?.idSolicitacao_PUSHNavigation?.mensagem}}</td>
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)">{{e?.quantidade | number:'0.':'pt-BR'}}</td>
+                <td scope="row" class="mensagem-limite" (click)="rowClick(e,i,dialogDetalhes)">{{e?.nome_Arquivo}}</td>
+                <td scope="row" *ngIf="[1,3].indexOf(usuario.user.idRole)>=0">
                   <nb-toggle [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="success"></nb-toggle>
                 </td>
-                <td scope="row" class="no-wrap" (click)="rowClick(e)">...</td>
-                <td scope="row"                         (click)="rowClick(e)">
+                <td scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)">
+                  <nb-icon icon="command" pack="gecdi-icons" class="size2rem"></nb-icon>
+                </td>
+                <td scope="row" *ngIf="usuario.user.idRole===1" (click)="rowClick(e,i,dialogDetalhes)">
                   <nb-toggle [ngModel]="e?.cancelado" (ngModelChange)="changeCheckCancelado(e,$event)" status="warning"></nb-toggle>
                 </td>
 
-                <td *ngIf="e_admin">
+                <td *ngIf="usuario.user.idRole===1">
                   <button nbButton ghost *ngIf="!e?.enviado" (click)="excluirEnvio(e,dialogExcluir);"><nb-icon icon="trash" pack="eva" status="danger"></nb-icon></button>
                 </td>
               </tr>
@@ -74,7 +76,7 @@
 </div>
 
 
-<ngx-dialog-envio #diag [envio]="EnvioSelecionado" [position]="posicao" [listaEnvios]="envios | async"></ngx-dialog-envio>
+<!-- <ngx-dialog-envio #diag [envio]="EnvioSelecionado" [position]="posicao" [listaEnvios]="envios | async"></ngx-dialog-envio> -->
 
 <ng-template #dialogExcluir let-data let-ref="dialogRef">
   <nb-card>
@@ -86,3 +88,46 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
+
+<ng-template #dialogDetalhes let-data let-ref="dialogRef" >
+  <nb-card>
+    <nb-card-header>
+      <div class="float-left">
+        <h4>Detalhes do Envio <b class="brown">{{ EnvioSelecionado?.idSolicitacao_Simulacao_Envio }}</b>:
+            Dia <b class="brown">{{ EnvioSelecionado?.data  | date:'dd/MMM/yyyy' }}</b> /
+            Horário: <b class="brown">{{ EnvioSelecionado?.horaFormatado }}</b>
+        </h4>
+      </div>
+      <div class="float-right">
+        <button nbButton ghost (click)="ref.close()" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="dialogLarge">
+      <p>
+        Mensagem: <b class="brown">{{ EnvioSelecionado?.idSolicitacao_PUSHNavigation?.mensagem }}</b>
+        <button nbButton ghost (click)="copiaTextoClipboard(EnvioSelecionado.idSolicitacao_PUSHNavigation?.mensagem.trim())" ><nb-icon icon="copy-outline" pack="eva" status="primary"></nb-icon></button>
+      </p>
+      <p>Impactos Previstos: <b class="brown">{{ EnvioSelecionado?.idSolicitacao_PUSHNavigation?.impactos_Previstos }}</b></p>
+      <p>Arquivo: <b class="brown">{{ EnvioSelecionado.nome_Arquivo }}</b></p>
+      <p>Registros: <b class="brown">{{ EnvioSelecionado.quantidade }}</b></p>
+      <p>
+        Comando PowerShell: <b class="brown">{{ EnvioSelecionado.comando_PowerShell }} </b>
+        <button nbButton ghost (click)="copiaTextoClipboard(EnvioSelecionado.comando_PowerShell.trim())" ><nb-icon icon="copy-outline" pack="eva" status="primary"></nb-icon></button>
+      </p>
+      <P  *ngIf="[1,3].indexOf(usuario.user.idRole)>=0">
+        <nb-toggle [ngModel]="EnvioSelecionado?.enviado" (ngModelChange)="changeCheckEnviado(EnvioSelecionado,$event)" status="success">Marcar envio como concluído</nb-toggle>
+      </P>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="primary" (click)="ref.close()"  >Fechar</button> &nbsp;&nbsp;
+      <div class="float-right">
+        <button nbButton (click)="getPosition(-1)" *ngIf="PosicaoSelecionada > 0" ><</button>
+            {{ PosicaoSelecionada + 1 }}
+        <button nbButton (click)="getPosition(+1)"  *ngIf="PosicaoSelecionada < envios.length-1" >></button>
+    </div>
+
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+
