@@ -46,7 +46,7 @@
             </thead>
 
             <tbody>
-              <tr *ngFor="let s of solicitacao | async; let i = index ;" [ngClass]="checkRow(s) + ' hand'">
+              <tr *ngFor="let s of solicitacao; let i = index ;" [ngClass]="checkRow(s) + ' hand'">
                 <th scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.idSolicitacao_PUSH}}</th>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.data_Cadastramento  | date:'dd/MMM/yy'}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.prioridade}}</td>

@@ -15,10 +15,14 @@ import { UserService } from '../../../services/user/user.service';
 })
 export class SolicitacoesComponent implements OnInit {
 
-  public solicitacao:Observable<Solicitacao>;
+  //public solicitacao:Observable<Solicitacao>;
+  public solicitacao:Solicitacao[];
   public usuario:User;
+  public listPrioridades:number[] = Array.from({ length: 255 }, (_, i) => i);
 
   public OrdemSolicitacoes:boolean = false;
+  public SoFila:boolean = true;
+  public AlteraPrioridade:boolean = false;
 
   constructor(
     private pushService:PushService,
@@ -52,9 +56,11 @@ export class SolicitacoesComponent implements OnInit {
   }
 
   refreshSolicitacoes(recontar:boolean=false, callback = null){
-    this.solicitacao = this.pushService.getSolicitacoes(recontar,'-1',this.OrdemSolicitacoes ? "idDesc" : "priority").pipe(map((u,i) => {
-      callback && callback();
-      return u; }));
+    this.pushService.getSolicitacoes(recontar,'-1',this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila)
+        .subscribe((s:Solicitacao[]) =>{
+          this.solicitacao = s;
+          callback && callback();
+        });
   }
 
 
@@ -65,28 +71,30 @@ export class SolicitacoesComponent implements OnInit {
         s = e;
         this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} marcado como ${e?.cancelado?'CANCELADO':'NÃO CANCELADO'}`,'',{ status: 'success' })
       } else {
-        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de cancelamento`,'',{ status: 'danger', duration: 5000 })
+        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de cancelamento`,'',{ status: 'danger', duration: 10000 })
       }
     })
   }
 
 
-  changeCheckAutorizado(s:Solicitacao,$event){
-    this.pushService.setSolicitacaoAutorizado(s.idSolicitacao_PUSH,!s.autorizacao_Gestor_PUSH).subscribe((e:Solicitacao) => {
-      if(e.autorizacao_Gestor_PUSH == !s.autorizacao_Gestor_PUSH){
-        s.autorizacao_Gestor_PUSH = e.autorizacao_Gestor_PUSH;
-        s = e;
+  changeCheckAutorizado(sol:Solicitacao,$event){
+    this.pushService.setSolicitacaoAutorizado(sol.idSolicitacao_PUSH,!sol.autorizacao_Gestor_PUSH).subscribe((e:Solicitacao) => {
+      if(e.autorizacao_Gestor_PUSH == !sol.autorizacao_Gestor_PUSH){
+        sol.autorizacao_Gestor_PUSH = e.autorizacao_Gestor_PUSH;
+        sol = e;
         this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} marcado como ${e?.autorizacao_Gestor_PUSH?'AUTORIZADO':'NÃO AUTORIZADO'}`,'',{ status: 'success' })
       } else {
-        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de autorização do gestor`,'',{ status: 'danger', duration: 5000 })
+        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de autorização do gestor`,'',{ status: 'danger', duration: 10000 })
       }
-    })
+    },(e) => {
+      this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message}`,'',{ status: 'danger', duration: 10000 })
+     })
   }
 
   solicitacaoASerExcluida:Solicitacao
-  excluirSolicitacao(s:Solicitacao,dialog: TemplateRef<any>){
-    this.solicitacaoASerExcluida = s;
-    this.dialogService.open(dialog, { context : `Deseja excluir Solicitação ID ${s.idSolicitacao_PUSH} - ${s.nome_Solicitacao} ` });
+  excluirSolicitacao(sol:Solicitacao,dialog: TemplateRef<any>){
+    this.solicitacaoASerExcluida = sol;
+    this.dialogService.open(dialog, { context : `Deseja excluir Solicitação ID ${sol.idSolicitacao_PUSH} - ${sol.nome_Solicitacao} ` });
   }
 
   deletarSolicitacao(dialog: TemplateRef<any>,ref:any,BotaoExcluir:any){
@@ -94,9 +102,24 @@ export class SolicitacoesComponent implements OnInit {
     this.pushService.deletarSolicitacao(this.solicitacaoASerExcluida).subscribe(s => {
       ref.close();
       this.refreshSolicitacoes(false, () =>
-          this.serviceSticker.show(`Solicitação ID ${this.solicitacaoASerExcluida.idSolicitacao_PUSH} - ${this.solicitacaoASerExcluida.nome_Solicitacao} EXCLUIDO!`,'',{ status: 'success', duration: 5000 })
+          this.serviceSticker.show(`Solicitação ID ${this.solicitacaoASerExcluida.idSolicitacao_PUSH} - ${this.solicitacaoASerExcluida.nome_Solicitacao} EXCLUIDO!`,'',{ status: 'success', duration: 10000 })
       );
-    })
+    },(e) => {
+        this.serviceSticker.show(`ERRO! Solicitação ID ${this.solicitacaoASerExcluida.idSolicitacao_PUSH} retornou erro ${e.message}`,'',{ status: 'danger', duration: 10000 })
+     })
+  }
+
+  alteraPrioridade(sol:Solicitacao,$event) {
+     this.pushService.setPrioridadeSolicitacao(sol,$event).subscribe((s:Solicitacao) => {
+        sol = s;
+        if (this.OrdemSolicitacoes)
+            this.solicitacao = this.solicitacao.sort((a,b) => b.idSolicitacao_PUSH-a.idSolicitacao_PUSH);
+        else
+            this.solicitacao = this.solicitacao.sort((a,b) => (a.prioridade-b.prioridade)*1000000000 + (b.quantidade_Total - a.quantidade_Total));
+        this.serviceSticker.show(`Solicitação ID ${s.idSolicitacao_PUSH} setado com prioridade ${s.prioridade}`,'',{ status: 'success', duration: 10000 })
+     },(e) => {
+        this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message}`,'',{ status: 'danger', duration: 10000 })
+     })
   }
 
   uploadFile(s:Solicitacao,$event){

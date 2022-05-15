@@ -60,11 +60,11 @@ export class PushService {
                .get<Curva[]>(`${API_PUSH}/Curvas`)
   }
 
-  getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority"){
+  getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority",soFila:boolean=true){
     if(cgc === "-1")
-      return this.http.get<Solicitacao>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}`);
+      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}`);
     else
-      return this.http.get<Solicitacao>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&order=${order}`);
+      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&order=${order}&soFila=${soFila}`);
   }
 
   setSolicitacaoCancelado(idSolicitacao,enviado){
@@ -85,6 +85,11 @@ export class PushService {
   deletarSolicitacao(solicitacao:Solicitacao){
     return this.http
                .post(`${API_PUSH}/solicitacao/${solicitacao.idSolicitacao_PUSH}/delete`,{})
+  }
+
+  setPrioridadeSolicitacao(sol:Solicitacao,prioridade){
+    return this.http
+               .post(`${API_PUSH}/solicitacao/${sol?.idSolicitacao_PUSH}/set-prioridade?prioridade=${prioridade}`,{})
   }
 
   deletarEnvio(envio:EnviosResponse){

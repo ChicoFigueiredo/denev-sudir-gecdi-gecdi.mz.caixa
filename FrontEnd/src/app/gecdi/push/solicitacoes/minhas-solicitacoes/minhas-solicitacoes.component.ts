@@ -15,7 +15,8 @@ import { DialogSolicitacaoComponent } from '../dialog-solicitacao/dialog-solicit
 })
 export class MinhasSolicitacoesComponent implements OnInit {
 
-  public solicitacao:Observable<Solicitacao>;
+  //public solicitacao:Observable<Solicitacao>;
+  public solicitacao:Solicitacao[];
   public solicitacaoAtual:Solicitacao;
   @ViewChild('diag') dialog: ElementRef<DialogSolicitacaoComponent>;
 
@@ -54,7 +55,9 @@ export class MinhasSolicitacoesComponent implements OnInit {
 
   refreshSolicitacoes(recontar:boolean=false){
     const usuario:User = <User> JSON.parse(localStorage.getItem("gecdi.user.data"));
-    this.solicitacao = this.pushService.getSolicitacoes(recontar,usuario.lotacaoFisica,this.OrdemSolicitacoes ? "idDesc" : "priority");
+    this.pushService
+        .getSolicitacoes(recontar,usuario.lotacaoFisica,this.OrdemSolicitacoes ? "idDesc" : "priority")
+        .subscribe((u:Solicitacao[]) => this.solicitacao = u);
   }
 
 

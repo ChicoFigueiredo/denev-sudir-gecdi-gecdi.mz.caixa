@@ -10,15 +10,11 @@
 
         <nb-card-body>
           <div class="row">
-            <div class="col-md-2">
-              <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>
-            </div>
-            <div class="col-md-2">
-              <button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>
-            </div>
-            <div class="col-md-3">
-              <nb-toggle [ngModel]="OrdemSolicitacoes" status="primary" (change)="refreshSolicitacoes(true)">Ordenar pelo solicitação mais recente</nb-toggle>
-            </div>
+              <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
+              <button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
+              <nb-toggle [(ngModel)]="OrdemSolicitacoes" status="primary" (change)="refreshSolicitacoes(true)">Ordenar pelo solicitação mais recente</nb-toggle>&nbsp;&nbsp;
+              <nb-toggle [(ngModel)]="SoFila" status="primary" (change)="refreshSolicitacoes(true)">Só Fila para Envio</nb-toggle>&nbsp;&nbsp;
+              <nb-toggle [(ngModel)]="AlteraPrioridade" status="primary">Altera Prioridade</nb-toggle>&nbsp;&nbsp;
           </div>
 
           <table class="table">
@@ -42,15 +38,25 @@
                 <td scope="col">Upload</td>
                 <td scope="col">Autori-zado</td>
                 <td scope="col">Cance-lado</td>
-                <td *ngIf="e_admin">Excluir</td>
+                <td *ngIf="usuario.user.idRole===1">Excluir</td>
               </tr>
             </thead>
 
             <tbody>
-              <tr *ngFor="let s of solicitacao | async; let i = index ;" [ngClass]="checkRow(s) + ' hand'">
+              <tr *ngFor="let s of solicitacao; let i = index ;" [ngClass]="checkRow(s) + ' hand'">
                 <th scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.idSolicitacao_PUSH}}</th>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.data_Cadastramento  | date:'dd/MMM/yy'}}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.prioridade}}</td>
+
+                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole===1 && AlteraPrioridade" (click)="rowClick(s,i)">
+                  <nb-select [(ngModel)]="s.prioridade" fullWidth id="prioridade" name="prioridade" (selectedChange)="alteraPrioridade(s,$event)">
+                    <nb-option *ngFor="let v of listPrioridades" [value]="v">{{v}}</nb-option>
+                  </nb-select>
+                </td>
+
+                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole!==1 || (!AlteraPrioridade && usuario.user.idRole===1)" (click)="rowClick(s,i)">
+                  {{s?.prioridade}}
+                </td>
+
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.nome}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.wF_GECRM}} <BR> {{s?.reQ_WO_Aprovacao_Mensagem}}</td>
                 <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.idEnvio_Mensagem}}</td>
@@ -78,7 +84,7 @@
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 
-                <td *ngIf="e_admin">
+                <td *ngIf="usuario.user.idRole===1">
                   <button nbButton ghost (click)="excluirSolicitacao(s,dialogExcluir);"><nb-icon icon="trash" pack="eva" status="danger"></nb-icon></button>
                 </td>
               </tr>

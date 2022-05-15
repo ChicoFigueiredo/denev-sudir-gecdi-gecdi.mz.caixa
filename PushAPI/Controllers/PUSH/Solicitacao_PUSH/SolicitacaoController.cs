@@ -32,24 +32,42 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
         // GET: api/Solicitacoes
         [HttpGet("lista")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(bool prior = true, bool recount = true)
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(DateTime? De = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100)
         {
-            return await GetSolicitacaoCGC(-1, DateTime.Now.AddDays(-50000), prior, recount);
+            return await GetSolicitacaoCGC(-1, DateTime.Now.AddDays(-50000), prior, recount, order, soFila, limit);
         }
 
 
         // GET: api/Solicitacoes/5325
         [HttpGet("lista/{cgc}")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int CGC, DateTime? De = null, bool prior = true, bool recount = true, string order = "priority", int limit = 100)
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int CGC, DateTime? De = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100)
         {
             if (recount)
                 _ = await _dbPush.Database.ExecuteSqlRawAsync("EXEC DB5138_PUSH.FILA.Atualiza_Contagem_de_Solicitacoes -1");
 
             if (De == null)
                 De = DateTime.Now.AddDays(-90);
-            
-            System.Linq.Expressions.Expression<Func<Solicitacao, int>> orderFunc; //necessário para solicitar o ToListAsync encadeado
 
+            System.Linq.Expressions.Expression<Func<Solicitacao, int>> orderFunc; //necessário para solicitar o ToListAsync encadeado
+            System.Linq.Expressions.Expression<Func<Solicitacao, bool>> whereFunc; //necessário para solicitar o ToListAsync encadeado
+
+            // filtros
+            if (CGC < 0)
+            {
+                if (soFila)
+                    whereFunc = x => x.Data_Cadastramento >= (DateTime)De && !x.Finalizado && !x.Cancelado;
+                else
+                    whereFunc = x => x.Data_Cadastramento >= (DateTime)De;
+            }
+            else
+            {
+                if (soFila)
+                    whereFunc = x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De && !x.Finalizado && !x.Cancelado;
+                else
+                    whereFunc = x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De;
+            }
+
+            // ordenação
             switch (order.ToLower())
             {
                 case "registro":
@@ -76,29 +94,13 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
             if (prior)
             {
-                if (CGC < 0)
-                    return await _dbPush.Solicitacao
-                        .Include(i => i.idEnvio_MensagemNavigation)
-                        .OrderBy(orderFunc)
-                        .ThenBy(o => o.Prioridade)
-                        .ThenBy(o => o.Quantidade_Total_Restante)
-                        .Where(x => x.Data_Cadastramento >= (DateTime)De)
-                        .ToListAsync<Solicitacao>();
-                else
-                    return await _dbPush.Solicitacao
-                        .Include(i => i.idEnvio_MensagemNavigation)
-                        .OrderBy(orderFunc)
-                        .ThenBy(o => o.Prioridade)
-                        .ThenBy(o => o.Quantidade_Total_Restante)
-                        .Take(limit)
-                        .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De)
-                        .ToListAsync<Solicitacao>();
-                /*
-                 
-            CASE WHEN Quantidade_Agendada + Quantidade_Total_Restante > 0 OR Cancelado = 0 OR Finalizado=1 THEN 0 ELSE 1 END
-           ,CASE WHEN Quantidade_Agendada + Quantidade_Total_Restante > 0 THEN Prioridade ELSE Prioridade*100 END
-           ,Quantidade_Total_Restante
-                 */
+                return await _dbPush.Solicitacao
+                    .Include(i => i.idEnvio_MensagemNavigation)
+                    .OrderBy(orderFunc)
+                    .ThenBy(o => o.Prioridade)
+                    .ThenBy(o => o.Quantidade_Total_Restante)
+                    .Where(whereFunc)
+                    .ToListAsync<Solicitacao>();
             }
             else
             {
@@ -131,7 +133,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
         // GET: api/Solicitacao/5/MarcarCancelado
         [HttpPost("{id}/MarcarCancelado")]
-        public async Task<ActionResult<Solicitacao>> GetSolicitacao_MarcarCancelado(int id, bool MarcarCancelado = false)
+        public async Task<ActionResult<Solicitacao>> PostSolicitacao_MarcarCancelado(int id, bool MarcarCancelado = false)
         {
             var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
 
@@ -149,9 +151,26 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             }
         }
 
+
+        // GET: api/Solicitacao/5/set-prioridade
+        [HttpPost("{id}/set-prioridade")]
+        public async Task<ActionResult<Solicitacao>> PostSolicitacao_SetPrioridade(int id, byte prioridade = 100)
+        {
+            var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
+
+            if (solicitacao == null)
+                return NotFound();
+
+            solicitacao.Prioridade = prioridade;
+            await _dbPush.SaveChangesAsync();
+
+            return Ok(solicitacao);
+
+        }
+
         // GET: api/Solicitacao/5/Autorizar
         [HttpPost("{id}/Autorizar")]
-        public async Task<ActionResult<Solicitacao>> GetSolicitacao_MarcarAutorizado(int id, bool MarcarAutorizado = true)
+        public async Task<ActionResult<Solicitacao>> PostSolicitacao_MarcarAutorizado(int id, bool MarcarAutorizado = true)
         {
             var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
 
