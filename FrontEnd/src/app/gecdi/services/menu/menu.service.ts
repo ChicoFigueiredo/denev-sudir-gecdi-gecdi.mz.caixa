@@ -32,7 +32,7 @@ export class MenuService {
         url = MENU_DA_ROLE[role].rota;
      }
      this._changeMenu.next(this.Menu_Atual);
-     this.router.navigateByUrl(url);
+     //this.router.navigateByUrl(url);
    }
 
    public GetRota(role:string){

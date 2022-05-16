@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PushAPI.Helpers;
 using PushAPI.Models.Push;
+using PushAPI.Models.Sites;
 
 namespace PushAPI.Controllers.PUSH.Envio
 {
@@ -100,7 +101,10 @@ namespace PushAPI.Controllers.PUSH.Envio
 
             if (solicitacao_Simulacao_Envio.Homologado)
             {
+                Usuario u = HttpContext.Items["User"] as Usuario;
                 solicitacao_Simulacao_Envio.Enviado = MarcarEnvioRealizado;
+                solicitacao_Simulacao_Envio.Matricula_Enviante = u.cUsuario;
+                solicitacao_Simulacao_Envio.Data_Hora_Atualizacao = DateTime.Now;
                 await _dbPush.SaveChangesAsync();
 
                 return Ok(solicitacao_Simulacao_Envio);
