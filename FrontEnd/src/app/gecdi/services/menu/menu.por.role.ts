@@ -94,6 +94,30 @@ const MENU_PUSH_BASE: NbMenuItem[] = [{
   },
 ]
 
+const MENU_PUSH_TI: NbMenuItem[] = [{
+    title: 'PUSH',
+    group: true,
+  },
+  {
+    title: 'Envios do dia',
+    icon: {
+      icon: 'file-export',
+      pack: 'font-awesome'
+    },
+    link: '/gecdi/push/envios',
+    home: true
+  },
+  {
+    title: 'Resumo',
+    icon: {
+      icon: 'newspaper',
+      pack: 'font-awesome'
+    },
+    link: '/gecdi/push/resumo',
+  },
+]
+
+
 const MENU_PUSH_ADMIN: NbMenuItem[] = [{
     title: 'Informe Whatsapp',
     icon: {
@@ -136,7 +160,7 @@ export const MENU_DA_ROLE: MenuMap = {
   3: { // Role Transmissor
     rota: '/gecdi/push/envios',
     menu: [
-      ...MENU_PUSH_BASE,
+      ...MENU_PUSH_TI,
       ...MENU_LOGOFF,
     ],
   },
@@ -148,7 +172,7 @@ export const MENU_DA_ROLE: MenuMap = {
     ],
   },
   5: { // Solicitante (Gestor de produto)
-    rota: '/gecdi/push/envios',
+    rota: '/gecdi/push/minhas-solicitacoes',
     menu: [
       ...MENU_PUSH_BASE,
       ...MENU_LOGOFF,
