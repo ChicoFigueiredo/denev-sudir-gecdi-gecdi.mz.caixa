@@ -117,6 +117,17 @@ const MENU_PUSH_TI: NbMenuItem[] = [{
   },
 ]
 
+const MENU_PUSH_COMPLEMENTO_TI: NbMenuItem[] = [
+  {
+    title: 'Fila de Solicitações',
+    icon: {
+      icon: 'cubes',
+      pack: 'font-awesome'
+    },
+    link: '/gecdi/push/solicitacoes',
+  },
+]
+
 
 const MENU_PUSH_ADMIN: NbMenuItem[] = [{
     title: 'Informe Whatsapp',
@@ -168,6 +179,7 @@ export const MENU_DA_ROLE: MenuMap = {
     rota: '/gecdi/push/envios',
     menu: [
       ...MENU_PUSH_BASE,
+      ...MENU_PUSH_COMPLEMENTO_TI,
       ...MENU_LOGOFF,
     ],
   },
