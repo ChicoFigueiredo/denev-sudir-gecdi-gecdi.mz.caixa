@@ -27,7 +27,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     reQ_WO_Aprovacao_Mensagem              : new FormControl(''                              ,[Validators.required, Validators.pattern('REQ\\d{12,12}$')]),
     reQ_WO_Aprovacao_Mensagem_Texto        : new FormControl(''                              ,[]),
     idEnvio_Mensagem                       : new FormControl(-1                              ,[]),
-    mensagem                               : new FormControl(''                              ,[Validators.required, Validators.minLength(20), Validators.maxLength(100), Validators.pattern('^(?!.*(\\w)\\1{3,}).+$')]),
+    mensagem                               : new FormControl(''                              ,[Validators.required, Validators.minLength(20), Validators.maxLength(1000), Validators.pattern('^(?!.*(\\w)\\1{3,}).+$')]),
     canal                                  : new FormControl(null                            ,[Validators.required]),
     nome_Campo1                            : new FormControl(''                              ,[]),
     nome_Campo2                            : new FormControl(''                              ,[]),
@@ -47,7 +47,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     enviar_DOM                             : new FormControl(false                           ,[]),
     enviar_Horario_Inicial                 : new FormControl(null                            ,[]), // Validators.required, Validators.pattern('\\d{2}:\\d{2}')
     enviar_Horario_Final                   : new FormControl(null                            ,[]), // Validators.required, Validators.pattern('\\d{2}:\\d{2}')
-    limitacao_Tranche                      : new FormControl(null                            ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
+    limitacao_Tranche                      : new FormControl(60000                           ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
     quantidade_Total                       : new FormControl(null                            ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
     quantidade_Enviada                     : new FormControl(0                               ,[]),
     matricula_Cadastramento                : new FormControl(null                            ,[]),

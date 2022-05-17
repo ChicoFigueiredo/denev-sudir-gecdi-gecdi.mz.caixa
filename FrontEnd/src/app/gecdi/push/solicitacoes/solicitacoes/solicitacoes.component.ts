@@ -128,4 +128,11 @@ export class SolicitacoesComponent implements OnInit {
     this.router.navigateByUrl(`/gecdi/push/minhas-solicitacoes/${s.idSolicitacao_PUSH}/upload`);
   }
 
+  geraTooltip(Sol:Solicitacao) {
+    return `Processado em ${Sol?.solicitacao_Upload[0].data_Processamento}\n
+Arquivo: ${Sol?.solicitacao_Upload[0].arquivo}\n
+Tempo de Processamento: ${Sol?.solicitacao_Upload[0].tempo_Decorrido}\n
+Histórico: ${Sol?.solicitacao_Upload[0].resultado_Processamento}`
+  }
+
 }

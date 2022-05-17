@@ -74,6 +74,13 @@
 
                 <td *ngIf="usuario.user.idRole===1" scope="row" (click)="rowClick(se)">
                   <button *ngIf="!s?.autorizacao_Gestor_PUSH" nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>
+                  <div *ngIf="s?.solicitacao_Upload[0]?.idSolicitacao_Upload > 0" [nbTooltip]="geraTooltip(s)">
+                    <b>{{ s?.solicitacao_Upload[0]?.processado ? 'Processado' : 'Aguardando' }}</b><BR>
+                    <span *ngIf="s?.solicitacao_Upload[0]?.processado" class="nowrap" >
+                        <i class="fas fa-thumbs-up   blue"></i>&nbsp;<b>{{ s?.solicitacao_Upload[0]?.registros_Aceitos  | number:'0.':'pt-BR' }}</b><BR>
+                        <i class="fas fa-thumbs-down red" ></i>&nbsp;<b>{{ s?.solicitacao_Upload[0]?.registros_Rejeitados  | number:'0.':'pt-BR' }}</b>
+                    </span>
+                  </div>
                 </td>
 
                 <td scope="row"                         (click)="rowClick(e)">

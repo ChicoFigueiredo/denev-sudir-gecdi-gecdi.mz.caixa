@@ -28,6 +28,7 @@
                 <td scope="col">Mensagem</td>
                 <td scope="col">Qtd</td>
                 <td scope="col">Arquivo</td>
+                <td scope="col">Impactos<BR>Previstos</td>
                 <td scope="col" *ngIf="[1,3].indexOf(usuario.user.idRole)>=0">Enviado</td>
                 <td scope="col">Extras</td>
                 <td scope="col" *ngIf="usuario.user.idRole===1">Cancelado</td>
@@ -46,13 +47,14 @@
                 <td scope="row" class="mensagem-limite" (click)="rowClick(e,i,dialogDetalhes)">{{e?.idSolicitacao_PUSHNavigation?.mensagem}}</td>
                 <td scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)">{{e?.quantidade | number:'0.':'pt-BR'}}</td>
                 <td scope="row" class="mensagem-limite" (click)="rowClick(e,i,dialogDetalhes)">{{e?.nome_Arquivo}}</td>
+                <td scope="row" class="mensagem-limite" (click)="rowClick(e,i,dialogDetalhes)">{{e?.idSolicitacao_PUSHNavigation.impactos_Previstos}}</td>
                 <td scope="row" *ngIf="[1,3].indexOf(usuario.user.idRole)>=0">
                   <nb-toggle [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="success"></nb-toggle>
                 </td>
                 <td scope="row" class="no-wrap"         (click)="rowClick(e,i,dialogDetalhes)">
                   <nb-icon icon="command" pack="gecdi-icons" class="size2rem"></nb-icon>
                 </td>
-                <td scope="row" *ngIf="usuario.user.idRole===1" (click)="rowClick(e,i,dialogDetalhes)">
+                <td scope="row" *ngIf="usuario.user.idRole===1">
                   <nb-toggle [ngModel]="e?.cancelado" (ngModelChange)="changeCheckCancelado(e,$event)" status="warning"></nb-toggle>
                 </td>
 

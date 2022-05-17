@@ -53,3 +53,17 @@ tbody > tr.row-green:nth-child(even) {background: #79c97c}
 :host-context(.user-name) {
   font-weight: bold;
 }
+
+
+
+.red {
+  color: red;
+}
+
+.blue{
+  color: blue;
+}
+
+.nowrap {
+  white-space: nowrap;
+}

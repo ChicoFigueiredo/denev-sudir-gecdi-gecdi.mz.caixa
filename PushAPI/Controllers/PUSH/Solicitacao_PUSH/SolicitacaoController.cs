@@ -96,6 +96,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             {
                 return await _dbPush.Solicitacao
                     .Include(i => i.idEnvio_MensagemNavigation)
+                    .Include(i => i.Solicitacao_Upload)
                     .OrderBy(orderFunc)
                     .ThenBy(o => o.Prioridade)
                     .ThenBy(o => o.Quantidade_Total_Restante)
@@ -107,10 +108,12 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 if (CGC < 0)
                     return await _dbPush.Solicitacao
                         .Include(i => i.idEnvio_MensagemNavigation)
+                        .Include(i => i.Solicitacao_Upload)
                         .Where(x => x.Data_Cadastramento >= (DateTime)De).ToListAsync();
                 else
                     return await _dbPush.Solicitacao
                         .Include(i => i.idEnvio_MensagemNavigation)
+                        .Include(i => i.Solicitacao_Upload)
                         .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De).ToListAsync();
             }
 

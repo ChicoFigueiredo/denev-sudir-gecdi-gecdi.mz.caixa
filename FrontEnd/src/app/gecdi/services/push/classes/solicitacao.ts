@@ -61,6 +61,7 @@ export class Solicitacao {
   Limite_Mensagens_Por_Dia:           number;
   idTipoMensagem:                     number;
   Limitacao_Tranche:                  number;
+  solicitacao_Upload:                 SolicitacaoUpload[];
 
   constructor() {
     const hoje = moment();
@@ -108,4 +109,19 @@ export interface IDEnvioMensagemNavigation {
   solicitacao:          Array<Solicitacao | null>;
 }
 
-
+export interface SolicitacaoUpload {
+  idSolicitacao_Upload:         number;
+  idSolicitacao_PUSH:           number;
+  data_Upload:                  string;
+  matricula_Upload:             null;
+  arquivo:                      string;
+  processado:                   boolean;
+  data_Processamento:           string;
+  rejeitado:                    boolean;
+  registros_Total:              number;
+  registros_Aceitos:            number;
+  registros_Rejeitados:         number;
+  resultado_Processamento:      string;
+  tempo_Decorrido:              string;
+  idSolicitacao_PUSHNavigation: null;
+}
