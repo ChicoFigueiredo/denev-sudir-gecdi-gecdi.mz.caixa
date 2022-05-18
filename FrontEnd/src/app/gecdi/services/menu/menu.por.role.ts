@@ -90,7 +90,7 @@ const MENU_PUSH_BASE: NbMenuItem[] = [{
       icon: 'newspaper',
       pack: 'font-awesome'
     },
-    link: '/gecdi/push/resumo',
+    link: '/gecdi/push/resumo-geral',
   },
 ]
 

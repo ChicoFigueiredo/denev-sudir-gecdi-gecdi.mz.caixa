@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PushAPI.Helpers;
 using PushAPI.Models.Push;
 using PushAPI.Models.Sites;
+using PushAPI.Responses;
 
 namespace PushAPI.Controllers.PUSH.Envio
 {
@@ -24,7 +25,7 @@ namespace PushAPI.Controllers.PUSH.Envio
             _dbPush = context;
         }
 
-        // GET: api/Envios
+        // GET: api/Envios/lista
         [HttpGet("lista")]
         public async Task<ActionResult<IEnumerable<Solicitacao_Simulacao_Envio>>> GetSolicitacao_Simulacao_Envio(DateTime? De, DateTime? Ate, int Enviados = 0, bool NaoEnviadosAntigos = true, bool simular = false)
         {
@@ -79,6 +80,16 @@ namespace PushAPI.Controllers.PUSH.Envio
             }
             
         }
+
+
+        // GET: api/Envios/resumo
+        [HttpGet("resumo")]
+        public async Task<ActionResult<IEnumerable<spResumo_Envios>>> GetSolicitacao_Simulacao_Envio_Resumo(DateTime? Data_Resumo)
+        {
+            DateTime Data_Resumo_Apurado = Data_Resumo ?? DateTime.Now.Date;
+            return await _dbPush.spResumo_Envios.FromSqlRaw<spResumo_Envios>($"EXEC DB5138_PUSH.Fila.Resumo '{Data_Resumo_Apurado.ToString("yyyy-MM-dd")}'").ToListAsync();
+        }
+
 
         // GET: api/Envios/5
         [HttpGet("{id}")]

@@ -5,6 +5,7 @@ import { ManutencaoCurvasComponent } from './curvas/manutencao-curvas/manutencao
 import { EnviosComponent } from './envios/envios/envios.component';
 import { FilaComponent } from './fila/fila/fila.component';
 import { PushComponent } from './push.component';
+import { ResumoComponent } from './resumo/resumo/resumo.component';
 import { WhatsappComponent } from './resumo/whatsapp/whatsapp.component';
 import { ControleProcessamentoUploadArquivoComponent } from './solicitacoes/controle-processamento-upload-arquivo/controle-processamento-upload-arquivo.component';
 import { MinhasSolicitacoesComponent } from './solicitacoes/minhas-solicitacoes/minhas-solicitacoes.component';
@@ -46,6 +47,10 @@ const routes: Routes = [{
   }, {
     path: 'resumo-whatsapp',
     component: WhatsappComponent,
+    canActivate: [AuthGuard], //Chama a rotina de autenticação
+  }, {
+    path: 'resumo-geral',
+    component: ResumoComponent,
     canActivate: [AuthGuard], //Chama a rotina de autenticação
   },
   {

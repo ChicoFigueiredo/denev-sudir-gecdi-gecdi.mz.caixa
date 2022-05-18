@@ -9,5 +9,6 @@ namespace PushAPI.Models.Push
     {
         public virtual DbSet<spVerifica_Status_Fila> spVerifica_Status_Fila { get; set; } = null!;
         public virtual DbSet<spVerifica_Historico_Fila> spVerifica_Historico_Fila { get; set; } = null!;
+        public virtual DbSet<spResumo_Envios> spResumo_Envios { get; set; } = null!;
     }
 }

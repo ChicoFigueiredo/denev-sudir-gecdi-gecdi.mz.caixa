@@ -2,3 +2,32 @@
 .font-2_25rem {
   font-size: 2.25rem;
 }
+
+
+.holder {
+  border: 1px solid black;
+  margin: 10px;
+  padding: 5px;
+  width: 200px;
+}
+
+.bar {
+  border: 1px solid grey;
+  padding: 3px;
+  margin: 10px 5px;
+  text-align: center;
+  padding: 0%;
+  display:table;
+  height: 40px;
+}
+
+.positive {
+  display:table-cell;
+  color: blue;
+  width: 180px;
+}
+
+
+.size {
+  background: green;
+}

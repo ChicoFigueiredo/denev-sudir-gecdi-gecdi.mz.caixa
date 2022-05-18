@@ -24,6 +24,7 @@ import { UploadArquivoComponent } from './solicitacoes/upload-arquivo/upload-arq
 
 import { AngularFileUploaderModule } from "angular-file-uploader";
 import { ControleProcessamentoUploadArquivoComponent } from './solicitacoes/controle-processamento-upload-arquivo/controle-processamento-upload-arquivo.component';
+import { ResumoComponent } from './resumo/resumo/resumo.component';
 
 const configToastr: NbToastrConfig =  <NbToastrConfig> {
   duration: 1500,
@@ -50,6 +51,7 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     ManutencaoCurvasComponent,
     UploadArquivoComponent,
     ControleProcessamentoUploadArquivoComponent,
+    ResumoComponent,
   ],
   imports: [
     CommonModule,

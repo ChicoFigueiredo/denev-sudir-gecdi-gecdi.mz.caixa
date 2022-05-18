@@ -8,6 +8,16 @@
 
         <nb-card-body>
 
+          <div class="holder">
+            <div class="bar" *ngFor="let item of data">
+              <div #bar class="positive">
+                <div class="size" [style.width.px]="getWidth(item, bar)">
+                  {{item}}
+                </div>
+              </div>
+            </div>
+          </div>
+
         </nb-card-body>
 
         <nb-card-footer>
