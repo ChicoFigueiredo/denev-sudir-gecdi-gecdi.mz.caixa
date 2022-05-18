@@ -28,6 +28,12 @@ export class EnviosComponent implements OnInit, OnDestroy {
   timerSlip:number = 60*15+1;
   timer:number = this.timerSlip;
   runEvent:number = 0;
+  SoDoDia:boolean = true;
+
+  QtdTotalPush:number = 0;
+  QtdEnvios:number=0;
+  QtdEnviosEfetivados:number=0;
+  MensagensDistintas:number=0;
 
   everySecond: Observable<number> = timer(0, 1000);
 
@@ -57,12 +63,16 @@ export class EnviosComponent implements OnInit, OnDestroy {
     })
   }
 
-  refreshEnvios(callback=null){
+  refreshEnvios(callback=null,simular:boolean=false){
     const dt = moment(this.dataSelecionada).format("YYYY-MM-DD");
-    this.pushService.getSolicitacoesEnvio(dt,dt,-1,true)
+    this.pushService.getSolicitacoesEnvio(dt,dt,-1,!this.SoDoDia,simular)
                     .pipe(map(u => { callback && callback(); return u; }))
                     .subscribe(l => {
                       this.envios = l;
+                      this.QtdTotalPush = l.map(q => q.quantidade).reduce((ant,cur,i) => ant + cur);
+                      this.QtdEnvios = l.length;
+                      this.QtdEnviosEfetivados = l.map(q => <number>(q.enviado ? 1 : 0)).reduce((ant,cur,i) => ant + cur);
+                      this.MensagensDistintas = new Set(l.map(q => q.idSolicitacao_PUSHNavigation.mensagem)).size
                       this.EnvioSelecionado = l[this.PosicaoSelecionada];
                     });
     this.timer = this.timerSlip;
@@ -119,6 +129,7 @@ export class EnviosComponent implements OnInit, OnDestroy {
       if(e.enviado == !c.enviado){
         c.enviado = e.enviado;
         c = e;
+        this.QtdEnviosEfetivados = this.envios.map(q => <number>(q.enviado ? 1 : 0)).reduce((ant,cur,i) => ant + cur);
         this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} marcado como ${e?.enviado?'ENVIADO':'NÃO ENVIADO'}`,'',{ status: 'success' })
       } else {
         this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} com erro na marcação de envio`,'',{ status: 'danger', duration: 5000 })

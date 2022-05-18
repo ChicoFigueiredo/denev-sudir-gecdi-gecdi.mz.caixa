@@ -23,13 +23,13 @@ export class PushService {
     this.getCurvas().subscribe((c:Curva[]) => this.Curvas = c);
   }
 
-  getSolicitacoesEnvio(de = null,ate = null, enviados = -1, antigos = true){
+  getSolicitacoesEnvio(de = null,ate = null, enviados = -1, antigos = true, simular = false){
     if (!de) de = moment().format("YYYY-MM-DD");
     if (!ate) ate = moment().format("YYYY-MM-DD");
     const xDe = moment(de);
     const xAte = moment(ate);
     return this.http
-               .get<EnviosResponse[]>(`${API_PUSH}/envios/lista?De=${xDe.format("YYYY-MM-DD")}&Ate=${xAte.format("YYYY-MM-DD")}&Enviados=${enviados}&NaoEnviadosAntigos=${antigos}`)
+               .get<EnviosResponse[]>(`${API_PUSH}/envios/lista?De=${xDe.format("YYYY-MM-DD")}&Ate=${xAte.format("YYYY-MM-DD")}&Enviados=${enviados}&NaoEnviadosAntigos=${antigos}&simular=${simular}`)
   }
 
   getSolicitacaoById(id){

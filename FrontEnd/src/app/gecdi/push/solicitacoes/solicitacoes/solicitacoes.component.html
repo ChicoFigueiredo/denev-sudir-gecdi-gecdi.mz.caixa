@@ -13,9 +13,9 @@
             <div class="col-md-12">
               <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
               <button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
-              <nb-toggle [(ngModel)]="OrdemSolicitacoes" status="primary" (change)="refreshSolicitacoes(true)">Ordenar pelo solicitação mais recente</nb-toggle>&nbsp;&nbsp;
-              <nb-toggle [(ngModel)]="SoFila" status="primary" (change)="refreshSolicitacoes(true)">Só Fila para Envio</nb-toggle>&nbsp;&nbsp;
-              <nb-toggle *ngIf="usuario.user.idRole===1" [(ngModel)]="AlteraPrioridade" status="primary">Altera Prioridade</nb-toggle>&nbsp;&nbsp;
+              <nb-toggle [(ngModel)]="OrdemSolicitacoes" status="primary" (change)="refreshSolicitacoes(true)" class="align-middle">Ordenar pelo solicitação mais recente</nb-toggle>&nbsp;&nbsp;
+              <nb-toggle [(ngModel)]="SoFila" status="primary" (change)="refreshSolicitacoes(true)" class="align-middle">Só Fila para Envio</nb-toggle>&nbsp;&nbsp;
+              <nb-toggle *ngIf="usuario.user.idRole===1" [(ngModel)]="AlteraPrioridade" status="primary" class="align-middle">Altera Prioridade</nb-toggle>&nbsp;&nbsp;
             </div>
           </div>
 

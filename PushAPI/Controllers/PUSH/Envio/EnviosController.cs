@@ -26,7 +26,7 @@ namespace PushAPI.Controllers.PUSH.Envio
 
         // GET: api/Envios
         [HttpGet("lista")]
-        public async Task<ActionResult<IEnumerable<Solicitacao_Simulacao_Envio>>> GetSolicitacao_Simulacao_Envio(DateTime? De, DateTime? Ate, int Enviados = 0, bool NaoEnviadosAntigos = true)
+        public async Task<ActionResult<IEnumerable<Solicitacao_Simulacao_Envio>>> GetSolicitacao_Simulacao_Envio(DateTime? De, DateTime? Ate, int Enviados = 0, bool NaoEnviadosAntigos = true, bool simular = false)
         {
             DateTime xDe = DateTime.Now.Date;
             DateTime xAte = DateTime.Now.Date;
@@ -36,6 +36,9 @@ namespace PushAPI.Controllers.PUSH.Envio
 
             if (Ate != null)
                 xAte = (DateTime)De;
+
+            if (simular)
+                _ = await _dbPush.Database.ExecuteSqlRawAsync($"DB5138_PUSH.FILA.Simular_Envio_PUSH @Processar = 1, @Data_Processar = '{xDe.ToString("yyyy-MM-dd")}', @Hora_Inicio = '00:00', @Hora_Fim = '23:59' ");
 
             if (Enviados < 0)
             {
