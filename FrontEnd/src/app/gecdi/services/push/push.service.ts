@@ -97,6 +97,11 @@ export class PushService {
                .post(`${API_PUSH}/solicitacao/${sol?.idSolicitacao_PUSH}/set-prioridade?prioridade=${prioridade}`,{})
   }
 
+  setCurvaSolicitacao(sol:Solicitacao,curva){
+    return this.http
+               .post(`${API_PUSH}/solicitacao/${sol?.idSolicitacao_PUSH}/set-curva?curva=${curva}`,{})
+  }
+
   deletarEnvio(envio:EnviosResponse){
     return this.http
                .post(`${API_PUSH}/envios/${envio?.idSolicitacao_Simulacao_Envio}/delete`,{})

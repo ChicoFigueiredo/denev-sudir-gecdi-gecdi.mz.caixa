@@ -15,7 +15,7 @@
               <button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
               <nb-toggle [(ngModel)]="OrdemSolicitacoes" status="primary" (change)="refreshSolicitacoes(true)" class="align-middle">Ordenar pelo solicitação mais recente</nb-toggle>&nbsp;&nbsp;
               <nb-toggle [(ngModel)]="SoFila" status="primary" (change)="refreshSolicitacoes(true)" class="align-middle">Só Fila para Envio</nb-toggle>&nbsp;&nbsp;
-              <nb-toggle *ngIf="usuario.user.idRole===1" [(ngModel)]="AlteraPrioridade" status="primary" class="align-middle">Altera Prioridade</nb-toggle>&nbsp;&nbsp;
+              <nb-toggle *ngIf="usuario.user.idRole===1" [(ngModel)]="AlteraPrioridade" status="primary" class="align-middle">Altera Prioridade/Curva</nb-toggle>&nbsp;&nbsp;
             </div>
           </div>
 
@@ -32,7 +32,7 @@
                 <td scope="col">Canal</td>
                 <td scope="col dir">Qtd. / Qtd.Env.</td>
                 <td scope="col dir">Qtd. Ag. / Fila</td>
-                <td scope="col">Curvas</td>
+                <td scope="col">Curva</td>
                 <td scope="col">De/Ate</td>
                 <td scope="col">Horário</td>
                 <td scope="col">Demand.<BR>Exec.</td>
@@ -66,9 +66,19 @@
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.canal}}</td>
                 <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Total | number:'0.':'pt-BR'}}<BR>{{s?.quantidade_Enviada | number:'0.':'pt-BR'}}</td>
                 <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Agendada | number:'0.':'pt-BR'}}<BR>{{s?.quantidade_Total_Restante | number:'0.':'pt-BR'}}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.idCurva_Envio_Dia_Normal}} / {{s?.idCurva_Envio_Dia_Cheio}} </td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_a_partir_de  | date:'dd/MMM/yy'}} - {{s?.enviar_no_maximo_ate  | date:'dd/MMM/yy'}}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_Horario_Inicial }} - {{s?.enviar_Horario_Final  }}</td>
+
+                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole!==1 || (!AlteraPrioridade && usuario.user.idRole===1)" (click)="rowClick(s,i)">
+                    <b>{{s?.idCurva}}</b> <br> {{s?.idCurvaNavigation?.apelido_Curva_Envio}}
+                </td>
+                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole===1 && AlteraPrioridade" (click)="rowClick(s,i)">
+                  <nb-select [(ngModel)]="s.idCurva" fullWidth id="idCurva" name="idCurva" (selectedChange)="alteraCurva(s,$event)">
+                    <nb-option *ngFor="let c of pushService.Curvas" [value]="c.idCurva_Envio">{{c.apelido_Curva_Envio}}</nb-option>
+                  </nb-select>
+                </td>
+
+
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_a_partir_de  | date:'dd/MMM/yy'}}<BR>{{s?.enviar_no_maximo_ate  | date:'dd/MMM/yy'}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_Horario_Inicial }}<BR>{{s?.enviar_Horario_Final  }}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.cgcDemandante}} / {{s?.cgcExecutora}}</td>
                 <!-- <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td> -->
 

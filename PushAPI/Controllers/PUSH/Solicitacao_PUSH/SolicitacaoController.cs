@@ -97,6 +97,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 return await _dbPush.Solicitacao
                     .Include(i => i.idEnvio_MensagemNavigation)
                     .Include(i => i.Solicitacao_Upload)
+                    .Include(i => i.idCurvaNavigation)
                     .OrderBy(orderFunc)
                     .ThenBy(o => o.Prioridade)
                     .ThenBy(o => o.Quantidade_Total_Restante)
@@ -109,11 +110,13 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                     return await _dbPush.Solicitacao
                         .Include(i => i.idEnvio_MensagemNavigation)
                         .Include(i => i.Solicitacao_Upload)
+                        .Include(i => i.idCurvaNavigation)
                         .Where(x => x.Data_Cadastramento >= (DateTime)De).ToListAsync();
                 else
                     return await _dbPush.Solicitacao
                         .Include(i => i.idEnvio_MensagemNavigation)
                         .Include(i => i.Solicitacao_Upload)
+                        .Include(i => i.idCurvaNavigation)
                         .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De).ToListAsync();
             }
 
@@ -165,6 +168,22 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 return NotFound();
 
             solicitacao.Prioridade = prioridade;
+            await _dbPush.SaveChangesAsync();
+
+            return Ok(solicitacao);
+
+        }
+
+        // GET: api/Solicitacao/5/set-curva
+        [HttpPost("{id}/set-curva")]
+        public async Task<ActionResult<Solicitacao>> PostSolicitacao_SetCurva(int id, byte curva = 34)
+        {
+            var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
+
+            if (solicitacao == null)
+                return NotFound();
+
+            solicitacao.idCurva = curva;
             await _dbPush.SaveChangesAsync();
 
             return Ok(solicitacao);

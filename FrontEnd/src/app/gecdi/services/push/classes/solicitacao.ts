@@ -3,65 +3,67 @@
 import * as moment from "moment";
 
 export class Solicitacao {
-  idSolicitacao_PUSH:                 number;
-  wF_GECRM:                           number;
-  nome_Solicitacao:                   string;
-  reQ_WO_Aprovacao_Mensagem:          string;
-  reQ_WO_Aprovacao_Mensagem_Texto:    null;
-  idEnvio_Mensagem:                   number;
-  mensagem:                           string;
-  canal:                              string;
-  nome_Campo1:                        string;
-  nome_Campo2:                        string;
-  nome_Campo3:                        string;
-  nome_Campo4:                        string;
-  nome_Campo5:                        string;
-  idCurva_Envio_Dia_Normal:           number;
-  idCurva_Envio_Dia_Cheio:            number;
-  enviar_a_partir_de:                 string;
-  enviar_no_maximo_ate:               string;
-  enviar_SEG:                         boolean;
-  enviar_TER:                         boolean;
-  enviar_QUA:                         boolean;
-  enviar_QUI:                         boolean;
-  enviar_SEX:                         boolean;
-  enviar_SAB:                         boolean;
-  enviar_DOM:                         boolean;
-  enviar_Horario_Inicial:             string;
-  enviar_Horario_Final:               string;
-  limitacao_Tranche:                  number;
-  quantidade_Total:                   number;
-  quantidade_Enviada:                 number;
-  matricula_Cadastramento:            null;
-  data_Cadastramento:                 string;
-  autorizacao_Gestor_PUSH:            boolean;
-  matricula_Autorizacao_Gestor_PUSH:  null;
-  bloqueado_TI:                       boolean;
-  matricula_Bloqueio_TI:              null;
-  data_Hora_Bloqueio:                 null;
-  data_Hora_Autorizacao:              null;
-  cancelado:                          boolean;
-  matricula_Cancelamento:             null;
-  data_Hora_Cancelamento:             null;
-  cgcDemandante:                      number;
-  cgcExecutora:                       number;
-  finalizado:                         boolean;
-  impactos_Previstos:                 string;
-  prioridade:                         number;
-  quantidade_Agendada:                number;
-  quantidade_Total_Restante:          number;
-  canalNavigation:                    null;
-  idCurva_Envio_Dia_CheioNavigation:  null;
-  idCurva_Envio_Dia_NormalNavigation: null;
-  idEnvio_MensagemNavigation:         string;
-  solicitacao_Clientes:               any[];
-  solicitacao_Simulacao_Envio:        any[];
-  enviar_Horario_InicialFormatado:    string;
-  enviar_Horario_FinalFormatado:      string;
-  Limite_Mensagens_Por_Dia:           number;
-  idTipoMensagem:                     number;
-  Limitacao_Tranche:                  number;
-  solicitacao_Upload:                 SolicitacaoUpload[];
+  idSolicitacao_PUSH:                     number;
+  wF_GECRM:                               number;
+  nome_Solicitacao:                       string;
+  reQ_WO_Aprovacao_Mensagem:              string;
+  reQ_WO_Aprovacao_Mensagem_Texto:        null | string;
+  idEnvio_Mensagem:                       number;
+  mensagem:                               string;
+  canal:                                  string;
+  nome_Campo1:                            string;
+  nome_Campo2:                            string;
+  nome_Campo3:                            string;
+  nome_Campo4:                            string;
+  nome_Campo5:                            string;
+  idCurva:                                number;
+  quantidade_Maxima_Autorizada:           number;
+  enviar_a_partir_de:                     string;
+  enviar_no_maximo_ate:                   string;
+  enviar_SEG:                             boolean;
+  enviar_TER:                             boolean;
+  enviar_QUA:                             boolean;
+  enviar_QUI:                             boolean;
+  enviar_SEX:                             boolean;
+  enviar_SAB:                             boolean;
+  enviar_DOM:                             boolean;
+  enviar_Horario_Inicial:                 string;
+  enviar_Horario_Final:                   string;
+  limitacao_Tranche:                      number;
+  quantidade_Total:                       number;
+  quantidade_Enviada:                     number;
+  matricula_Cadastramento:                string | null;
+  data_Cadastramento:                     string;
+  autorizacao_Gestor_PUSH:                boolean;
+  matricula_Autorizacao_Gestor_PUSH:      null;
+  bloqueado_TI:                           boolean;
+  matricula_Bloqueio_TI:                  null;
+  data_Hora_Bloqueio:                     null;
+  data_Hora_Autorizacao:                  null;
+  cancelado:                              boolean;
+  matricula_Cancelamento:                 null;
+  data_Hora_Cancelamento:                 null;
+  cgcDemandante:                          number;
+  cgcExecutora:                           number;
+  finalizado:                             boolean;
+  impactos_Previstos:                     string;
+  prioridade:                             number;
+  quantidade_Agendada:                    number;
+  quantidade_Total_Restante:              number;
+  limite_Mensagens_Por_Dia:               number | null;
+  idTipoMensagem:                         number;
+  titulo:                                 null;
+  urL_Acao:                               null;
+  urL_Imagem:                             null;
+  canalNavigation:                        null;
+  quantidade_Maxima_AutorizadaNavigation: null;
+  idCurvaNavigation:                      IDCurvaNavigation | null;
+  idEnvio_MensagemNavigation:             IDEnvioMensagemNavigation;
+  solicitacao_Clientes:                   any[];
+  solicitacao_Simulacao_Envio:            any[];
+  solicitacao_Upload:                     SolicitacaoUpload[];
+  enviar_Horario_InicialFormatado:        string;
+  enviar_Horario_FinalFormatado:          string;
 
   constructor() {
     const hoje = moment();
@@ -80,7 +82,7 @@ export class Solicitacao {
     this.enviar_SEX = true;
     this.enviar_SAB = true;
     this.enviar_DOM = false;
-    this.Limitacao_Tranche = 60000;
+    this.limitacao_Tranche = 60000;
     this.canal = 'ibc';
   }
 }
@@ -109,6 +111,55 @@ export interface IDEnvioMensagemNavigation {
   solicitacao:          Array<Solicitacao | null>;
 }
 
+export interface SolicitacaoUpload {
+  idSolicitacao_Upload:         number;
+  idSolicitacao_PUSH:           number;
+  data_Upload:                  string;
+  matricula_Upload:             null;
+  arquivo:                      string;
+  processado:                   boolean;
+  data_Processamento:           string;
+  rejeitado:                    boolean;
+  registros_Total:              number;
+  registros_Aceitos:            number;
+  registros_Rejeitados:         number;
+  resultado_Processamento:      string;
+  tempo_Decorrido:              string;
+  idSolicitacao_PUSHNavigation: null;
+}
+
+export interface IDCurvaNavigation {
+  idCurva_Envio:                                     number;
+  apelido_Curva_Envio:                               string;
+  nome_Curva_Envio:                                  string;
+  curva_Envio_Tranches:                              any[];
+  solicitacaoQuantidade_Maxima_AutorizadaNavigation: any[];
+  solicitacaoidCurvaNavigation:                      Array<Solicitacao | null>;
+}
+
+export interface IDEnvioMensagemNavigation {
+  idEnvio_Mensagem:     number;
+  mensagem1:            string;
+  data_Inicio:          null;
+  data_Fim:             null;
+  tranches:             null;
+  push_Enviados:        null;
+  apelido:              null;
+  ativo:                boolean;
+  enviados:             number;
+  faltam:               number;
+  appCaixa:             boolean;
+  caixaTem:             boolean;
+  mensagemRegex:        null | string;
+  monitoração_Producao: string | null;
+  caixA_Tem:            boolean;
+  cartão:               boolean;
+  crédito:              boolean;
+  pre_Autorizado:       boolean;
+  envio_CPF:            any[];
+  envio_Tranche:        any[];
+  solicitacao:          Solicitacao[];
+}
 export interface SolicitacaoUpload {
   idSolicitacao_Upload:         number;
   idSolicitacao_PUSH:           number;

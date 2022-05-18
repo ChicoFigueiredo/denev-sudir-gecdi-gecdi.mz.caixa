@@ -25,7 +25,7 @@ export class SolicitacoesComponent implements OnInit {
   public AlteraPrioridade:boolean = false;
 
   constructor(
-    private pushService:PushService,
+    public pushService:PushService,
     private serviceSticker: NbToastrService,
     private userService: UserService,
     private dialogService: NbDialogService,
@@ -120,9 +120,20 @@ export class SolicitacoesComponent implements OnInit {
             this.solicitacao = this.solicitacao.sort((a,b) => (a.prioridade-b.prioridade)*1000000000 + (b.quantidade_Total - a.quantidade_Total));
         this.serviceSticker.show(`Solicitação ID ${s.idSolicitacao_PUSH} setado com prioridade ${s.prioridade}`,'',{ status: 'success', duration: 10000 })
      },(e) => {
-        this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message}`,'',{ status: 'danger', duration: 10000 })
+        this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message} ao setar a prioridade`,'',{ status: 'danger', duration: 10000 })
      })
   }
+
+
+  alteraCurva(sol:Solicitacao,$event) {
+     this.pushService.setCurvaSolicitacao(sol,$event).subscribe((s:Solicitacao) => {
+        this.serviceSticker.show(`Solicitação ID ${s.idSolicitacao_PUSH} setado com a curva ${s.idCurva} - ${ this.pushService.Curvas.filter(x => x.idCurva_Envio==$event)[0].nome_Curva_Envio }`,'',{ status: 'success', duration: 10000 })
+     },(e) => {
+        this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message} ao setar a curva`,'',{ status: 'danger', duration: 10000 })
+     })
+  }
+
+
 
   uploadFile(s:Solicitacao,$event){
     this.router.navigateByUrl(`/gecdi/push/minhas-solicitacoes/${s.idSolicitacao_PUSH}/upload`);
