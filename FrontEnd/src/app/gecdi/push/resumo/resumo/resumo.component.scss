@@ -1,3 +1,61 @@
 table {
   font-family: 'Tw Cen MT';
+  tr > td {
+    font-size: 1.5rem;
+    font-weight: bold;
+    &.font-regular {
+      font-weight: normal;
+    }
+    &.verde {
+      color: #548235;
+    }
+    &.espaço{
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+    }
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.td-top-left {
+  border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-left: 2px solid #70ad47; background-color: #E2F0D9;
+}
+
+.td-top-middle {
+  border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47;
+}
+
+.td-top-right {
+  border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-right: 2px solid #70ad47
+}
+
+.td-middle-left {
+  border-top: 1px solid #e2f0d9; border-bottom: 1px solid #ffffff; background-color: #E2F0D9;
+}
+
+.td-middle-middle {
+  border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9
+}
+
+.td-middle-right {
+  border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9
+}
+
+.td-bottom-left {
+  border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-left: 2px solid #70ad47
+}
+
+.td-bottom-middle {
+  border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47
+}
+
+.td-bottom-right {
+  border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-right: 2px solid #70ad47
 }

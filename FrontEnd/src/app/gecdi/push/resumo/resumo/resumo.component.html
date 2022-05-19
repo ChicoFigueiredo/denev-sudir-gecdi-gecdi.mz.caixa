@@ -6,141 +6,55 @@
   <nb-card-body>
 
     <nb-tabset>
-      <nb-tab tabTitle="Resumo">
+      <nb-tab tabTitle="Resumo Diário">
+        <div class="row">
+          <div class="col-md-12">
+            Data:
+            <input nbInput placeholder="Hoje" [nbDatepicker]="dateTimePicker" [ngModel]="dataSelecionada" (ngModelChange)="changeDataSelecionada(dataSelecionada,$event)"><nb-datepicker #dateTimePicker format="dd/MMM/yyyy"></nb-datepicker>&nbsp;&nbsp;&nbsp;
+            <button nbButton (click)="refreshResumo()"><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button> &nbsp;&nbsp;
+          </div>
+        </div>
+        <BR><BR>
 
         <table cellspacing="0" border="0">
-          <colgroup width="81"></colgroup>
+          <colgroup width="60"></colgroup>
           <colgroup width="224"></colgroup>
           <colgroup width="123"></colgroup>
           <colgroup width="88"></colgroup>
           <colgroup width="521"></colgroup>
           <colgroup width="137"></colgroup>
           <colgroup width="141"></colgroup>
-          <colgroup width="179"></colgroup>
+          <colgroup width="250"></colgroup>
           <tr>
-            <td height="27" align="left" valign=middle><font size=4 color="#548235">Data</font></td>
-            <td align="left" valign=middle sdval="44699" sdnum="1033;1033;M/D/YYYY"><font size=4 color="#548235">5/18/2022</font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="center" valign=middle><font size=4 color="#000000"><br></font></td>
+            <td class="td-top-left   text-center"  valign=middle height="28">ID</td>
+            <td class="td-top-middle text-center"  valign=middle>WF</td>
+            <td class="td-top-middle text-center"  valign=middle>Canal</td>
+            <td class="td-top-middle text-center"  valign=middle>IDM</td>
+            <td class="td-top-middle"              valign=middle>Mensagem</td>
+            <td class="td-top-middle text-right"   valign=middle>Qtd. Dia</td>
+            <td class="td-top-middle text-right"   valign=middle>Enviados</td>
+            <td class="td-top-right  text-center"  valign=middle>%</td>
+          </tr>
+          <tr *ngFor="let r of resumo">
+            <td class="td-middle-left   text-center"                     valign=middle>{{r?.ids}}</td>
+            <td class="td-middle-middle text-center"                     valign=middle>{{r?.wf}}</td>
+            <td class="td-middle-middle text-center  verde font-regular" valign=middle>{{r?.canal}}</td>
+            <td class="td-middle-middle text-center"                     valign=middle>{{r?.idm}}</td>
+            <td class="td-middle-middle font-regular verde espaço"       valign=middle>{{r?.mensagem}}</td>
+            <td class="td-middle-middle text-right   verde font-regular" valign=middle>{{r?.qtd_Dia | number:'0.':'pt-BR'}}</td>
+            <td class="td-middle-middle text-right   verde font-regular" valign=middle>{{r?.enviado | number:'0.':'pt-BR'}}</td>
+            <td class="td-middle-right  text-center  verde font-regular" valign=middle>{{r?.percentual_Dec | number:'0.1':'pt-BR'}}%</td>
           </tr>
           <tr>
-            <td height="28" align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="left" valign=middle><font size=4 color="#000000">                                                                                                                                                                                </font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="left" valign=middle><font size=4 color="#000000"><br></font></td>
-            <td align="center" valign=middle><font size=4 color="#000000"><br></font></td>
-          </tr>
-          <tr>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-left: 2px solid #70ad47" height="28" align="left" valign=middle><b><font size=4 color="#000000">ID</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000">WF</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000">Canal</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000">IDM</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-right: 1px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000">Mensagem</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000">Qtd. Dia</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000">Enviados</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-right: 2px solid #70ad47" align="center" valign=middle><b><font size=4 color="#000000">%</font></b></td>
-          </tr>
-          <tr>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #ffffff" height="135" align="left" valign=middle bgcolor="#E2F0D9" sdval="62" sdnum="1033;"><b><font size=4 color="#000000">62</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="7596" sdnum="1033;0;0"><b><font size=4 color="#000000">7596</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle><font size=4 color="#548235">ibc</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="119" sdnum="1033;"><b><font size=4 color="#000000">119</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9; border-right: 1px solid #70ad47" align="left" valign=middle><font size=4 color="#548235">Economize ALTERANDO a Cesta da sua conta para uma mais barata ou CANCELE e use os servicos gratuitos. Acesse APP CAIXA, opcao Minha Conta, menu Cestas de Servicos ou dirija-se a um terminal de autoatendimento CAIXA</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="120000" sdnum="1033;0;#,##0"><font size=4 color="#548235">120,000</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="0" sdnum="1033;0;#,##0"><font size=4 color="#548235">0</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="center" valign=middle sdval="0" sdnum="1033;0;0.0%"><font size=4 color="#548235">0.0%</font></td>
-          </tr>
-          <tr>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #ffffff" height="108" align="left" valign=middle bgcolor="#E2F0D9" sdval="172" sdnum="1033;"><b><font size=4 color="#000000">172</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="6725" sdnum="1033;0;0"><b><font size=4 color="#000000">6725</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle><font size=4 color="#548235">ibc</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="175" sdnum="1033;"><b><font size=4 color="#000000">175</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9; border-right: 1px solid #70ad47" align="left" valign=middle><font size=4 color="#548235">Cart&atilde;o CAIXA Super maio com cart&otilde;es Elo e Visa! Anuidade zero para sempre. Contrate no caixa eletr&ocirc;nico ou App CAIXA at&eacute; 31/05. Consulte regulamento no site da CAIXA.</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="111915" sdnum="1033;0;#,##0"><font size=4 color="#548235">111,915</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="111915" sdnum="1033;0;#,##0"><font size=4 color="#548235">111,915</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="center" valign=middle sdval="1" sdnum="1033;0;0.0%"><font size=4 color="#548235">100.0%</font></td>
-          </tr>
-          <tr>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #ffffff" height="162" align="left" valign=middle bgcolor="#E2F0D9" sdval="173" sdnum="1033;"><b><font size=4 color="#000000">173</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="7784" sdnum="1033;0;0"><b><font size=4 color="#000000">7784</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle><font size=4 color="#548235">caixatem</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="176" sdnum="1033;"><b><font size=4 color="#000000">176</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9; border-right: 1px solid #70ad47" align="left" valign=middle><font size=4 color="#548235">Est&aacute; chegando o dia de pagar sua parcela do seu empr&eacute;stimo CAIXA Tem. Tenha saldo na conta Poupan&ccedil;a CAIXA Tem, receba o valor por PIX ou transfer&ecirc;ncia. A parcela n&atilde;o pode ser debitada de benef&iacute;cios sociais como Aux&iacute;lio Brasil. Se j&aacute; possui saldo ou depositou o valor, desconsidere.</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="113016" sdnum="1033;0;#,##0"><font size=4 color="#548235">113,016</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="113016" sdnum="1033;0;#,##0"><font size=4 color="#548235">113,016</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="center" valign=middle sdval="1" sdnum="1033;0;0.0%"><font size=4 color="#548235">100.0%</font></td>
-          </tr>
-          <tr>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #ffffff" height="162" align="left" valign=middle bgcolor="#E2F0D9" sdval="175" sdnum="1033;"><b><font size=4 color="#000000">175</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="7786" sdnum="1033;0;0"><b><font size=4 color="#000000">7786</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle><font size=4 color="#548235">caixatem</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="178" sdnum="1033;"><b><font size=4 color="#000000">178</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9; border-right: 1px solid #70ad47" align="left" valign=middle><font size=4 color="#548235">Lembre-se da parcela do seu empr&eacute;stimo CAIXA Tem. Tenha saldo na conta Poupan&ccedil;a CAIXA Tem, receba o valor por PIX ou transfer&ecirc;ncia. A parcela n&atilde;o pode ser debitada de benef&iacute;cios sociais como Aux&iacute;lio Brasil. Se j&aacute; possui saldo ou depositou o valor, desconsidere.</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="140637" sdnum="1033;0;#,##0"><font size=4 color="#548235">140,637</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="140637" sdnum="1033;0;#,##0"><font size=4 color="#548235">140,637</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="center" valign=middle sdval="1" sdnum="1033;0;0.0%"><font size=4 color="#548235">100.0%</font></td>
-          </tr>
-          <tr>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #ffffff" height="54" align="left" valign=middle bgcolor="#E2F0D9" sdval="171" sdnum="1033;"><b><font size=4 color="#000000">171</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="7798" sdnum="1033;0;0"><b><font size=4 color="#000000">7798</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle><font size=4 color="#548235">caixatem</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="174" sdnum="1033;"><b><font size=4 color="#000000">174</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9; border-right: 1px solid #70ad47" align="left" valign=middle><font size=4 color="#548235">As regras de uso do FGTS mudaram! Veja no App Habita&ccedil;&atilde;o CAIXA se voc&ecirc; pode usar no seu contrato!</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="56831" sdnum="1033;0;#,##0"><font size=4 color="#548235">56,831</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="56831" sdnum="1033;0;#,##0"><font size=4 color="#548235">56,831</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="center" valign=middle sdval="1" sdnum="1033;0;0.0%"><font size=4 color="#548235">100.0%</font></td>
-          </tr>
-          <tr>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #ffffff" height="54" align="left" valign=middle bgcolor="#E2F0D9" sdval="176" sdnum="1033;"><b><font size=4 color="#000000">176</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="7697" sdnum="1033;0;0"><b><font size=4 color="#000000">7697</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle><font size=4 color="#548235">caixatem</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="33" sdnum="1033;"><b><font size=4 color="#000000">33</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9; border-right: 1px solid #70ad47" align="left" valign=middle><font size=4 color="#548235">Voc&ecirc; j&aacute; pode solicitar o seu cart&atilde;o de cr&eacute;dito direto no CAIXA Tem! Aproveite!</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="50000" sdnum="1033;0;#,##0"><font size=4 color="#548235">50,000</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="50000" sdnum="1033;0;#,##0"><font size=4 color="#548235">50,000</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="center" valign=middle sdval="1" sdnum="1033;0;0.0%"><font size=4 color="#548235">100.0%</font></td>
-          </tr>
-          <tr>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #ffffff" height="81" align="left" valign=middle bgcolor="#E2F0D9" sdval="177" sdnum="1033;"><b><font size=4 color="#000000">177</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="7461" sdnum="1033;0;0"><b><font size=4 color="#000000">7461</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle><font size=4 color="#548235">ibc</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="180" sdnum="1033;"><b><font size=4 color="#000000">180</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9; border-right: 1px solid #70ad47" align="left" valign=middle><font size=4 color="#548235">Agora clientes com cart&atilde;o de debito ELO podem pagar as suas compras por aproxima&ccedil;&atilde;o com o seu Celular via Google Pay.</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="30000" sdnum="1033;0;#,##0"><font size=4 color="#548235">30,000</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="30000" sdnum="1033;0;#,##0"><font size=4 color="#548235">30,000</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="center" valign=middle sdval="1" sdnum="1033;0;0.0%"><font size=4 color="#548235">100.0%</font></td>
-          </tr>
-          <tr>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #ffffff" height="109" align="left" valign=middle bgcolor="#E2F0D9" sdval="178" sdnum="1033;"><b><font size=4 color="#000000">178</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="7635" sdnum="1033;0;0"><b><font size=4 color="#000000">7635</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle><font size=4 color="#548235">caixatem</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="left" valign=middle sdval="109" sdnum="1033;"><b><font size=4 color="#000000">109</font></b></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9; border-right: 1px solid #70ad47" align="left" valign=middle><font size=4 color="#548235">Voc&ecirc; ainda n&atilde;o contratou seu empr&eacute;stimo no CAIXA Tem? Aproveite a oportunidade para empreender ou investir no seu neg&oacute;cio. Acesse SIM Digital - Cr&eacute;dito CAIXA Tem e confira.</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="769006" sdnum="1033;0;#,##0"><font size=4 color="#548235">769,006</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="right" valign=middle sdval="90000" sdnum="1033;0;#,##0"><font size=4 color="#548235">90,000</font></td>
-            <td style="border-top: 1px solid #e2f0d9; border-bottom: 1px solid #e2f0d9" align="center" valign=middle sdval="0.117034197392478" sdnum="1033;0;0.0%"><font size=4 color="#548235">11.7%</font></td>
-          </tr>
-          <tr>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-left: 2px solid #70ad47" height="55" align="left" valign=middle><b><font size=4 color="#000000">Total Geral</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000"><br></font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000"><br></font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000"><br></font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-right: 1px solid #70ad47" align="left" valign=middle><b><font size=4 color="#000000"><br></font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="right" valign=middle sdval="1391405" sdnum="1033;0;#,##0"><b><font size=4 color="#000000">1,391,405</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47" align="right" valign=middle sdval="592399" sdnum="1033;0;#,##0"><b><font size=4 color="#000000">592,399</font></b></td>
-            <td style="border-top: 2px solid #70ad47; border-bottom: 2px solid #70ad47; border-right: 2px solid #70ad47" align="center" valign=middle sdval="0.425755980465788" sdnum="1033;0;0.0%"><b><font size=4 color="#000000">42.6%</font></b></td>
+            <td class="td-bottom-left"   colspan="5" height="55" valign=middle>Total Geral</td>
+            <td class="td-bottom-middle  text-right" valign=middle>{{qtd_Dia_Total | number:'0.':'pt-BR'}}</td>
+            <td class="td-bottom-middle  text-right" valign=middle>{{enviado_Total | number:'0.':'pt-BR'}}</td>
+            <td class="td-bottom-right  text-center" valign=middle>{{percentual_Dec_Total | number:'0.1':'pt-BR'}}%</td>
           </tr>
         </table>
 
       </nb-tab>
-      <nb-tab tabTitle="Ajuda e Instruções">
+      <nb-tab tabTitle="Resumo Faixa Datas">
 
       </nb-tab>
 

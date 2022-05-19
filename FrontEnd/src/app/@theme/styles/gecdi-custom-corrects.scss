@@ -2,4 +2,32 @@ html {
     font-size: 12px;
 }
 
-@font-face { font-family: "Tw Cen MT"; src: url('/assets/fonts/tw/TwCenMTStd.otf') format('opentype'); }
+@font-face { font-family: "Tw Cen MT 2"; src: url('/assets/fonts/tw/TwCenMTStd-Light.otf') format('opentype'); }
+@font-face{
+  font-family:"Tw Cen MT 3";
+  src:
+  url("/assets/fonts/tw/Tw_Cen_MT.ttf") format("truetype"),
+  url("/assets/fonts/tw/Tw_Cen_MT.ttf") format("woff"),
+  url("/assets/fonts/tw/Tw_Cen_MT.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "Tw Cen MT";
+  src: url('/assets/fonts/tw/TCM_____.TTF');
+}
+@font-face {
+  font-family: "Tw Cen MT";
+  src: url('/assets/fonts/tw/TCB_____.TTF');
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Tw Cen MT";
+  src: url("/assets/fonts/tw/TCMI____.TTF");
+  font-style: italic, oblique;
+}
+@font-face {
+  font-family: "Tw Cen MT";
+  src: url("/assets/fonts/tw/TCBI____.TTF");
+  font-weight: bold;
+  font-style: italic, oblique;
+}

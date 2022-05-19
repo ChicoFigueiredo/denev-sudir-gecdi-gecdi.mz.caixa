@@ -87,7 +87,7 @@ namespace PushAPI.Controllers.PUSH.Envio
         public async Task<ActionResult<IEnumerable<spResumo_Envios>>> GetSolicitacao_Simulacao_Envio_Resumo(DateTime? Data_Resumo)
         {
             DateTime Data_Resumo_Apurado = Data_Resumo ?? DateTime.Now.Date;
-            return await _dbPush.spResumo_Envios.FromSqlRaw<spResumo_Envios>($"EXEC DB5138_PUSH.Fila.Resumo '{Data_Resumo_Apurado.ToString("yyyy-MM-dd")}'").ToListAsync();
+            return await _dbPush.spResumo_Envios.FromSqlRaw<spResumo_Envios>($"EXEC DB5138_PUSH.Fila.Resumo_Envios '{Data_Resumo_Apurado.ToString("yyyy-MM-dd")}'").ToListAsync();
         }
 
 
