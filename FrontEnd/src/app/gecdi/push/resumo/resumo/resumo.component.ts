@@ -11,7 +11,7 @@ import { PushService } from '../../../services/push/push.service';
 export class ResumoComponent implements OnInit {
 
   resumo:EnvioResumo[];
-  dataSelecionada:any = moment(); //.format("DD/MMM/YYYY");
+  dataSelecionada:any = moment().toDate(); //.format("DD/MMM/YYYY");
   qtd_Dia_Total:number=0;
   enviado_Total:number=0;
   percentual_Dec_Total:number=0;
@@ -21,6 +21,7 @@ export class ResumoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.refreshResumo()
   }
 
   refreshResumo(){
@@ -36,7 +37,7 @@ export class ResumoComponent implements OnInit {
   }
 
   changeDataSelecionada(data,$event){
-    this.dataSelecionada = moment($event);
+    this.dataSelecionada = moment($event).toDate();
     this.refreshResumo();
   }
 }

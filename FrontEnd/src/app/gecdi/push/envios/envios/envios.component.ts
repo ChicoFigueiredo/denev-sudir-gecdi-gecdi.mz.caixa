@@ -50,8 +50,10 @@ export class EnviosComponent implements OnInit, OnDestroy {
     //private momentDate:NbMomentDateService,
   ) {
     this.userService.changeUser().subscribe(u => this.usuario= <User>u );
-    //this.dataSelecionada = this.momentDate.parse(moment().format('YYYY-MM-DD'),'YYYY-MM-DD');
-    //this.dataSelecionada = moment().toDate(); //.format('YYYY-MM-DD');//new Date(moment().format('YYYY-MM-DD'))
+    moment.updateLocale('pt-BR', {
+      monthsShort: moment.monthsShort('-MMM-')
+    });
+
   }
 
   ngOnInit(): void {

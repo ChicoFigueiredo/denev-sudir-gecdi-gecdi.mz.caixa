@@ -29,8 +29,12 @@ import { JwtHeaderInterceptor } from './gecdi/services/interceptor/interceptor.s
 import localePt from '@angular/common/locales/pt';
 import { environment } from '../environments/environment';
 import { UserDataInterceptor } from './gecdi/services/interceptor/login.interceptor.service';
+import * as moment from 'moment';
 
 registerLocaleData(localePt, 'pt-BR');
+moment.updateLocale('pt-BR', {
+  monthsShort: moment.monthsShort('-MMM-')
+});
 
 @NgModule({
   declarations: [AppComponent],
