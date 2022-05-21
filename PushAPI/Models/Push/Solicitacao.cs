@@ -64,6 +64,7 @@ namespace PushAPI.Models.Push
         public string? Titulo { get; set; }
         public string? URL_Acao { get; set; }
         public string? URL_Imagem { get; set; }
+        public bool? E_Cadastramento_Manual { get; set; }
 
         public virtual Canais CanalNavigation { get; set; } = null!;
         public virtual Curva_Envio Quantidade_Maxima_AutorizadaNavigation { get; set; } = null!;

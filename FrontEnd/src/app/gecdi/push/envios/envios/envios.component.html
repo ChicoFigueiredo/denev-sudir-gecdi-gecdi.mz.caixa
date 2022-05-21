@@ -14,6 +14,7 @@
             <div class="col-md-12">
               Data:
               <input nbInput placeholder="Hoje" [nbDatepicker]="dateTimePicker" [ngModel]="dataSelecionada" (ngModelChange)="changeDataSelecionada(dataSelecionada,$event)"><nb-datepicker #dateTimePicker format="dd/MMM/yyyy"></nb-datepicker>&nbsp;&nbsp;&nbsp;
+              <!-- <input nbInput placeholder="Hoje" [nbDatepicker]="dateTimePicker" [(ngModel)]="dataSelecionada"><nb-datepicker #dateTimePicker format="DD/MMM/YYYY"></nb-datepicker>&nbsp;&nbsp;&nbsp; -->
               <button nbButton (click)="refreshEnvios()"><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button> &nbsp;&nbsp;
               <nb-toggle [ngModel]="SoDoDia" status="primary" (change)="refreshEnvios(true)" class="align-middle">Só Envios do Dia</nb-toggle> &nbsp;&nbsp;
               <button *ngIf="usuario.user.idRole===1" nbButton (click)="refreshEnvios(null,true)"><i class="fas fa-calculator"></i>&nbsp;Simular Envio &nbsp;&nbsp;<span #atu></span></button> &nbsp;&nbsp;
@@ -164,6 +165,15 @@
       <p>Impactos Previstos: <b class="brown">{{ EnvioSelecionado?.idSolicitacao_PUSHNavigation?.impactos_Previstos }}</b></p>
       <p>Arquivo: <b class="brown">{{ EnvioSelecionado.nome_Arquivo }}</b></p>
       <p>Registros: <b class="brown">{{ EnvioSelecionado.quantidade }}</b></p>
+      <p><BR></p>
+      <p><BR></p>
+      <p>
+        <!-- Estamos executando o PUSH - Horário 21:00h,Tranche29 QTD0000060000 e a mensagem enviada será "Você ainda não contratou seu empréstimo no CAIXA Tem? Aproveite a oportunidade para empreender ou investir no seu negócio. Acesse SIM Digital - Crédito CAIXA Tem e confira." -->
+        Mensagem Sala PO: <b class="brown">{{ geraMensagemPO(EnvioSelecionado) }} </b>
+        <button nbButton ghost (click)="copiaTextoClipboard(geraMensagemPO(EnvioSelecionado))">
+          <nb-icon icon="copy-outline" pack="eva" status="primary"></nb-icon>
+        </button>
+      </p>
       <p>
         Comando PowerShell: <b class="brown">{{ EnvioSelecionado.comando_PowerShell }} </b>
         <button nbButton ghost (click)="copiaTextoClipboard(EnvioSelecionado.comando_PowerShell.trim())">
@@ -171,7 +181,7 @@
         </button>
       </p>
       <P *ngIf="[1,3].indexOf(usuario.user.idRole)>=0">
-        <nb-toggle [ngModel]="EnvioSelecionado?.enviado" (ngModelChange)="changeCheckEnviado(EnvioSelecionado,$event)" status="success">Marcar envio como concluído</nb-toggle>
+        <nb-toggle [ngModel]="EnvioSelecionado?.enviado" (ngModelChange)="changeCheckEnviado(EnvioSelecionado,$event)" status="success">Marcar envio como concluído</nb-toggle>&nbsp;&nbsp;&nbsp;
         <span *ngIf="usuario.user.idRole===1">
           <nb-toggle [ngModel]="e?.cancelado" (ngModelChange)="changeCheckCancelado(EnvioSelecionado,$event)" status="warning">Marcar envio como cancelado</nb-toggle>
         </span>

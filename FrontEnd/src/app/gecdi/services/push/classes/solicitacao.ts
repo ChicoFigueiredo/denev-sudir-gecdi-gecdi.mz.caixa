@@ -64,6 +64,7 @@ export class Solicitacao {
   solicitacao_Upload:                     SolicitacaoUpload[];
   enviar_Horario_InicialFormatado:        string;
   enviar_Horario_FinalFormatado:          string;
+  e_Cadastramento_Manual:                 boolean;
 
   constructor() {
     const hoje = moment();

@@ -23,7 +23,7 @@ export class EnviosComponent implements OnInit, OnDestroy {
   public PosicaoSelecionada: number = 1;
   public posicao:number = 0;
 
-  dataSelecionada:any = moment(); //.format("DD/MMM/YYYY");
+  dataSelecionada:any = new Date(); //moment(); ; //moment().toDate();  // = moment().toDate(); //.format("DD/MMM/YYYY");
   timerSubscription: Subscription;
   timerSlip:number = 60*10+1;
   timer:number = this.timerSlip;
@@ -47,8 +47,11 @@ export class EnviosComponent implements OnInit, OnDestroy {
     private serviceSticker: NbToastrService,
     private userService: UserService,
     private dialogService: NbDialogService,
+    //private momentDate:NbMomentDateService,
   ) {
     this.userService.changeUser().subscribe(u => this.usuario= <User>u );
+    //this.dataSelecionada = this.momentDate.parse(moment().format('YYYY-MM-DD'),'YYYY-MM-DD');
+    //this.dataSelecionada = moment().toDate(); //.format('YYYY-MM-DD');//new Date(moment().format('YYYY-MM-DD'))
   }
 
   ngOnInit(): void {
@@ -153,7 +156,7 @@ export class EnviosComponent implements OnInit, OnDestroy {
   }
 
   changeDataSelecionada(data,$event){
-    this.dataSelecionada = moment($event);
+    this.dataSelecionada = moment($event).toDate();
     this.refreshEnvios();
   }
 
@@ -171,6 +174,11 @@ export class EnviosComponent implements OnInit, OnDestroy {
           this.serviceSticker.show(`Solicitação ID ${this.envioASerExcluido.idSolicitacao_Simulacao_Envio} - ${this.envioASerExcluido.horaFormatado} EXCLUIDO! (${this.envioASerExcluido?.idSolicitacao_PUSHNavigation?.mensagem})`,'',{ status: 'success', duration: 5000 })
       });
     })
+  }
+
+
+  geraMensagemPO(e:EnviosResponse) {
+    return `Estamos executando o PUSH - Horário ${e.horaFormatado}h, Tranche ${ e.tranche}, QTD ${e.quantidade} e a mensagem enviada será "${e.idSolicitacao_PUSHNavigation.mensagem}"`
   }
 
 }

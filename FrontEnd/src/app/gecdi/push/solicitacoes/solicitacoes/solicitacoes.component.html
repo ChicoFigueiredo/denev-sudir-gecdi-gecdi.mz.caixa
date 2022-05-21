@@ -64,7 +64,12 @@
                 <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.idEnvio_Mensagem}}</td>
                 <td scope="row" class="mensagem-limite30" (click)="rowClick(s,i)">{{s?.mensagem}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.canal}}</td>
-                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Total | number:'0.':'pt-BR'}}<BR>{{s?.quantidade_Enviada | number:'0.':'pt-BR'}}</td>
+
+                <td scope="row" class="no-wrap dir nowrap"       (click)="rowClick(s,i)">
+                  {{s?.quantidade_Total | number:'0.':'pt-BR'}} <i *ngIf="s?.e_Cadastramento_Manual" class="fa fa-hourglass red" ></i><BR>
+                  {{s?.quantidade_Enviada | number:'0.':'pt-BR'}}
+                </td>
+
                 <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Agendada | number:'0.':'pt-BR'}}<BR>{{s?.quantidade_Total_Restante | number:'0.':'pt-BR'}}</td>
 
                 <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole!==1 || (!AlteraPrioridade && usuario.user.idRole===1)" (click)="rowClick(s,i)">

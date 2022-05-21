@@ -58,7 +58,6 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     PushRoutingModule,
     PickerModule,
 
-    NbMomentDateModule,
 
     NbCardModule,
     NbAutocompleteModule,
@@ -70,8 +69,10 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     NbFormFieldModule,
     NbToastrModule.forRoot(configToastr),
 
-    NbDatepickerModule.forRoot(),
-    NbTimepickerModule.forRoot(),
+    NbDatepickerModule,
+    NbTimepickerModule,
+    NbMomentDateModule,
+
     NbToggleModule,
 
     NbIconModule,

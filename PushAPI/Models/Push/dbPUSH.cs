@@ -385,6 +385,10 @@ namespace PushAPI.Models.Push
 
                 entity.Property(e => e.Data_Hora_Cancelamento).HasColumnType("datetime");
 
+                entity.Property(e => e.E_Cadastramento_Manual)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Enviar_DOM).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Enviar_Horario_Final).HasDefaultValueSql("('21:00')");
@@ -411,7 +415,7 @@ namespace PushAPI.Models.Push
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.Limitacao_Tranche).HasDefaultValueSql("((200000))");
+                entity.Property(e => e.Limitacao_Tranche).HasDefaultValueSql("((60000))");
 
                 entity.Property(e => e.Limite_Mensagens_Por_Dia).HasDefaultValueSql("((-1))");
 
@@ -488,7 +492,7 @@ namespace PushAPI.Models.Push
 
                 entity.Property(e => e.URL_Imagem).IsUnicode(false);
 
-                entity.Property(e => e.idCurva).HasDefaultValueSql("((29))");
+                entity.Property(e => e.idCurva).HasDefaultValueSql("((34))");
 
                 entity.Property(e => e.idTipoMensagem).HasDefaultValueSql("((1))");
 
@@ -570,7 +574,7 @@ namespace PushAPI.Models.Push
 
                 entity.Property(e => e.Comando_PowerShell)
                     .HasMaxLength(4000)
-                    .HasComputedColumnSql("(((((('   '+format(isnull(CONVERT([datetime],[Hora]),''),'HH:mm'))+' > C:\\apps\\processacsv\\ProcessaCSV -a prd -l ')+format([ParametroLote],'0'))+' -L true -d ''Y:\\'' -f ''')+isnull([Nome_Arquivo],''))+'''')", false);
+                    .HasComputedColumnSql("(((('C:\\apps\\processacsv\\ProcessaCSV -a prd -l '+format([ParametroLote],'0'))+' -L true -d ''Y:\\'' -f ''')+isnull([Nome_Arquivo],''))+'''')", false);
 
                 entity.Property(e => e.Data).HasColumnType("date");
 
@@ -588,7 +592,7 @@ namespace PushAPI.Models.Push
                     .IsFixedLength();
 
                 entity.Property(e => e.Matricula_Enviante)
-                    .HasMaxLength(6)
+                    .HasMaxLength(7)
                     .IsUnicode(false)
                     .IsFixedLength();
 
