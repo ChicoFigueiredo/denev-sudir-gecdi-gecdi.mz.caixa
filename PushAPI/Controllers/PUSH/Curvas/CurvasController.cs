@@ -25,6 +25,7 @@ namespace PushAPI.Controllers.PUSH.Curvas
 
         // GET: api/Curvas
         [HttpGet]
+        [Authorize()]
         public async Task<ActionResult<IEnumerable<Curva_Envio>>> GetCurva_Envio()
         {
             return await _context.Curva_Envio

@@ -7,7 +7,7 @@
             <label for="idSolicitacao_PUSH" class="label">N° Solicitação:</label>
             <input formControlName="idSolicitacao_PUSH" type="text" nbInput fullWidth id="idSolicitacao_PUSH"
               placeholder="Numeração automática" disabled>
-            <!-- <input type="text" nbInput fullWidth id="matricula"  placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+
           </div>
         </nb-form-field>
       </div>
@@ -32,7 +32,7 @@
               (blur)="Ref_REQ_WO_Aprovacao_Mensagem.value = Ref_REQ_WO_Aprovacao_Mensagem.value.toUpperCase()"
               (keyup)="Ref_REQ_WO_Aprovacao_Mensagem.value = Ref_REQ_WO_Aprovacao_Mensagem.value.toUpperCase()"
               [status]="(f.reQ_WO_Aprovacao_Mensagem.touched && f.reQ_WO_Aprovacao_Mensagem.errors) ? 'danger': 'info'">
-            <!-- <input type="text" nbInput fullWidth id="matricula"  placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+
           </div>
         </nb-form-field>
       </div>
@@ -46,7 +46,7 @@
             <label for="WF_GECRM" class="label">WF GECRM (N° Workflow da Base de Dados):</label>
             <input formControlName="wF_GECRM" type="text" nbInput fullWidth id="WF_GECRM"
               placeholder="N° do WF da base fornecida pela GECRM">
-            <!-- <input type="text" nbInput fullWidth id="matricula"  placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+
           </div>
         </nb-form-field>
       </div>
@@ -71,9 +71,6 @@
               [i18n]="I8N_TRADUCAO"
           ></emoji-mart>
         </div>
-        <!-- <nb-select fullWidth id="role" name="role" >
-          <nb-option *ngFor="let r of userService.roles;" [value]="r.idRole">{{r.nome_Role}}</nb-option>
-        </nb-select> -->
       </div>
     </div>
   </div>
@@ -86,11 +83,9 @@
           <div class="form-group">
             <label for="idTipoMensagem" class="label">Tipo de Mensagem:</label>
             <nb-select formControlName="idTipoMensagem" fullWidth id="Canal" name="idTipoMensagem" value="1">
-              <!--  -->
               <nb-option [value]="1" selected>Mensagem única / estática</nb-option>
-              <!-- <nb-option value="2">Mensagem Dinâmica</nb-option> -->
             </nb-select>
-            <!-- <input type="text" nbInput fullWidth id="matricula"  placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+
           </div>
         </nb-form-field>
       </div>
@@ -107,12 +102,9 @@
             <nb-select formControlName="canal" fullWidth id="Canal" name="Canal"
               [status]="(f.canal.touched && f.canal.errors) ? 'danger': 'info'"
             >
-              <!--  -->
-              <nb-option value="ibc">IBC</nb-option>
-              <nb-option value="caixatem" selected>CAIXA Tem</nb-option>
-              <!-- <nb-option value="cartao">App Cartões</nb-option> -->
+              <nb-option *ngFor="let c of pushService.Canais" [value]="c?.canal">{{c?.nome_Canal}}</nb-option>
             </nb-select>
-            <!-- <input type="text" nbInput fullWidth id="matricula"  placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+
           </div>
         </nb-form-field>
       </div>
@@ -126,7 +118,7 @@
             <input formControlName="quantidade_Total" type="text" nbInput fullWidth id="Quantidade_Total"
               placeholder="Estimativa da quantidade de PUSH a ser enviados aos clientes "
               [status]="(f.quantidade_Total.touched && f.quantidade_Total.errors) ? 'danger': 'info'">
-            <!-- <input type="text" nbInput fullWidth id="matricula"  placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+
           </div>
         </nb-form-field>
       </div>
@@ -141,7 +133,7 @@
             <input formControlName="limitacao_Tranche" type="text" nbInput fullWidth id="Limitacao_Tranche"
               placeholder="Qtd. acordada com a GEPTI"
               [status]="(f.limitacao_Tranche.touched && f.limitacao_Tranche.errors) ? 'danger': 'info'">
-            <!-- <input type="text" nbInput fullWidth id="matricula"  placeholder="Matricula (c999999 ou p999999 ou f999999)"> -->
+
           </div>
         </nb-form-field>
       </div>
@@ -257,6 +249,9 @@
       </div>
     </div>
 
+  </div>
+
+  <div class="row">
 
   </div>
 

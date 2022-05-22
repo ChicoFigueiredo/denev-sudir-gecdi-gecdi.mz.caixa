@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import * as moment from "moment";
 import { Solicitacao } from "../../../services/push/classes/solicitacao";
+import { PushService } from "../../../services/push/push.service";
 import { User } from "../../../services/user/classes/User";
 import { UserService } from "../../../services/user/user.service";
 
@@ -120,6 +121,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
 
   constructor(
     private userService:UserService,
+    public pushService:PushService,
   ) {
     userService.changeUser().subscribe(u => this.user = u);
   }

@@ -6,6 +6,7 @@ import { EnvioResumo, EnviosResponse } from './classes/envios';
 import { FilaResponse } from './classes/fila';
 import { Curva } from './classes/curvas';
 import { Solicitacao } from './classes/solicitacao';
+import { Canal } from './classes/canais';
 
 const API_PUSH = environment.urlAPI + '/api'
 
@@ -15,12 +16,14 @@ const API_PUSH = environment.urlAPI + '/api'
 export class PushService {
 
   public Curvas:Curva[] = [];
+  public Canais:Canal[] = [];
   public solicitacaoSelecionada:Solicitacao;
 
   constructor(
     private http: HttpClient
   ) {
     this.getCurvas().subscribe((c:Curva[]) => this.Curvas = c);
+    this.getCanais().subscribe((c:Canal[]) => this.Canais = c);
   }
 
   getSolicitacoesEnvio(de = null,ate = null, enviados = -1, antigos = true, simular = false){
@@ -63,6 +66,11 @@ export class PushService {
   getCurvas() {
     return this.http
                .get<Curva[]>(`${API_PUSH}/Curvas`)
+  }
+
+  getCanais() {
+    return this.http
+               .get<Canal[]>(`${API_PUSH}/Canais`)
   }
 
   getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority",soFila:boolean=true){
