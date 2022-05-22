@@ -51,8 +51,8 @@ export class SolicitacoesComponent implements OnInit {
   }
 
 
-  rowClick(s){
-
+  rowClick(s:Solicitacao){
+    this.router.navigateByUrl(`/gecdi/push/solicitacao/${s.idSolicitacao_PUSH}/edit`)
   }
 
   refreshSolicitacoes(recontar:boolean=false, callback = null){

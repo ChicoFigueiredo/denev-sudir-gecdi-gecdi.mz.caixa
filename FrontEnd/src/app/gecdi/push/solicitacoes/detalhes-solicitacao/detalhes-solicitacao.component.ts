@@ -13,7 +13,23 @@ import { UserService } from "../../../services/user/user.service";
 export class DetalhesSolicitacaoComponent implements OnInit {
 
   public isEmojiPickerVisible: boolean;
-  @Input("solicitacao") public solicitacao: Solicitacao;
+  @Input("mode") public modo: string = "normal";
+
+  //@Input("solicitacao") public solicitacao: Solicitacao;
+  private _solicitacao: Solicitacao;
+  get solicitacao() { return this._solicitacao; }
+  @Input("solicitacao") set solicitacao(value: Solicitacao) {
+
+    if (value?.idSolicitacao_PUSH > 0){
+      value.enviar_a_partir_de = <any>moment(value.enviar_a_partir_de).toDate();
+      value.enviar_no_maximo_ate = <any>moment(value.enviar_no_maximo_ate).toDate();
+      value.enviar_Horario_InicialFormatado = <any>moment(value.enviar_Horario_InicialFormatado,'HH:mm');
+      value.enviar_Horario_FinalFormatado = <any>moment(value.enviar_Horario_FinalFormatado,'HH:mm');
+      this.formSolicitacao.patchValue(value);
+    }
+    this._solicitacao = value;
+  }
+
   @ViewChild("diag") dialog: ElementRef<any>;
   @ViewChild("message") message: ElementRef<any>;
   minDataSolicitacao = moment();
@@ -113,26 +129,14 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     moment.locale('pt-br');
 
     if (this.solicitacao?.idSolicitacao_PUSH > 0){
-      this.solicitacao.enviar_a_partir_de = <any>moment(this.solicitacao.enviar_a_partir_de).toDate();
-      this.solicitacao.enviar_no_maximo_ate = <any>moment(this.solicitacao.enviar_no_maximo_ate).toDate();
-      this.solicitacao.enviar_Horario_InicialFormatado = <any>moment(this.solicitacao.enviar_Horario_InicialFormatado,'HH:mm');
-      this.solicitacao.enviar_Horario_FinalFormatado = <any>moment(this.solicitacao.enviar_Horario_FinalFormatado,'HH:mm');
-      this.formSolicitacao.patchValue(this.solicitacao);
+      // // conversões conveniêntes para aceitação no FormGroup e nos componentes de data e hora
+      // this.solicitacao.enviar_a_partir_de = <any>moment(this.solicitacao.enviar_a_partir_de).toDate();
+      // this.solicitacao.enviar_no_maximo_ate = <any>moment(this.solicitacao.enviar_no_maximo_ate).toDate();
+      // this.solicitacao.enviar_Horario_InicialFormatado = <any>moment(this.solicitacao.enviar_Horario_InicialFormatado,'HH:mm');
+      // this.solicitacao.enviar_Horario_FinalFormatado = <any>moment(this.solicitacao.enviar_Horario_FinalFormatado,'HH:mm');
+
+      // this.formSolicitacao.patchValue(this.solicitacao);
     }
-
-    // if (moment().hour()>12)
-    //   this.dataDe = moment().add(2,'days').startOf('day');
-    // else
-    //   this.dataDe = moment().add(2,'days').startOf('day');
-
-    // if (this.dataDe.day() === 0)
-    //   this.dataDe = this.dataDe.add(1,'days').startOf('day');
-
-    // this.formSolicitacao.patchValue({
-    //   enviar_a_partir_de: this.dataDe.format('YYYY-MM-DD'),
-    //   enviar_no_maximo_ate: this.dataDe.add(35,'days').startOf('day').format('YYYY-MM-DD')
-    // })
-
 
   }
 
@@ -142,7 +146,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     this.insertAtCursor(this.message.nativeElement, event.emoji.native);
     this.isEmojiPickerVisible = false;
     this.message.nativeElement.focus();
-    this.formSolicitacao.patchValue({mensagem: this.message.nativeElement.value});
+    this.formSolicitacao.patchValue({mensagem: this.message.nativeElement.value}); // necessário para forçar a mensagem a receber o emoji
   }
 
   insertAtCursor(myField, myValue) {
@@ -157,6 +161,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
       myField.value += myValue;
     }
   }
+
   // convenience getter for easy access to form fields
   get f() { return this.formSolicitacao.controls; }
 
