@@ -300,7 +300,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 solicitacaoDB.WF_GECRM = (solicitacaoDB.WF_GECRM ?? -1) != (solicitacao.WF_GECRM ?? -1) ? solicitacao.WF_GECRM : solicitacaoDB.WF_GECRM;
 
                 solicitacaoDB.idTipoMensagem = solicitacaoDB.idTipoMensagem  != solicitacao.idTipoMensagem ? solicitacao.idTipoMensagem : solicitacaoDB.idTipoMensagem;
-                solicitacaoDB.Canal = solicitacaoDB.Canal.ToLower().Trim() != solicitacao.Canal.ToLower().Trim() ? solicitacao.Canal.ToLower().Trim() : solicitacaoDB.Nome_Solicitacao;
+                solicitacaoDB.Canal = solicitacaoDB.Canal.ToLower().Trim() != solicitacao.Canal.ToLower().Trim() ? solicitacao.Canal.ToLower().Trim() : solicitacaoDB.Canal;
                 solicitacaoDB.Quantidade_Total = solicitacaoDB.Quantidade_Total  != solicitacao.Quantidade_Total ? solicitacao.Quantidade_Total : solicitacaoDB.Quantidade_Total;
                 solicitacaoDB.Limitacao_Tranche = solicitacaoDB.Limitacao_Tranche  != solicitacao.Limitacao_Tranche ? solicitacao.Limitacao_Tranche : solicitacaoDB.Limitacao_Tranche;
                 solicitacaoDB.Impactos_Previstos = solicitacaoDB.Impactos_Previstos.ToLower().Trim() != solicitacao.Impactos_Previstos.ToLower().Trim() ? solicitacao.Impactos_Previstos.Trim() : solicitacaoDB.Impactos_Previstos;

@@ -63,8 +63,13 @@
           <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible;">😀</button>
         </div>
         <div class="meio">
-          <emoji-mart class="emoji-mart" *ngIf="isEmojiPickerVisible" (emojiSelect)="addEmoji($event)"
-            title="Escolha o emoji" [i18n]="I8N_TRADUCAO"></emoji-mart>
+          <emoji-mart
+              *ngIf="isEmojiPickerVisible"
+              class="emoji-mart"
+              (emojiSelect)="addEmoji($event)"
+              title="Escolha o emoji"
+              [i18n]="I8N_TRADUCAO"
+          ></emoji-mart>
         </div>
         <!-- <nb-select fullWidth id="role" name="role" >
           <nb-option *ngFor="let r of userService.roles;" [value]="r.idRole">{{r.nome_Role}}</nb-option>

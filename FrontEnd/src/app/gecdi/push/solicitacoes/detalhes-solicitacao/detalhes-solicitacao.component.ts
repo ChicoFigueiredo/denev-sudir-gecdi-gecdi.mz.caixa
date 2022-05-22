@@ -142,6 +142,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     this.insertAtCursor(this.message.nativeElement, event.emoji.native);
     this.isEmojiPickerVisible = false;
     this.message.nativeElement.focus();
+    this.formSolicitacao.patchValue({mensagem: this.message.nativeElement.value});
   }
 
   insertAtCursor(myField, myValue) {
