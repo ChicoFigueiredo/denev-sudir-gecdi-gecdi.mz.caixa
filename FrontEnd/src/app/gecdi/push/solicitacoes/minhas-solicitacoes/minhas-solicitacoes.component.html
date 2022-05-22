@@ -22,8 +22,8 @@
             <thead class="row-title">
               <tr class="row-title">
                 <td scope="col">ID<BR>Sol.</td>
+                <td scope="col">Edit</td>
                 <td scope="col">Data</td>
-                <td scope="col">Priori<BR>dade</td>
                 <td scope="col">Nome</td>
                 <td scope="col">WF / REQ</td>
                 <td scope="col">ID<BR>Msg</td>
@@ -35,8 +35,8 @@
                 <td scope="col">Horário</td>
                 <td scope="col">Demand.<BR>Exec.</td>
                 <td scope="col">Impactos</td>
-                <td scope="col">Autori-zado</td>
-                <td scope="col">Cance-lado</td>
+                <td scope="col">Au torizado</td>
+                <td scope="col">Can ce lado</td>
                 <td scope="col">Upload</td>
               </tr>
             </thead>
@@ -44,18 +44,23 @@
             <tbody>
               <tr *ngFor="let s of solicitacao; let i = index ;" [ngClass]="checkRow(s) + ' hand'">
                 <th scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.idSolicitacao_PUSH}}</th>
+                <th scope="row" class="no-wrap"           (click)="rowClick(s,i)"><i class="fas fa-pen" *ngIf="!s?.autorizacao_Gestor_PUSH && !s?.cancelado"></i></th>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.data_Cadastramento  | date:'dd/MMM/yy'}}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.prioridade}}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.nome}}</td>
+                <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.nome_Solicitacao}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.wF_GECRM}} <BR> {{s?.reQ_WO_Aprovacao_Mensagem}}</td>
                 <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.idEnvio_Mensagem}}</td>
                 <td scope="row" class="mensagem-limite30" (click)="rowClick(s,i)">{{s?.mensagem}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.canal}}</td>
-                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Total | number:'0.':'pt-BR'}}<BR>{{s?.quantidade_Enviada | number:'0.':'pt-BR'}}</td>
+
+                <td scope="row" class="no-wrap dir nowrap"       (click)="rowClick(s,i)">
+                  {{s?.quantidade_Total | number:'0.':'pt-BR'}} <i *ngIf="s?.e_Cadastramento_Manual" class="fa fa-hourglass red" ></i><BR>
+                  {{s?.quantidade_Enviada | number:'0.':'pt-BR'}}
+                </td>
+
                 <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Agendada | number:'0.':'pt-BR'}}<BR>{{s?.quantidade_Total_Restante | number:'0.':'pt-BR'}}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_a_partir_de  | date:'dd/MMM/yy'}} - {{s?.enviar_no_maximo_ate  | date:'dd/MMM/yy'}}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_Horario_Inicial }} - {{s?.enviar_Horario_Final  }}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.cgcDemandante}} / {{s?.cgcExecutora}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_a_partir_de  | date:'dd/MMM/yy'}}<BR>{{s?.enviar_no_maximo_ate  | date:'dd/MMM/yy'}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_Horario_Inicial }}<BR>>{{s?.enviar_Horario_Final  }}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.cgcDemandante}}<BR>{{s?.cgcExecutora}}</td>
                 <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td>
 
                 <td scope="row"                         (click)="rowClick(se)">
@@ -86,7 +91,12 @@
         </nb-card-body>
 
         <nb-card-footer>
-          Legenda:
+          Legenda:<BR>
+          <i class="fas fa-pen"></i> Solicitação pode ser editada&nbsp;&nbsp;
+          <i class="fa fa-hourglass red" ></i>&nbsp;Base ainda não carregada&nbsp;&nbsp;
+          <nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon>&nbsp;Botão de upload de arquivo&nbsp;&nbsp;
+          <i class="fas fa-thumbs-up blue"></i>&nbsp;Registros carregados do arquivo e aceitos&nbsp;&nbsp;
+          <i class="fas fa-thumbs-down red" ></i>&nbsp;Registros do arquivo rejeitados&nbsp;&nbsp;
         </nb-card-footer>
       </nb-card>
 
