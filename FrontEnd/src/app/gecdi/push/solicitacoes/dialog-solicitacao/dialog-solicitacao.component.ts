@@ -12,6 +12,7 @@ import {
   NbDialogService,
   NbToastrService
 } from '@nebular/theme';
+import * as moment from 'moment';
 import {
   Solicitacao
 } from '../../../services/push/classes/solicitacao';
@@ -79,10 +80,25 @@ export class DialogSolicitacaoComponent implements OnInit {
       alert(`Existem ${erros} erros de validação que impedem o cadastramento. Corrija os campos marcados em vermelho e tente novamente.`);
       btnSalvar.disabled = false;
     } else {
+      const hi = detal.formSolicitacao.controls.enviar_Horario_InicialFormatado;
+      const hf = detal.formSolicitacao.controls.enviar_Horario_FinalFormatado;
+
+      const his = hi.value._isAMomentObject ? hi.value.format('HH:mm') : `${hi.value}`;
+      const hfs = hf.value._isAMomentObject ? hf.value.format('HH:mm') : `${hf.value}`;
+
+      detal.formSolicitacao.controls.enviar_Horario_InicialFormatado.value = his;
+      detal.formSolicitacao.controls.enviar_Horario_FinalFormatado.value = hfs;
+
+      const di = moment(detal.formSolicitacao.controls.enviar_a_partir_de.value).format("YYYY-MM-DD");
+      const df = moment(detal.formSolicitacao.controls.enviar_no_maximo_ate.value).format("YYYY-MM-DD");
+
+      detal.formSolicitacao.controls.enviar_a_partir_de.value = di;
+      detal.formSolicitacao.controls.enviar_no_maximo_ate.value = df;
+
       detal.formSolicitacao.patchValue({
-        wF_GECRM                 : detal.formSolicitacao.controls.wF_GECRM.value === "" ? null : detal.formSolicitacao.controls.wF_GECRM.value,
-        Limite_Mensagens_Por_Dia : detal.formSolicitacao.controls.Limite_Mensagens_Por_Dia.value === "" ? null : detal.formSolicitacao.controls.Limite_Mensagens_Por_Dia.value,
-        limitacao_Tranche        : detal.formSolicitacao.controls.limitacao_Tranche.value === "" ? null : detal.formSolicitacao.controls.limitacao_Tranche.value,
+        wF_GECRM                        : detal.formSolicitacao.controls.wF_GECRM.value === "" ? null : detal.formSolicitacao.controls.wF_GECRM.value,
+        Limite_Mensagens_Por_Dia        : detal.formSolicitacao.controls.Limite_Mensagens_Por_Dia.value === "" ? null : detal.formSolicitacao.controls.Limite_Mensagens_Por_Dia.value,
+        limitacao_Tranche               : detal.formSolicitacao.controls.limitacao_Tranche.value === "" ? null : detal.formSolicitacao.controls.limitacao_Tranche.value,
       })
       this.pushService.postNewSolicitacao(detal.formSolicitacao.value).subscribe((sol: Solicitacao) => {
         try {

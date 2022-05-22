@@ -167,7 +167,7 @@
             <label for="enviar_a_partir_de" class="label">Enviar a partir de (Data):</label>
             <input formControlName="enviar_a_partir_de" type="text" nbInput fullWidth
               [nbDatepicker]="dpEnviar_a_partir_de" id="enviar_a_partir_de" placeholder="Não enviar antes de"
-              (blur)="filtraDataDe($event)">
+              >
             <nb-datepicker #dpEnviar_a_partir_de format="dd/MMM/YYYY" [filter]="filterDataDe"></nb-datepicker>
           </div>
         </nb-form-field>
@@ -182,7 +182,7 @@
             <label for="enviar_no_maximo_ate" class="label">Enviar até no máximo (Data):</label>
             <input formControlName="enviar_no_maximo_ate" type="text" nbInput fullWidth
               [nbDatepicker]="dpEnviar_no_maximo_ate" id="enviar_no_maximo_ate" placeholder="Não enviar depois de"
-              (blur)="filtraDataAte($event)">
+              >
             <nb-datepicker #dpEnviar_no_maximo_ate format="dd/MMM/YYYY" [filter]="filterDataAte"></nb-datepicker>
           </div>
         </nb-form-field>

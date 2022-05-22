@@ -67,7 +67,7 @@ const configToastr: NbToastrConfig =  <NbToastrConfig> {
     NbCheckboxModule,
     NbUserModule,
     NbFormFieldModule,
-    NbToastrModule.forRoot(configToastr),
+    NbToastrModule,
 
     NbDatepickerModule,
     NbTimepickerModule,
