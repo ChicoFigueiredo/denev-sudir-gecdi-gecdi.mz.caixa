@@ -46,7 +46,8 @@ export class MinhasSolicitacoesComponent implements OnInit {
 
 
   rowClick(s){
-
+    this.solicitacaoAtual = s;
+    (<any> this.dialog).openDialog();
   }
 
   novaSolicitacao(novo:boolean){

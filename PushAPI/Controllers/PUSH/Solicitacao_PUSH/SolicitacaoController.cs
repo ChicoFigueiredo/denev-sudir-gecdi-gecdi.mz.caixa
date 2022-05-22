@@ -275,8 +275,58 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
                 return CreatedAtAction("GetSolicitacao", new { id = solicitacao.idSolicitacao_PUSH }, solicitacao);
             }
-            
-            return BadRequest(new { error = 1002, message = "Solicitação de criação/atualização de Solicitação com problemas" });
+            else 
+            {
+                var solicitacaoDB = await _dbPush.Solicitacao.FindAsync(solicitacao.idSolicitacao_PUSH);
+                if (solicitacaoDB == null)
+                    return NotFound();
+                
+                if ( solicitacaoDB.Mensagem.ToLower().Trim() != solicitacao.Mensagem.ToLower().Trim() ){
+                    Mensagem msg = await _dbPush.Mensagem.FirstOrDefaultAsync(f => f.Mensagem1 == solicitacao.Mensagem.Trim());
+                    if (msg == null)
+                    {
+                        msg = new();
+                        msg.Mensagem1 = solicitacao.Mensagem;
+                        var msgAdd = await _dbPush.Mensagem.AddAsync(msg);
+                        await _dbPush.SaveChangesAsync();
+                    }
+                    solicitacaoDB.idEnvio_Mensagem = msg.idEnvio_Mensagem;
+                    solicitacaoDB.Mensagem = solicitacao.Mensagem.Trim();
+                }
+
+                solicitacaoDB.Nome_Solicitacao = solicitacaoDB.Nome_Solicitacao.ToLower().Trim() != solicitacao.Nome_Solicitacao.ToLower().Trim() ? solicitacao.Nome_Solicitacao.Trim() : solicitacaoDB.Nome_Solicitacao;
+                solicitacaoDB.REQ_WO_Aprovacao_Mensagem = solicitacaoDB.REQ_WO_Aprovacao_Mensagem.ToLower().Trim() != solicitacao.REQ_WO_Aprovacao_Mensagem.ToLower().Trim() ? solicitacao.REQ_WO_Aprovacao_Mensagem.Trim() : solicitacaoDB.REQ_WO_Aprovacao_Mensagem;
+                
+                solicitacaoDB.WF_GECRM = (solicitacaoDB.WF_GECRM ?? -1) != (solicitacao.WF_GECRM ?? -1) ? solicitacao.WF_GECRM : solicitacaoDB.WF_GECRM;
+
+                solicitacaoDB.idTipoMensagem = solicitacaoDB.idTipoMensagem  != solicitacao.idTipoMensagem ? solicitacao.idTipoMensagem : solicitacaoDB.idTipoMensagem;
+                solicitacaoDB.Canal = solicitacaoDB.Canal.ToLower().Trim() != solicitacao.Canal.ToLower().Trim() ? solicitacao.Canal.ToLower().Trim() : solicitacaoDB.Nome_Solicitacao;
+                solicitacaoDB.Quantidade_Total = solicitacaoDB.Quantidade_Total  != solicitacao.Quantidade_Total ? solicitacao.Quantidade_Total : solicitacaoDB.Quantidade_Total;
+                solicitacaoDB.Limitacao_Tranche = solicitacaoDB.Limitacao_Tranche  != solicitacao.Limitacao_Tranche ? solicitacao.Limitacao_Tranche : solicitacaoDB.Limitacao_Tranche;
+                solicitacaoDB.Impactos_Previstos = solicitacaoDB.Impactos_Previstos.ToLower().Trim() != solicitacao.Impactos_Previstos.ToLower().Trim() ? solicitacao.Impactos_Previstos.Trim() : solicitacaoDB.Impactos_Previstos;
+                solicitacaoDB.Limitacao_Tranche = solicitacaoDB.Limitacao_Tranche  != solicitacao.Limitacao_Tranche ? solicitacao.Limitacao_Tranche : solicitacaoDB.Limitacao_Tranche;
+                
+                solicitacaoDB.Enviar_a_partir_de= (solicitacaoDB.Enviar_a_partir_de ?? new DateTime(0)) != (solicitacao.Enviar_a_partir_de ?? new DateTime(0)) ? solicitacao.Enviar_a_partir_de : solicitacaoDB.Enviar_a_partir_de;
+                solicitacaoDB.Enviar_no_maximo_ate= (solicitacaoDB.Enviar_no_maximo_ate ?? new DateTime(0)) != (solicitacao.Enviar_no_maximo_ate ?? new DateTime(0)) ? solicitacao.Enviar_no_maximo_ate : solicitacaoDB.Enviar_no_maximo_ate;
+                
+                solicitacaoDB.Enviar_Horario_InicialFormatado = (solicitacaoDB.Enviar_Horario_InicialFormatado.ToLower().Trim() ?? "") != (solicitacao.Enviar_Horario_InicialFormatado.ToLower().Trim() ?? "") ? solicitacao.Enviar_Horario_InicialFormatado.ToLower().Trim() : solicitacaoDB.Enviar_Horario_InicialFormatado;
+                solicitacaoDB.Enviar_Horario_FinalFormatado   = (solicitacaoDB.Enviar_Horario_FinalFormatado.ToLower().Trim() ?? "")   != (solicitacao.Enviar_Horario_FinalFormatado.ToLower().Trim() ?? "")   ? solicitacao.Enviar_Horario_FinalFormatado.ToLower().Trim()   : solicitacaoDB.Enviar_Horario_FinalFormatado;
+
+                solicitacaoDB.Enviar_DOM =  solicitacaoDB.Enviar_DOM != solicitacao.Enviar_DOM ? solicitacao.Enviar_DOM : solicitacaoDB.Enviar_DOM;
+                solicitacaoDB.Enviar_SEG =  solicitacaoDB.Enviar_SEG != solicitacao.Enviar_SEG ? solicitacao.Enviar_SEG : solicitacaoDB.Enviar_SEG;
+                solicitacaoDB.Enviar_TER =  solicitacaoDB.Enviar_TER != solicitacao.Enviar_TER ? solicitacao.Enviar_TER : solicitacaoDB.Enviar_TER;
+                solicitacaoDB.Enviar_QUA =  solicitacaoDB.Enviar_QUA != solicitacao.Enviar_QUA ? solicitacao.Enviar_QUA : solicitacaoDB.Enviar_QUA;
+                solicitacaoDB.Enviar_QUI =  solicitacaoDB.Enviar_QUI != solicitacao.Enviar_QUI ? solicitacao.Enviar_QUI : solicitacaoDB.Enviar_QUI;
+                solicitacaoDB.Enviar_SEX =  solicitacaoDB.Enviar_SEX != solicitacao.Enviar_SEX ? solicitacao.Enviar_SEX : solicitacaoDB.Enviar_SEX;
+                solicitacaoDB.Enviar_SAB =  solicitacaoDB.Enviar_SAB != solicitacao.Enviar_SAB ? solicitacao.Enviar_SAB : solicitacaoDB.Enviar_SAB;
+
+
+                solicitacaoDB.Limite_Mensagens_Por_Dia = solicitacaoDB.Limite_Mensagens_Por_Dia  != solicitacao.Limite_Mensagens_Por_Dia ? solicitacao.Limite_Mensagens_Por_Dia : solicitacaoDB.Limite_Mensagens_Por_Dia;
+                await _dbPush.SaveChangesAsync();
+
+                return Ok(solicitacaoDB);
+            }
+            //return BadRequest(new { error = 1002, message = "Solicitação de criação/atualização de Solicitação com problemas" });
             
         }
 

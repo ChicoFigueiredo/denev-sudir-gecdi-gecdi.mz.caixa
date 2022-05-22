@@ -112,6 +112,14 @@ export class DetalhesSolicitacaoComponent implements OnInit {
 
     moment.locale('pt-br');
 
+    if (this.solicitacao?.idSolicitacao_PUSH > 0){
+      this.solicitacao.enviar_a_partir_de = <any>moment(this.solicitacao.enviar_a_partir_de).toDate();
+      this.solicitacao.enviar_no_maximo_ate = <any>moment(this.solicitacao.enviar_no_maximo_ate).toDate();
+      this.solicitacao.enviar_Horario_InicialFormatado = <any>moment(this.solicitacao.enviar_Horario_InicialFormatado,'HH:mm');
+      this.solicitacao.enviar_Horario_FinalFormatado = <any>moment(this.solicitacao.enviar_Horario_FinalFormatado,'HH:mm');
+      this.formSolicitacao.patchValue(this.solicitacao);
+    }
+
     // if (moment().hour()>12)
     //   this.dataDe = moment().add(2,'days').startOf('day');
     // else
