@@ -471,6 +471,8 @@ namespace PushAPI.Models.Push
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
 
+                entity.Property(e => e.Observacoes).HasDefaultValueSql("(N'')");
+
                 entity.Property(e => e.Prioridade).HasDefaultValueSql("((100))");
 
                 entity.Property(e => e.Quantidade_Maxima_Autorizada).HasDefaultValueSql("((27))");
@@ -599,6 +601,8 @@ namespace PushAPI.Models.Push
                 entity.Property(e => e.Nome_Arquivo)
                     .HasMaxLength(200)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Observacoes).HasDefaultValueSql("(N'')");
 
                 entity.Property(e => e.REQ_Envio)
                     .HasMaxLength(20)

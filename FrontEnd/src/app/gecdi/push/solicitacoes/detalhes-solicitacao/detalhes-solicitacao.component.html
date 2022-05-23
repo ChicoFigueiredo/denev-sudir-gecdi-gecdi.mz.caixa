@@ -230,7 +230,7 @@
             <nb-toggle formControlName="enviar_QUI" status="success">Qui</nb-toggle>&nbsp;
             <nb-toggle formControlName="enviar_SEX" status="success">Sex</nb-toggle>&nbsp;
             <nb-toggle formControlName="enviar_SAB" status="success">Sáb</nb-toggle>&nbsp;
-            <nb-toggle formControlName="enviar_DOM" status="success" disabled>Dom</nb-toggle>&nbsp;
+            <nb-toggle formControlName="enviar_DOM" status="success" [disabled]="modo!='admin'">Dom</nb-toggle>&nbsp;
           </div>
         </nb-form-field>
       </div>
@@ -249,9 +249,111 @@
       </div>
     </div>
 
+
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Observacoes" class="label">Observações:</label>
+            <textarea formControlName="observacoes" type="text" nbInput fullWidth id="Observacoes"
+              height="4.5em"
+              placeholder="Anote aqui observações pertinentes à solicitação"
+              [status]="(f.observacoes.touched && f.observacoes.errors) ? 'danger': 'info'"></textarea>
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="modo==='admin'">
+
+    <div class="col-md-1">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="prioridade" class="label">Prioridade:</label>
+            <nb-select formControlName="prioridade" fullWidth id="idCurva" name="idCurva"
+                       (selectedChange)="alteraPrioridade(solicitacao,$event)"
+                       [status]="(f.prioridade.touched && f.prioridade.errors) ? 'danger': 'info'"
+                       >
+                <nb-option *ngFor="let v of listPrioridades" [value]="v">{{v}}</nb-option>
+            </nb-select>
+
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-3">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="idCurva" class="label">Curva:</label>
+            <nb-select formControlName="idCurva" fullWidth id="idCurva" name="idCurva"
+                       (selectedChange)="alteraCurva(solicitacao,$event)"
+                       [status]="(f.idCurva.touched && f.idCurva.errors) ? 'danger': 'info'"
+                       >
+              <nb-option *ngFor="let c of pushService.Curvas" [value]="c.idCurva_Envio">{{c.nome_Curva_Envio}}</nb-option>
+            </nb-select>
+
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Autorizacao" class="label">Autorização:</label>
+            <input type="text" nbInput fullWidth id="Autorizacao" placeholder="" hidden> <BR>
+              <nb-toggle formControlName="autorizacao_Gestor_PUSH" (ngModelChange)="changeCheckAutorizado(solicitacao,$event)" status="success">Autorizado GECDI</nb-toggle>
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="Cancelamento" class="label">Cancelamento:</label>
+            <input type="text" nbInput fullWidth id="Cancelamento" placeholder="" hidden> <BR>
+              <nb-toggle formControlName="cancelado" (ngModelChange)="changeCheckCancelado(solicitacao,$event)" status="warning">Cancelado GECDI</nb-toggle>
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <nb-form-field>
+          <div class="form-group">
+            <label for="CgcDemandante" class="label">CGC Demandante:</label>
+            <input formControlName="cgcDemandante" type="text" nbInput fullWidth id="CgcDemandante"
+              placeholder="CGC da unidade demandante"
+              [status]="(f.limitacao_Tranche.touched && f.limitacao_Tranche.errors) ? 'danger': 'info'"
+              [nbAutocomplete]="autoCGC"
+              >
+
+            <nb-autocomplete #autoCGC size="large" [activeFirst]="true">
+
+              <nb-option *ngFor="let c of listCGC$" [value]="c.cgc">{{ c.nome_Exibicao }}</nb-option>
+
+            </nb-autocomplete>
+
+
+          </div>
+        </nb-form-field>
+      </div>
+    </div>
+
 
   </div>
 

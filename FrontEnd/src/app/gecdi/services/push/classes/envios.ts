@@ -27,6 +27,7 @@ export interface EnviosResponse {
   idSolicitacao_PUSHNavigation:  IDSolicitacaoPUSHNavigation;
   solicitacao_Clientes:          SolicitacaoCliente[];
   comando_PowerShell:            string;
+  observacoes:                   string;
 }
 
 export interface IDSolicitacaoPUSHNavigation {

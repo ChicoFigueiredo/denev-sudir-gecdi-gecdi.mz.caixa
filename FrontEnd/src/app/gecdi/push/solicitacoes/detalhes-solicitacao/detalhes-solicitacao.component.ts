@@ -1,8 +1,13 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NbToastrService } from "@nebular/theme";
 import * as moment from "moment";
+import { Observable, of } from "rxjs";
+import { map, startWith } from 'rxjs/operators';
 import { Solicitacao } from "../../../services/push/classes/solicitacao";
 import { PushService } from "../../../services/push/push.service";
+import { Unidade } from "../../../services/unidades/classes/unidades";
+import { UnidadesService } from "../../../services/unidades/unidades.service";
 import { User } from "../../../services/user/classes/User";
 import { UserService } from "../../../services/user/user.service";
 
@@ -14,9 +19,11 @@ import { UserService } from "../../../services/user/user.service";
 export class DetalhesSolicitacaoComponent implements OnInit {
 
   public isEmojiPickerVisible: boolean;
+  public listPrioridades:number[] = Array.from({ length: 255 }, (_, i) => i);
   @Input("mode") public modo: string = "normal";
-
-  //@Input("solicitacao") public solicitacao: Solicitacao;
+  //listCGC$:Observable<Unidade[]> = of([]);
+  listCGC$:Unidade[];
+  @ViewChild('autoCGC') autoCGC;
   private _solicitacao: Solicitacao;
   get solicitacao() { return this._solicitacao; }
   @Input("solicitacao") set solicitacao(value: Solicitacao) {
@@ -39,22 +46,21 @@ export class DetalhesSolicitacaoComponent implements OnInit {
 
   public formSolicitacao:FormGroup = new FormGroup({
     idSolicitacao_PUSH                     : new FormControl(-1                                              ,[]),
-    wF_GECRM                               : new FormControl(null                                            ,[Validators.pattern('^[0-9]*$')]),
     nome_Solicitacao                       : new FormControl(''                                              ,[Validators.required, Validators.minLength(10), Validators.maxLength(100), Validators.pattern("^(?!.*(\\w)\\1{3,}).+$")]),
     reQ_WO_Aprovacao_Mensagem              : new FormControl(''                                              ,[Validators.required, Validators.pattern('REQ\\d{12,12}$')]),
     reQ_WO_Aprovacao_Mensagem_Texto        : new FormControl(''                                              ,[]),
+    wF_GECRM                               : new FormControl(null                                            ,[Validators.pattern('^[0-9]*$')]),
     idEnvio_Mensagem                       : new FormControl(-1                                              ,[]),
     mensagem                               : new FormControl(''                                              ,[Validators.required, Validators.minLength(20), Validators.maxLength(1000), Validators.pattern('^(?!.*(\\w)\\1{3,}).+$')]),
+    idTipoMensagem                         : new FormControl(1                                               ,[]),
     canal                                  : new FormControl(null                                            ,[Validators.required]),
-    nome_Campo1                            : new FormControl(''                                              ,[]),
-    nome_Campo2                            : new FormControl(''                                              ,[]),
-    nome_Campo3                            : new FormControl(''                                              ,[]),
-    nome_Campo4                            : new FormControl(''                                              ,[]),
-    nome_Campo5                            : new FormControl(''                                              ,[]),
-    idCurva_Envio_Dia_Normal               : new FormControl(null                                            ,[]),
-    idCurva_Envio_Dia_Cheio                : new FormControl(null                                            ,[]),
+    quantidade_Total                       : new FormControl(null                                            ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
+    limitacao_Tranche                      : new FormControl(60000                                           ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
+    impactos_Previstos                     : new FormControl(null                                            ,[Validators.required, Validators.minLength(20), Validators.pattern('^(?!.*(\\w)\\1{3,}).+$')]),
     enviar_a_partir_de                     : new FormControl(moment().add(2,'days').startOf('day').toDate()  ,[]), // Validators.required, Validators.pattern('\\d{2}\\/(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)[.]\\/\d{4}')
     enviar_no_maximo_ate                   : new FormControl(moment().add(35,'days').startOf('day').toDate() ,[]), // Validators.required, Validators.pattern('\\d{2}\\/(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)[.]\\/\d{4}')
+    enviar_Horario_InicialFormatado        : new FormControl(moment('07:00','HH:mm')                         ,[]),
+    enviar_Horario_FinalFormatado          : new FormControl(moment('21:00','HH:mm')                         ,[]),
     enviar_SEG                             : new FormControl(true                                            ,[]),
     enviar_TER                             : new FormControl(true                                            ,[]),
     enviar_QUA                             : new FormControl(true                                            ,[]),
@@ -62,45 +68,75 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     enviar_SEX                             : new FormControl(true                                            ,[]),
     enviar_SAB                             : new FormControl(true                                            ,[]),
     enviar_DOM                             : new FormControl(false                                           ,[]),
+    Limite_Mensagens_Por_Dia               : new FormControl(null                                            ,[]),
+    observacoes                            : new FormControl(''                                              ,[]),
+    prioridade                             : new FormControl(100                                             ,[]),
+    idCurva                                : new FormControl(34                                              ,[]),
+    autorizacao_Gestor_PUSH                : new FormControl(false                                           ,[]),
+    cancelado                              : new FormControl(false                                           ,[]),
+    cgcDemandante                          : new FormControl(-1                                              ,[]),
+    nome_Campo1                            : new FormControl(''                                              ,[]),
+    nome_Campo2                            : new FormControl(''                                              ,[]),
+    nome_Campo3                            : new FormControl(''                                              ,[]),
+    nome_Campo4                            : new FormControl(''                                              ,[]),
+    nome_Campo5                            : new FormControl(''                                              ,[]),
     enviar_Horario_Inicial                 : new FormControl(null                                            ,[]), // Validators.required, Validators.pattern('\\d{2}:\\d{2}')
     enviar_Horario_Final                   : new FormControl(null                                            ,[]), // Validators.required, Validators.pattern('\\d{2}:\\d{2}')
-    limitacao_Tranche                      : new FormControl(60000                                           ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
-    quantidade_Total                       : new FormControl(null                                            ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
     quantidade_Enviada                     : new FormControl(0                                               ,[]),
     matricula_Cadastramento                : new FormControl(null                                            ,[]),
     data_Cadastramento                     : new FormControl(null                                            ,[]),
-    autorizacao_Gestor_PUSH                : new FormControl(false                                           ,[]),
     matricula_Autorizacao_Gestor_PUSH      : new FormControl(null                                            ,[]),
     bloqueado_TI                           : new FormControl(false                                           ,[]),
     matricula_Bloqueio_TI                  : new FormControl(null                                            ,[]),
     data_Hora_Bloqueio                     : new FormControl(null                                            ,[]),
     data_Hora_Autorizacao                  : new FormControl(null                                            ,[]),
-    cancelado                              : new FormControl(false                                           ,[]),
     matricula_Cancelamento                 : new FormControl(null                                            ,[]),
     data_Hora_Cancelamento                 : new FormControl(null                                            ,[]),
-    cgcDemandante                          : new FormControl(-1                                              ,[]),
     cgcExecutora                           : new FormControl(-1                                              ,[]),
     finalizado                             : new FormControl(false                                           ,[]),
-    impactos_Previstos                     : new FormControl(null                                            ,[Validators.required, Validators.minLength(20), Validators.pattern('^(?!.*(\\w)\\1{3,}).+$')]),
-    prioridade                             : new FormControl(100                                             ,[]),
     quantidade_Agendada                    : new FormControl(0                                               ,[]),
     quantidade_Total_Restante              : new FormControl(0                                               ,[]),
     canalNavigation                        : new FormControl(null                                            ,[]),
-    idCurva_Envio_Dia_CheioNavigation      : new FormControl(null                                            ,[]),
-    idCurva_Envio_Dia_NormalNavigation     : new FormControl(null                                            ,[]),
     idEnvio_MensagemNavigation             : new FormControl(null                                            ,[]),
     solicitacao_Clientes                   : new FormControl(null                                            ,[]),
     solicitacao_Simulacao_Envio            : new FormControl(null                                            ,[]),
-    enviar_Horario_InicialFormatado        : new FormControl(moment('07:00','HH:mm')                         ,[]),
-    enviar_Horario_FinalFormatado          : new FormControl(moment('21:00','HH:mm')                         ,[]),
-    Limite_Mensagens_Por_Dia               : new FormControl(null                                            ,[]),
-    idTipoMensagem                         : new FormControl(1                                               ,[]),
     CanalNavigation                        : new FormControl(null                                            ,[]),
     Quantidade_Maxima_AutorizadaNavigation : new FormControl(null                                            ,[]),
     Solicitacao_Clientes                   : new FormControl(null                                            ,[]),
     Solicitacao_Simulacao_Envio            : new FormControl(null                                            ,[]),
     idCurvaNavigation                      : new FormControl(null                                            ,[]),
   })
+
+  constructor(
+    private userService:UserService,
+    public pushService:PushService,
+    private serviceSticker: NbToastrService,
+    private unidadeService: UnidadesService,
+  ) {
+    userService.changeUser().subscribe(u => this.user = u);
+
+    this.formSolicitacao.get("cgcDemandante")
+                        .valueChanges
+                        .subscribe(t => {
+                            if (t.length>=3)
+                               this.unidadeService.getUnidades(t).subscribe(u => this.listCGC$=u);
+                        })
+    // this.formSolicitacao.get("cgcDemandante")
+    //                     .valueChanges
+    //                     .pipe(
+    //                       startWith(''),
+    //                       map(t => {
+    //                         this.listCGC$ = this.unidadeService.getUnidades(t);
+    //                       }),
+    //                     )
+  }
+
+  ngOnInit(): void {
+
+    moment.locale('pt-br');
+
+  }
+
 
 
   filterDataDe = (date) => {
@@ -118,29 +154,6 @@ export class DetalhesSolicitacaoComponent implements OnInit {
       return false;
   };
 
-
-  constructor(
-    private userService:UserService,
-    public pushService:PushService,
-  ) {
-    userService.changeUser().subscribe(u => this.user = u);
-  }
-
-  ngOnInit(): void {
-
-    moment.locale('pt-br');
-
-    if (this.solicitacao?.idSolicitacao_PUSH > 0){
-      // // conversões conveniêntes para aceitação no FormGroup e nos componentes de data e hora
-      // this.solicitacao.enviar_a_partir_de = <any>moment(this.solicitacao.enviar_a_partir_de).toDate();
-      // this.solicitacao.enviar_no_maximo_ate = <any>moment(this.solicitacao.enviar_no_maximo_ate).toDate();
-      // this.solicitacao.enviar_Horario_InicialFormatado = <any>moment(this.solicitacao.enviar_Horario_InicialFormatado,'HH:mm');
-      // this.solicitacao.enviar_Horario_FinalFormatado = <any>moment(this.solicitacao.enviar_Horario_FinalFormatado,'HH:mm');
-
-      // this.formSolicitacao.patchValue(this.solicitacao);
-    }
-
-  }
 
   public addEmoji(event) {
     //this.textArea = `${this.textArea}${event.emoji.native}`;
@@ -161,6 +174,56 @@ export class DetalhesSolicitacaoComponent implements OnInit {
         myField.value.substring(endPos, myField.value.length);
     } else {
       myField.value += myValue;
+    }
+  }
+
+  alteraCurva(sol:Solicitacao,$event) {
+    this.pushService.setCurvaSolicitacao(sol,$event).subscribe((s:Solicitacao) => {
+       this.serviceSticker.show(`Solicitação ID ${s.idSolicitacao_PUSH} setado com a curva ${s.idCurva} - ${ this.pushService.Curvas.filter(x => x.idCurva_Envio==$event)[0].nome_Curva_Envio }`,'',{ status: 'success', duration: 10000 })
+    },(e) => {
+       this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message} ao setar a curva`,'',{ status: 'danger', duration: 10000 })
+    })
+  }
+
+
+  alteraPrioridade(sol:Solicitacao,$event) {
+    this.pushService.setPrioridadeSolicitacao(sol,$event).subscribe((s:Solicitacao) => {
+       sol = s;
+       this.serviceSticker.show(`Solicitação ID ${s.idSolicitacao_PUSH} setado com prioridade ${s.prioridade}`,'',{ status: 'success', duration: 10000 })
+    },(e) => {
+       this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message} ao setar a prioridade`,'',{ status: 'danger', duration: 10000 })
+    })
+  }
+
+
+  changeCheckAutorizado(sol:Solicitacao,$event){
+    if(sol){
+      this.pushService.setSolicitacaoAutorizado(sol.idSolicitacao_PUSH,!sol.autorizacao_Gestor_PUSH).subscribe((e:Solicitacao) => {
+        if(e.autorizacao_Gestor_PUSH == !sol.autorizacao_Gestor_PUSH){
+          sol.autorizacao_Gestor_PUSH = e.autorizacao_Gestor_PUSH;
+          sol = e;
+          this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} marcado como ${e?.autorizacao_Gestor_PUSH?'AUTORIZADO':'NÃO AUTORIZADO'}`,'',{ status: 'success' })
+        } else {
+          this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de autorização do gestor`,'',{ status: 'danger', duration: 10000 })
+        }
+      },(e) => {
+        this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message}`,'',{ status: 'danger', duration: 10000 })
+       })
+    }
+  }
+
+
+  changeCheckCancelado(s:Solicitacao,$event){
+    if(s){
+      this.pushService.setSolicitacaoCancelado(s.idSolicitacao_PUSH,!s.cancelado).subscribe((e:Solicitacao) => {
+        if(e.cancelado == !s.cancelado){
+          s.cancelado = e.cancelado;
+          s = e;
+          this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} marcado como ${e?.cancelado?'CANCELADO':'NÃO CANCELADO'}`,'',{ status: 'success' })
+        } else {
+          this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de cancelamento`,'',{ status: 'danger', duration: 10000 })
+        }
+      })
     }
   }
 
