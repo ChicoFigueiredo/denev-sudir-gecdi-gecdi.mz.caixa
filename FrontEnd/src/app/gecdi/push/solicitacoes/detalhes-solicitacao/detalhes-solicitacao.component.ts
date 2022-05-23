@@ -40,6 +40,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
 
   @ViewChild("diag") dialog: ElementRef<any>;
   @ViewChild("message") message: ElementRef<any>;
+  @ViewChild("nomeSolicitacao") public nomeSolicitacao: ElementRef<any>;
   minDataSolicitacao = moment();
   dataDe:any = moment().toDate();
   private user:User;
@@ -134,6 +135,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
   ngOnInit(): void {
 
     moment.locale('pt-br');
+    this.nomeSolicitacao.nativeElement.focus();
 
   }
 

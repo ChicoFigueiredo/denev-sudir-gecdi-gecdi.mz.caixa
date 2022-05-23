@@ -94,7 +94,12 @@ export class DialogSolicitacaoComponent implements OnInit {
           status: 'success',
           duration: 15000
         })
+        btnSalvar.disabled = false;
         this.onadd.emit();
+      },(e) => {
+        this.serviceSticker.show(`Gravação da solicitação retornou ERRO ${e.message}!`, '', { status: 'danger', duration: 10000 });
+        detal.nomeSolicitacao.nativeElement.focus();
+        btnSalvar.disabled = false;
       })
     }
 

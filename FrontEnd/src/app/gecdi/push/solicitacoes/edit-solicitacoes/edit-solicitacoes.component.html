@@ -1,12 +1,16 @@
 
 <nb-card>
   <nb-card-header>
-    <h3>Editar Solicitação de PUSH {{idSolicitacao_PUSH}}</h3>
+    <h3><button nbButton ghost (click)="voltarSolicitacoes()"><nb-icon class="font-2_25rem" size="3" icon="arrow-back-outline" pack="eva"></nb-icon></button><nb-icon  class="font-2_25rem" icon="edit-2-outline" pack="eva"></nb-icon>  Editar Solicitação de PUSH {{idSolicitacao_PUSH}}</h3>
   </nb-card-header>
   <nb-card-body>
-    <ngx-detalhes-solicitacao [solicitacao]="solicitacao" mode="admin"></ngx-detalhes-solicitacao>
+    <ngx-detalhes-solicitacao #detalhes [solicitacao]="solicitacao" mode="admin"></ngx-detalhes-solicitacao>
   </nb-card-body>
   <nb-card-footer>
-
+    <div class="float-right">
+      <button #btnSalvar nbButton (click)="salvarSolicitacao(null,btnSalvar)">Salvar</button>
+      &nbsp;&nbsp;
+      <button nbButton (click)="voltarSolicitacoes()">Fechar / Voltar</button>
+    </div>
   </nb-card-footer>
 </nb-card>

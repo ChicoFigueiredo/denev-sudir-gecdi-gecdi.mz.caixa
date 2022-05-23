@@ -320,6 +320,9 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 solicitacaoDB.Enviar_SEX =  solicitacaoDB.Enviar_SEX != solicitacao.Enviar_SEX ? solicitacao.Enviar_SEX : solicitacaoDB.Enviar_SEX;
                 solicitacaoDB.Enviar_SAB =  solicitacaoDB.Enviar_SAB != solicitacao.Enviar_SAB ? solicitacao.Enviar_SAB : solicitacaoDB.Enviar_SAB;
 
+                solicitacaoDB.CGCDemandante =  solicitacaoDB.CGCDemandante != solicitacao.CGCDemandante ? solicitacao.CGCDemandante : solicitacaoDB.CGCDemandante;
+                solicitacaoDB.Observacoes = solicitacaoDB.Observacoes.ToLower().Trim() != solicitacao.Observacoes.ToLower().Trim() ? solicitacao.Observacoes.Trim() : solicitacaoDB.Observacoes;
+
 
                 solicitacaoDB.Limite_Mensagens_Por_Dia = solicitacaoDB.Limite_Mensagens_Por_Dia  != solicitacao.Limite_Mensagens_Por_Dia ? solicitacao.Limite_Mensagens_Por_Dia : solicitacaoDB.Limite_Mensagens_Por_Dia;
                 await _dbPush.SaveChangesAsync();

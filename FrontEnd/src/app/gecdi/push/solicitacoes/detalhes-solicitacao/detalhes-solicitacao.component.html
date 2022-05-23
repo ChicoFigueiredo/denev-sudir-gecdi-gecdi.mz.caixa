@@ -16,7 +16,7 @@
     <div class="col-md-10">
       <div class="form-group">
         <label for="Nome_Solicitacao" class="label">Nome/Assunto Solicitação:</label>
-        <input formControlName="nome_Solicitacao" type="text" nbInput fullWidth id="nome_Solicitacao"
+        <input #nomeSolicitacao formControlName="nome_Solicitacao" type="text" nbInput fullWidth id="nome_Solicitacao"
           placeholder="Descreva suscintamente o objetivo do envio dessa mensagem"
           [status]="(f.nome_Solicitacao.touched && f.nome_Solicitacao.errors) ? 'danger': 'info'">
       </div>
