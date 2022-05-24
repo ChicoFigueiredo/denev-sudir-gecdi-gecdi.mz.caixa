@@ -14,6 +14,13 @@ using PushAPI.Models.Atendimento;
 
 namespace PushAPI.Services
 { 
+    
+    public class BuscaNome {
+        public string cUsuario {get; set;} = "";
+        public string Nome {get; set;} = "";
+        public string NomeExibicao {get => (cUsuario + " - " + Nome) ;}
+
+    }
     public interface IUserService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
@@ -21,6 +28,7 @@ namespace PushAPI.Services
         Usuario GetById(int id);
         Usuario GetByMatricula(string matricula);
         Task<Usuario> RegisterUser(string matricula, Role role = Role.User);
+        List<BuscaNome> BuscaPorNome(string Busca);
     }
 
     public class UserService : IUserService
@@ -40,6 +48,8 @@ namespace PushAPI.Services
             _appSettings = appSettings.Value;
             _dbSites = __dbSites;
             _dbAtendimento = __dbAtendimento;
+
+            xDE_Find = new DirectoryEntry(_appSettings.LDAP_User_Manager);
         }
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
@@ -150,6 +160,39 @@ namespace PushAPI.Services
                     {
                         SearchResult sr = searcher.FindOne();
                         if (!(sr == null)) return sr.GetDirectoryEntry();
+                        else
+                            return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+       private DirectoryEntry xDE_Find;
+       public List<BuscaNome> BuscaPorNome(string Busca)
+       {
+           SearchResultCollection bsc = BuscaUsuarioDominioPeloNome(Busca.ToLower().Trim(), xDE_Find);
+           List<BuscaNome> lst = new();
+           foreach(SearchResult e in bsc){
+               if (e.Properties.Contains("mailnickname") && e.Properties.Contains("Name") ){
+                  lst.Add(new BuscaNome { cUsuario = e.Properties["mailnickname"][0].ToString(), Nome = e.Properties["Name"][0].ToString()});
+               }
+           }
+
+           return lst;
+       }
+        private SearchResultCollection BuscaUsuarioDominioPeloNome(string UsName, DirectoryEntry root)
+        {
+            try
+            {
+                {
+                    using (var searcher = new DirectorySearcher(root, string.Format("(|(sAMAccountName={0})(displayName={0}*))", UsName)))
+                    {
+                        var sr = searcher.FindAll();
+                        if (!(sr == null)) return sr;
                         else
                             return null;
                     }

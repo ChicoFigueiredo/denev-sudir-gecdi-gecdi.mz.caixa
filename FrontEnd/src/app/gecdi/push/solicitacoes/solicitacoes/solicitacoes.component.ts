@@ -4,9 +4,13 @@ import { NbToastrService, NbDialogService, NbGlobalPhysicalPosition } from '@neb
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../../../environments/environment';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
 import { PushService } from '../../../services/push/push.service';
+import { Unidade } from '../../../services/unidades/classes/unidades';
+import { UnidadesService } from '../../../services/unidades/unidades.service';
 import { User } from '../../../services/user/classes/User';
+import { UserListRequest } from '../../../services/user/classes/user-request';
 import { UserService } from '../../../services/user/user.service';
 
 @Component({
@@ -26,6 +30,12 @@ export class SolicitacoesComponent implements OnInit {
   public dataDe: Date = moment().add(-90,'day').startOf('day').toDate();
   public dataAte: Date = moment().add(90,'day').startOf('day').toDate();
 
+  public cgcSol: number = null;
+  listCGC$:Unidade[];
+
+  public matriculaSol:string = null;
+  listMatriculas$:UserListRequest[];
+
   public OrdemSolicitacoes:boolean = false;
   public SoFila:boolean = true;
   public AlteraPrioridade:boolean = false;
@@ -36,6 +46,7 @@ export class SolicitacoesComponent implements OnInit {
     private userService: UserService,
     private dialogService: NbDialogService,
     private router: Router,
+    private unidadeService: UnidadesService,
   ) {
     this.userService.changeUser().subscribe(u => this.usuario=u );
   }
@@ -69,8 +80,10 @@ export class SolicitacoesComponent implements OnInit {
   quantidade_Agendada_Autorizado_Sum:number = 0;
   quantidade_Solicitacoes:number = 0;
   quantidade_Solicitacoes_Autorizadas:number = 0;
-  refreshSolicitacoes(recontar:boolean=false, callback = null){
-    this.pushService.getSolicitacoes(recontar,'-1',this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila,this.limitRegistros,moment(this.dataDe).format('YYYY-MM-DD'),moment(this.dataAte).format('YYYY-MM-DD'))
+  refreshSolicitacoes(recontar:boolean=false, callback = null, cgc = null, matr = null){
+    this.cgcSol = cgc;
+    this.matriculaSol = matr;
+    this.pushService.getSolicitacoes(recontar,this.cgcSol && this.cgcSol > 0 ? `${this.cgcSol}` : '-1' ,this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila,this.limitRegistros,moment(this.dataDe).format('YYYY-MM-DD'),moment(this.dataAte).format('YYYY-MM-DD'),this.matriculaSol)
         .subscribe((s:Solicitacao[]) =>{
           this.solicitacao = s;
           this.quantidade_Total_Sum = s.map(q => q.quantidade_Total).reduce((ant,cur,i) => ant + cur);
@@ -165,6 +178,24 @@ export class SolicitacoesComponent implements OnInit {
 Arquivo: ${Sol?.solicitacao_Upload[0].arquivo}\n
 Tempo de Processamento: ${Sol?.solicitacao_Upload[0].tempo_Decorrido}\n
 Histórico: ${Sol?.solicitacao_Upload[0].resultado_Processamento}`
+  }
+
+  waitCGC:any
+  findCGC(t){
+    this.waitCGC && clearTimeout(this.waitCGC);
+    if (t.length>=3)
+      this.waitCGC = setTimeout(() => this.unidadeService.getUnidades(t).subscribe(u => this.listCGC$=u),environment.intervalToGetAPI);
+    else (t.length == 0)
+      this.cgcSol = null;
+  }
+
+  waitMatricula:any
+  findMatricula(t){
+    this.waitMatricula && clearTimeout(this.waitMatricula);
+    if (t.length>=7)
+      this.waitMatricula = setTimeout(() => this.userService.getUsersFind(t).subscribe(u => this.listMatriculas$=u),environment.intervalToGetAPI);
+    else (t.length == 0)
+      this.matriculaSol = null;
   }
 
 }

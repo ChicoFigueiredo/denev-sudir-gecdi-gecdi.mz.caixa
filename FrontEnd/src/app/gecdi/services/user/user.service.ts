@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
 import { MenuService } from '../menu/menu.service';
 import { Role } from './classes/Role';
 import { User } from './classes/User';
+import { UserListRequest } from './classes/user-request';
 import { Usuario } from './classes/Usuario';
 
 const API_PUSH = environment.urlAPI + '/api'
@@ -76,6 +77,12 @@ export class UserService {
     return this.http
                .get<Usuario[]>(`${API_PUSH}/user?lim=${lim}&busca=${q}`);
   }
+
+  getUsersFind(q:string='',lim:number=25):Observable<UserListRequest[]> {
+    return this.http
+               .get<UserListRequest[]>(`${API_PUSH}/user/find?lim=${lim}&q=${q}`);
+  }
+
 
 
   deleteUser(id:number){

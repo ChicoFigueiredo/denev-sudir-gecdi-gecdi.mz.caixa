@@ -21,6 +21,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
 
   public isEmojiPickerVisible: boolean;
   public listPrioridades:number[] = Array.from({ length: 255 }, (_, i) => i);
+  public estaSalvando:boolean = false;
   @Input("mode") public modo: string = "normal";
   //listCGC$:Observable<Unidade[]> = of([]);
   listCGC$:Unidade[];
@@ -220,33 +221,37 @@ export class DetalhesSolicitacaoComponent implements OnInit {
 
 
   changeCheckAutorizado(sol:Solicitacao,$event){
-    if(sol){
-      this.pushService.setSolicitacaoAutorizado(sol.idSolicitacao_PUSH,!sol.autorizacao_Gestor_PUSH).subscribe((e:Solicitacao) => {
-        if(e.autorizacao_Gestor_PUSH == !sol.autorizacao_Gestor_PUSH){
-          sol.autorizacao_Gestor_PUSH = e.autorizacao_Gestor_PUSH;
-          sol = e;
-          this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} marcado como ${e?.autorizacao_Gestor_PUSH?'AUTORIZADO':'NÃO AUTORIZADO'}`,'',{ status: 'success' })
-        } else {
-          this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de autorização do gestor`,'',{ status: 'danger', duration: 10000 })
-        }
-      },(e) => {
-        this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message}`,'',{ status: 'danger', duration: 10000 })
-       })
+    if(!this.estaSalvando){
+      if(sol){
+        this.pushService.setSolicitacaoAutorizado(sol.idSolicitacao_PUSH,!sol.autorizacao_Gestor_PUSH).subscribe((e:Solicitacao) => {
+          if(e.autorizacao_Gestor_PUSH == !sol.autorizacao_Gestor_PUSH){
+            sol.autorizacao_Gestor_PUSH = e.autorizacao_Gestor_PUSH;
+            sol = e;
+            this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} marcado como ${e?.autorizacao_Gestor_PUSH?'AUTORIZADO':'NÃO AUTORIZADO'}`,'',{ status: 'success' })
+          } else {
+            this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de autorização do gestor`,'',{ status: 'danger', duration: 10000 })
+          }
+        },(e) => {
+          this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message}`,'',{ status: 'danger', duration: 10000 })
+        })
+      }
     }
   }
 
 
   changeCheckCancelado(s:Solicitacao,$event){
-    if(s){
-      this.pushService.setSolicitacaoCancelado(s.idSolicitacao_PUSH,!s.cancelado).subscribe((e:Solicitacao) => {
-        if(e.cancelado == !s.cancelado){
-          s.cancelado = e.cancelado;
-          s = e;
-          this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} marcado como ${e?.cancelado?'CANCELADO':'NÃO CANCELADO'}`,'',{ status: 'success' })
-        } else {
-          this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de cancelamento`,'',{ status: 'danger', duration: 10000 })
-        }
-      })
+    if(!this.estaSalvando){
+      if(s){
+        this.pushService.setSolicitacaoCancelado(s.idSolicitacao_PUSH,!s.cancelado).subscribe((e:Solicitacao) => {
+          if(e.cancelado == !s.cancelado){
+            s.cancelado = e.cancelado;
+            s = e;
+            this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} marcado como ${e?.cancelado?'CANCELADO':'NÃO CANCELADO'}`,'',{ status: 'success' })
+          } else {
+            this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_PUSH} com erro na marcação de cancelamento`,'',{ status: 'danger', duration: 10000 })
+          }
+        })
+      }
     }
   }
 

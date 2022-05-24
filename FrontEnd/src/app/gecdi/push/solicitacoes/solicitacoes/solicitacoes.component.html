@@ -28,7 +28,34 @@
               <nb-select [(ngModel)]="limitRegistros" id="regs" name="regs" (selectedChange)="refreshSolicitacoes(true)">
                 <nb-option *ngFor="let i of listLimits" [value]="i">{{ i==-1 ? "Todos" : i }}</nb-option>
               </nb-select>
-              &nbsp;registros
+              &nbsp;registros&nbsp;&nbsp;&nbsp;
+
+
+              CGC Demandante:
+              <input #cgc [(ngModel)]="cgcSol" type="text" nbInput id="CgcDemandante"
+                placeholder="CGC da unidade demandante"
+                [nbAutocomplete]="autoCGC"
+                (ngModelChange)="findCGC($event)"
+                (keyup.enter)="cgcSol == null || cgcSol < 0 ? refreshSolicitacoes(true) : ''"
+                >
+              <nb-autocomplete #autoCGC size="large" [activeFirst]="true" (selectedChange)="refreshSolicitacoes(true,null,$event,matriculaSol)">
+                <nb-option *ngFor="let c of listCGC$" [value]="c.cgc">{{ c.nome_Exibicao }}</nb-option>
+              </nb-autocomplete>
+              <button nbButton (click)="cgc.value=null; refreshSolicitacoes(false,null,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
+
+              Matricula:
+              <input #matricula [(ngModel)]="matriculaSol" type="text" nbInput id="MatriculaDemandante"
+                placeholder="Matrícula do demandante"
+                [nbAutocomplete]="autoMatricula"
+                (ngModelChange)="findMatricula($event)"
+                (keyup.enter)="matriculaSol == null ? refreshSolicitacoes(true) : ''"
+                >
+              <nb-autocomplete #autoMatricula size="large" [activeFirst]="true" (selectedChange)="refreshSolicitacoes(true,null,cgcSol,$event)">
+                <nb-option *ngFor="let c of listMatriculas$" [value]="c.cUsuario">{{ c.nomeExibicao }}</nb-option>
+              </nb-autocomplete>
+              <button nbButton (click)="matricula.value=null; refreshSolicitacoes(false,null,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;
+
+
             </div>
           </div>
 

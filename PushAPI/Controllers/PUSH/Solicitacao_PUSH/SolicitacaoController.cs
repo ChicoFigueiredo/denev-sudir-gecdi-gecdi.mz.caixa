@@ -32,15 +32,15 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
         // GET: api/Solicitacoes
         [HttpGet("lista")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100)
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100, string matricula = "")
         {
-            return await GetSolicitacaoCGC(-1, De, Ate, prior, recount, order, soFila, limit);
+            return await GetSolicitacaoCGC(-1, De, Ate, prior, recount, order, soFila, limit, matricula);
         }
 
 
         // GET: api/Solicitacoes/5325
         [HttpGet("lista/{cgc}")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int CGC, DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100)
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int CGC, DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100, string matricula = "")
         {
             //_dbPush.Configuration.LazyLoadingEnabled = false;
             if (recount)
@@ -106,6 +106,9 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                     .ThenBy(o => o.Prioridade)
                     .ThenBy(o => o.Quantidade_Total_Restante)
                     .Where(whereFunc);
+                
+                if ((matricula ?? "").Trim() != "")
+                    ret = ret.Where(x => x.Matricula_Cadastramento.ToLower() == matricula.ToLower().Trim());
                     
                 if (limit > 0) 
                     return await ret.Take(limit).ToListAsync<Solicitacao>();
@@ -127,6 +130,10 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                         .Include(i => i.Solicitacao_Upload)
                         //.Include(i => i.idCurvaNavigation)
                         .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De);
+                        
+                
+                if ((matricula ?? "").Trim() != "")
+                    ret = ret.Where(x => x.Matricula_Cadastramento.ToLower() == matricula.ToLower().Trim());
 
                 if (limit > 0) 
                     return await ret.Take(limit).ToListAsync<Solicitacao>();

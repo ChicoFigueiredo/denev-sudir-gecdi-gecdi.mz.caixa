@@ -36,9 +36,11 @@ export class EditSolicitacoesComponent implements OnInit {
     this.router.navigateByUrl("/gecdi/push/solicitacoes")
   }
 
+
   salvarSolicitacao(ref: any, btnSalvar:any) {
-    btnSalvar.disabled = true;
     const detal: any = this.detalhes; //.elementRef.nativeElement;
+    detal.estaSalvando = true;
+    btnSalvar.disabled = true;
     detal.formSolicitacao.markAllAsTouched();
     console.log(detal.formSolicitacao.value)
     console.log(detal.formSolicitacao)
@@ -63,6 +65,7 @@ export class EditSolicitacoesComponent implements OnInit {
     if (errosDados) {
       alert(`Existem ${erros} erros de validação que impedem o cadastramento. Corrija os campos marcados em vermelho e tente novamente.`);
       btnSalvar.disabled = false;
+      detal.estaSalvando = false;
     } else {
       detal.formSolicitacao.patchValue({
         wF_GECRM                        : detal.formSolicitacao.controls.wF_GECRM.value === "" ? null : detal.formSolicitacao.controls.wF_GECRM.value,
@@ -76,10 +79,12 @@ export class EditSolicitacoesComponent implements OnInit {
         this.serviceSticker.show(`Solicitação ID ${sol?.idSolicitacao_PUSH} salva!`, '', { status: 'success', duration: 10000 });
         detal.nomeSolicitacao.nativeElement.focus();
         btnSalvar.disabled = false;
+        detal.estaSalvando = false;
       },(e) => {
         this.serviceSticker.show(`Gravação da solicitação retornou ERRO ${e.message}!`, '', { status: 'danger', duration: 10000 });
         detal.nomeSolicitacao.nativeElement.focus();
         btnSalvar.disabled = false;
+        detal.estaSalvando = false;
       })
     }
 

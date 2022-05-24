@@ -71,6 +71,23 @@ namespace PushAPI.Controllers.User
         }
 
 
+        // GET: api/User/find
+        [HttpGet("find")]
+        public async Task<ActionResult<List<BuscaNome>>> GetBuscaUsuarioLdap(string q = "")
+        {
+            if ((q ?? "").Trim() !=""){
+                List<BuscaNome> lst = _userService.BuscaPorNome(q);
+
+                if (lst == null)
+                    return NotFound();
+
+                return lst;
+            }
+            else
+                return NotFound();
+        }
+
+
         // GET: api/User/Roles
         [HttpGet("Roles")]
         public async Task<IEnumerable<Roles>> GetRoles()
