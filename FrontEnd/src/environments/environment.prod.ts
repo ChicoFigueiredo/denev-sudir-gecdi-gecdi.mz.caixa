@@ -8,5 +8,6 @@ export const environment = {
   authname: 'email',
   urlAPI: '',
   nomeSite: 'GECDI / Gestão',
-  itemsPadrao: 25
+  itemsPadrao: 25,
+  horarioLimite: 14,
 };

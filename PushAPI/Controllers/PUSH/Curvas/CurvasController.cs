@@ -13,7 +13,7 @@ namespace PushAPI.Controllers.PUSH.Curvas
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Role.Admin)]
+    [Authorize(Role.Admin,Role.GECDI,Role.GestorTI,Role.Solicitante,Role.Transmissor,Role.User)]
     public class CurvasController : ControllerBase
     {
         private readonly dbPUSH _context;
@@ -25,7 +25,6 @@ namespace PushAPI.Controllers.PUSH.Curvas
 
         // GET: api/Curvas
         [HttpGet]
-        [Authorize()]
         public async Task<ActionResult<IEnumerable<Curva_Envio>>> GetCurva_Envio()
         {
             return await _context.Curva_Envio
@@ -50,6 +49,7 @@ namespace PushAPI.Controllers.PUSH.Curvas
         // PUT: api/Curvas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Role.Admin)]
         public async Task<IActionResult> PutCurva_Envio(int id, Curva_Envio curva_Envio)
         {
             if (id != curva_Envio.idCurva_Envio)
@@ -81,6 +81,7 @@ namespace PushAPI.Controllers.PUSH.Curvas
         // POST: api/Curvas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Role.Admin)]
         public async Task<ActionResult<Curva_Envio>> PostCurva_Envio(Curva_Envio curva_Envio)
         {
             _context.Curva_Envio.Add(curva_Envio);
@@ -91,6 +92,7 @@ namespace PushAPI.Controllers.PUSH.Curvas
 
         // DELETE: api/Curvas/5
         [HttpDelete("{id}")]
+        [Authorize(Role.Admin)]
         public async Task<IActionResult> DeleteCurva_Envio(int id)
         {
             var curva_Envio = await _context.Curva_Envio.FindAsync(id);

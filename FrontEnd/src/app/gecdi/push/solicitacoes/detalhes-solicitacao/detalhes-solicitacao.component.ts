@@ -4,6 +4,7 @@ import { NbToastrService } from "@nebular/theme";
 import * as moment from "moment";
 import { Observable, of } from "rxjs";
 import { map, startWith } from 'rxjs/operators';
+import { environment } from "../../../../../environments/environment";
 import { Solicitacao } from "../../../services/push/classes/solicitacao";
 import { PushService } from "../../../services/push/push.service";
 import { Unidade } from "../../../services/unidades/classes/unidades";
@@ -122,14 +123,6 @@ export class DetalhesSolicitacaoComponent implements OnInit {
                             if (t.length>=3)
                                this.unidadeService.getUnidades(t).subscribe(u => this.listCGC$=u);
                         })
-    // this.formSolicitacao.get("cgcDemandante")
-    //                     .valueChanges
-    //                     .pipe(
-    //                       startWith(''),
-    //                       map(t => {
-    //                         this.listCGC$ = this.unidadeService.getUnidades(t);
-    //                       }),
-    //                     )
   }
 
   ngOnInit(): void {
@@ -142,16 +135,44 @@ export class DetalhesSolicitacaoComponent implements OnInit {
 
 
   filterDataDe = (date) => {
+    if (this.modo==="admin")
+        return true;
+    const diasPermitidos:Array<number> = [];
+    if (this.f.enviar_DOM.value) diasPermitidos.push(0);
+    if (this.f.enviar_SEG.value) diasPermitidos.push(1);
+    if (this.f.enviar_TER.value) diasPermitidos.push(2);
+    if (this.f.enviar_QUA.value) diasPermitidos.push(3);
+    if (this.f.enviar_QUI.value) diasPermitidos.push(4);
+    if (this.f.enviar_SEX.value) diasPermitidos.push(5);
+    if (this.f.enviar_SAB.value) diasPermitidos.push(6);
+
+    let diaAberto = moment();
+
+    if (diaAberto.hour() > environment.horarioLimite)
+        diaAberto = diaAberto.add(2,'days').startOf('day');
+    else
+        diaAberto = diaAberto.add(1,'days').startOf('day');
+
     if (date && date.getDay())
-      return date.getDay() !== 0 && moment(date).isSameOrAfter(moment().add(2,'days').startOf('day'));
+      return diasPermitidos.includes(date.getDay()) && moment(date).isSameOrAfter(diaAberto);
     else
       return false;
   };
 
   filterDataAte = (date) => {
+    if (this.modo==="admin")
+        return true;
+    const diasPermitidos:Array<number> = [];
+    if (this.f.enviar_DOM.value) diasPermitidos.push(0);
+    if (this.f.enviar_SEG.value) diasPermitidos.push(1);
+    if (this.f.enviar_TER.value) diasPermitidos.push(2);
+    if (this.f.enviar_QUA.value) diasPermitidos.push(3);
+    if (this.f.enviar_QUI.value) diasPermitidos.push(4);
+    if (this.f.enviar_SEX.value) diasPermitidos.push(5);
+    if (this.f.enviar_SAB.value) diasPermitidos.push(6);
     this.dataDe = moment(this.formSolicitacao.controls.enviar_a_partir_de.value).toDate();
     if (date && date.getDay())
-      return date.getDay() !== 0 && moment(date).isSameOrAfter(moment(this.dataDe).startOf('day'));
+      return diasPermitidos.includes(date.getDay()) && moment(date).isSameOrAfter(moment(this.dataDe).startOf('day'));
     else
       return false;
   };

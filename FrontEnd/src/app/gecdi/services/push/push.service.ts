@@ -73,11 +73,11 @@ export class PushService {
                .get<Canal[]>(`${API_PUSH}/Canais`)
   }
 
-  getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority",soFila:boolean=true){
+  getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority",soFila:boolean=true,limit=-1,de='',ate=''){
     if(cgc === "-1")
-      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}`);
+      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}`);
     else
-      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&order=${order}&soFila=${soFila}`);
+      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}`);
   }
 
   getEnviosResumo(data){

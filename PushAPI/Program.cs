@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Text.Json.Serialization;
 using Serilog;
 using System.Text.Json;
+//using Microsoft.EntityFrameworkCore.Proxies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,10 +106,14 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 });
 
 builder.Services.AddDbContext<dbSites>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBSites")));
-builder.Services.AddDbContext<dbPUSH>(options => options.UseSqlServer(
-        builder.Configuration.GetConnectionString("WebApiDBPUSH"),
-        sql => sql.CommandTimeout(60 * 60 * 5)
-));
+builder.Services.AddDbContext<dbPUSH>(options => {
+    options
+        //.UseLazyLoadingProxies(false)
+        .UseSqlServer(
+            builder.Configuration.GetConnectionString("WebApiDBPUSH"),
+            sql => sql.CommandTimeout(60 * 60 * 5)
+        );
+});
 builder.Services.AddDbContext<dbAtendimento>(options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("WebApiDBAtendimento"),
         sql => sql.CommandTimeout(60 * 60 * 5)
@@ -178,7 +183,7 @@ public static class AllowingServerSideValidationToBeDisabledInvalidModelStateRes
             .MethodInfo.GetCustomAttributes(typeof(OptionalValidationAttribute), true)
             .SingleOrDefault())?.ShouldEnableDataValidationParameterName;
 
-        var isValidationEnabled = false; // true habilita a validação de modelos
+        var isValidationEnabled = false; // true habilita a validaï¿½ï¿½o de modelos
 
         if (shouldEnableDataValidationarameterName != null)
         {

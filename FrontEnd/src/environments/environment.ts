@@ -13,5 +13,6 @@ export const environment = {
   authname: 'email',
   urlAPI: 'https://localhost:7116',
   nomeSite: 'GECDI / Gestão',
-  itemsPadrao: 25
+  itemsPadrao: 25,
+  horarioLimite: 14,
 };

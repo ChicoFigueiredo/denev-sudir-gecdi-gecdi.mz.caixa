@@ -13,7 +13,7 @@ namespace PushAPI.Controllers.PUSH.CanaisEnvio
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Role.Admin)]
+    [Authorize(Role.Admin,Role.GECDI,Role.GestorTI,Role.Solicitante,Role.Transmissor,Role.User)]
     public class CanaisController : ControllerBase
     {
         private readonly dbPUSH _dbPUSH;
@@ -25,7 +25,6 @@ namespace PushAPI.Controllers.PUSH.CanaisEnvio
 
         // GET: api/Canais
         [HttpGet]
-        [Authorize()]
         public async Task<ActionResult<IEnumerable<Canais>>> GetCanais(bool soHabilitados = true)
         {
             return soHabilitados ? await _dbPUSH.Canais.Where(c => (c.Disponivel ?? false)).ToListAsync() : await _dbPUSH.Canais.ToListAsync();
@@ -48,6 +47,7 @@ namespace PushAPI.Controllers.PUSH.CanaisEnvio
         // PUT: api/Canais/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Role.Admin)]
         public async Task<IActionResult> PutCanais(string id, Canais canais)
         {
             if (id != canais.Canal)
@@ -79,6 +79,7 @@ namespace PushAPI.Controllers.PUSH.CanaisEnvio
         // POST: api/Canais
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Role.Admin)]
         public async Task<ActionResult<Canais>> PostCanais(Canais canais)
         {
             _dbPUSH.Canais.Add(canais);
@@ -89,6 +90,7 @@ namespace PushAPI.Controllers.PUSH.CanaisEnvio
 
         // DELETE: api/Canais/5
         [HttpDelete("{id}")]
+        [Authorize(Role.Admin)]
         public async Task<IActionResult> DeleteCanais(string id)
         {
             var canais = await _dbPUSH.Canais.FindAsync(id);

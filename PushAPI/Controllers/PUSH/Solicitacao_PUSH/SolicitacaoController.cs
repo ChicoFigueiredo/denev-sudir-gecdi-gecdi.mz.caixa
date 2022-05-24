@@ -32,21 +32,25 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
         // GET: api/Solicitacoes
         [HttpGet("lista")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(DateTime? De = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100)
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100)
         {
-            return await GetSolicitacaoCGC(-1, DateTime.Now.AddDays(-50000), prior, recount, order, soFila, limit);
+            return await GetSolicitacaoCGC(-1, De, Ate, prior, recount, order, soFila, limit);
         }
 
 
         // GET: api/Solicitacoes/5325
         [HttpGet("lista/{cgc}")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int CGC, DateTime? De = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100)
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int CGC, DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100)
         {
+            //_dbPush.Configuration.LazyLoadingEnabled = false;
             if (recount)
                 _ = await _dbPush.Database.ExecuteSqlRawAsync("EXEC DB5138_PUSH.FILA.Atualiza_Contagem_de_Solicitacoes -1");
 
             if (De == null)
                 De = DateTime.Now.AddDays(-90);
+
+            if (Ate == null)
+                Ate = DateTime.Now.AddDays(90);
 
             System.Linq.Expressions.Expression<Func<Solicitacao, int>> orderFunc; //necessário para solicitar o ToListAsync encadeado
             System.Linq.Expressions.Expression<Func<Solicitacao, bool>> whereFunc; //necessário para solicitar o ToListAsync encadeado
@@ -55,16 +59,16 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             if (CGC < 0)
             {
                 if (soFila)
-                    whereFunc = x => x.Data_Cadastramento >= (DateTime)De && !x.Finalizado && !x.Cancelado;
+                    whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
                 else
-                    whereFunc = x => x.Data_Cadastramento >= (DateTime)De;
+                    whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
             }
             else
             {
                 if (soFila)
-                    whereFunc = x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De && !x.Finalizado && !x.Cancelado;
+                    whereFunc = x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
                 else
-                    whereFunc = x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De;
+                    whereFunc = x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
             }
 
             // ordenação
@@ -94,30 +98,40 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
             if (prior)
             {
-                return await _dbPush.Solicitacao
+                var ret = _dbPush.Solicitacao
                     .Include(i => i.idEnvio_MensagemNavigation)
                     .Include(i => i.Solicitacao_Upload)
-                    .Include(i => i.idCurvaNavigation)
+                    //.Include(i => i.idCurvaNavigation)
                     .OrderBy(orderFunc)
                     .ThenBy(o => o.Prioridade)
                     .ThenBy(o => o.Quantidade_Total_Restante)
-                    .Where(whereFunc)
-                    .ToListAsync<Solicitacao>();
+                    .Where(whereFunc);
+                    
+                if (limit > 0) 
+                    return await ret.Take(limit).ToListAsync<Solicitacao>();
+                else
+                    return await ret.ToListAsync<Solicitacao>();
+                
             }
             else
             {
-                if (CGC < 0)
-                    return await _dbPush.Solicitacao
+                var ret = (CGC < 0) ?
+                     _dbPush.Solicitacao
                         .Include(i => i.idEnvio_MensagemNavigation)
                         .Include(i => i.Solicitacao_Upload)
-                        .Include(i => i.idCurvaNavigation)
-                        .Where(x => x.Data_Cadastramento >= (DateTime)De).ToListAsync();
+                        //.Include(i => i.idCurvaNavigation)
+                        .Where(x => x.Data_Cadastramento >= (DateTime)De)
+                    :
+                     _dbPush.Solicitacao
+                        .Include(i => i.idEnvio_MensagemNavigation)
+                        .Include(i => i.Solicitacao_Upload)
+                        //.Include(i => i.idCurvaNavigation)
+                        .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De);
+
+                if (limit > 0) 
+                    return await ret.Take(limit).ToListAsync<Solicitacao>();
                 else
-                    return await _dbPush.Solicitacao
-                        .Include(i => i.idEnvio_MensagemNavigation)
-                        .Include(i => i.Solicitacao_Upload)
-                        .Include(i => i.idCurvaNavigation)
-                        .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De).ToListAsync();
+                    return await ret.ToListAsync<Solicitacao>();
             }
 
         }

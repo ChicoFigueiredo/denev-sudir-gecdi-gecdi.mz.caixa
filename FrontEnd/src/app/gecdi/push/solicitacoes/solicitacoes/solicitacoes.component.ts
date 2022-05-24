@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbToastrService, NbDialogService, NbGlobalPhysicalPosition } from '@nebular/theme';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
@@ -19,6 +20,11 @@ export class SolicitacoesComponent implements OnInit {
   public solicitacao:Solicitacao[];
   public usuario:User;
   public listPrioridades:number[] = Array.from({ length: 255 }, (_, i) => i);
+  public listLimits:number[] = [25,50,75,100,200,500,1000,-1];
+  public limitRegistros:number = 100;
+
+  public dataDe: Date = moment().add(-90,'day').startOf('day').toDate();
+  public dataAte: Date = moment().add(90,'day').startOf('day').toDate();
 
   public OrdemSolicitacoes:boolean = false;
   public SoFila:boolean = true;
@@ -55,10 +61,25 @@ export class SolicitacoesComponent implements OnInit {
     this.router.navigateByUrl(`/gecdi/push/solicitacao/${s.idSolicitacao_PUSH}/edit`)
   }
 
+
+  quantidade_Total_Sum:number = 0;
+  quantidade_Total_Autorizado_Sum:number = 0;
+  quantidade_Enviada_Sum:number = 0;
+  quantidade_Agendada_Sum:number = 0;
+  quantidade_Agendada_Autorizado_Sum:number = 0;
+  quantidade_Solicitacoes:number = 0;
+  quantidade_Solicitacoes_Autorizadas:number = 0;
   refreshSolicitacoes(recontar:boolean=false, callback = null){
-    this.pushService.getSolicitacoes(recontar,'-1',this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila)
+    this.pushService.getSolicitacoes(recontar,'-1',this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila,this.limitRegistros,moment(this.dataDe).format('YYYY-MM-DD'),moment(this.dataAte).format('YYYY-MM-DD'))
         .subscribe((s:Solicitacao[]) =>{
           this.solicitacao = s;
+          this.quantidade_Total_Sum = s.map(q => q.quantidade_Total).reduce((ant,cur,i) => ant + cur);
+          this.quantidade_Total_Autorizado_Sum = s.map(q => q.autorizacao_Gestor_PUSH ? q.quantidade_Total : 0).reduce((ant,cur,i) => ant + cur);
+          this.quantidade_Enviada_Sum = s.map(q => q.quantidade_Enviada).reduce((ant,cur,i) => ant + cur);
+          this.quantidade_Agendada_Sum = s.map(q => q.quantidade_Agendada).reduce((ant,cur,i) => ant + cur);
+          this.quantidade_Agendada_Autorizado_Sum = s.map(q => q.autorizacao_Gestor_PUSH ? q.quantidade_Agendada : 0).reduce((ant,cur,i) => ant + cur);
+          this.quantidade_Solicitacoes = s.length;
+          this.quantidade_Solicitacoes_Autorizadas = s.map(q => <number>(q.autorizacao_Gestor_PUSH ? 1 : 0)).reduce((ant,cur,i) => ant + cur);
           callback && callback();
         });
   }

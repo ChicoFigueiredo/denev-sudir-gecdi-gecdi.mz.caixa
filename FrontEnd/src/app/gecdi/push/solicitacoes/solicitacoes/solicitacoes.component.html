@@ -15,7 +15,20 @@
               <button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
               <nb-toggle [(ngModel)]="OrdemSolicitacoes" status="primary" (change)="refreshSolicitacoes(true)" class="align-middle">Ordenar pelo solicitação mais recente</nb-toggle>&nbsp;&nbsp;
               <nb-toggle [(ngModel)]="SoFila" status="primary" (change)="refreshSolicitacoes(true)" class="align-middle">Só Fila para Envio</nb-toggle>&nbsp;&nbsp;
-              <nb-toggle *ngIf="usuario.user.idRole===1" [(ngModel)]="AlteraPrioridade" status="primary" class="align-middle">Altera Prioridade/Curva</nb-toggle>&nbsp;&nbsp;
+              <nb-toggle *ngIf="usuario.user.idRole===1" [(ngModel)]="AlteraPrioridade" status="primary" class="align-middle">Altera Prioridade/Curva</nb-toggle>&nbsp;&nbsp;<BR>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+
+              De:<input nbInput placeholder="De" [nbDatepicker]="dateTimePickerDe" [ngModel]="dataDe" (ngModelChange)="refreshSolicitacoes(true)"><nb-datepicker #dateTimePickerDe format="dd/MMM/yyyy"></nb-datepicker>&nbsp;&nbsp;&nbsp;
+              Até:<input nbInput placeholder="Ate" [nbDatepicker]="dateTimePickerAte" [ngModel]="dataAte" (ngModelChange)="refreshSolicitacoes(true)"><nb-datepicker #dateTimePickerAte format="dd/MMM/yyyy"></nb-datepicker>&nbsp;&nbsp;&nbsp;
+
+              <nb-select [(ngModel)]="limitRegistros" id="regs" name="regs" (selectedChange)="refreshSolicitacoes(true)">
+                <nb-option *ngFor="let i of listLimits" [value]="i">{{ i==-1 ? "Todos" : i }}</nb-option>
+              </nb-select>
+              &nbsp;registros
             </div>
           </div>
 
@@ -49,14 +62,13 @@
                 <th scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.idSolicitacao_PUSH}}</th>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.data_Cadastramento  | date:'dd/MMM/yy'}}</td>
 
-                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole===1 && AlteraPrioridade" (click)="rowClick(s,i)">
+                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole!==1 || (!AlteraPrioridade && usuario.user.idRole===1) || !s?.autorizacao_Gestor_PUSH" (click)="rowClick(s,i)">
+                  {{s?.prioridade}}
+                </td>
+                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole===1 && AlteraPrioridade && s?.autorizacao_Gestor_PUSH">
                   <nb-select [(ngModel)]="s.prioridade" fullWidth id="prioridade" name="prioridade" (selectedChange)="alteraPrioridade(s,$event)">
                     <nb-option *ngFor="let v of listPrioridades" [value]="v">{{v}}</nb-option>
                   </nb-select>
-                </td>
-
-                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole!==1 || (!AlteraPrioridade && usuario.user.idRole===1)" (click)="rowClick(s,i)">
-                  {{s?.prioridade}}
                 </td>
 
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.nome}}</td>
@@ -70,12 +82,15 @@
                   {{s?.quantidade_Enviada | number:'0.':'pt-BR'}}
                 </td>
 
-                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Agendada | number:'0.':'pt-BR'}}<BR>{{s?.quantidade_Total_Restante | number:'0.':'pt-BR'}}</td>
+                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">
+                    {{s?.quantidade_Agendada | number:'0.':'pt-BR'}}<BR>
+                    <b class="brown">{{s?.quantidade_Total_Restante > 0 ? (s?.quantidade_Total_Restante | number:'0.':'pt-BR') : 'Finalizando'}}</b>
+                </td>
 
-                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole!==1 || (!AlteraPrioridade && usuario.user.idRole===1)" (click)="rowClick(s,i)">
+                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole!==1 || (!AlteraPrioridade && usuario.user.idRole===1) || !s?.autorizacao_Gestor_PUSH" (click)="rowClick(s,i)">
                     <b>{{s?.idCurva}}</b> <br> {{s?.idCurvaNavigation?.apelido_Curva_Envio}}
                 </td>
-                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole===1 && AlteraPrioridade" (click)="rowClick(s,i)">
+                <td scope="row" class="no-wrap" *ngIf="usuario.user.idRole===1 && AlteraPrioridade && s?.autorizacao_Gestor_PUSH">
                   <nb-select [(ngModel)]="s.idCurva" fullWidth id="idCurva" name="idCurva" (selectedChange)="alteraCurva(s,$event)">
                     <nb-option *ngFor="let c of pushService.Curvas" [value]="c.idCurva_Envio">{{c.apelido_Curva_Envio}}</nb-option>
                   </nb-select>
@@ -84,10 +99,10 @@
 
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_a_partir_de  | date:'dd/MMM/yy'}}<BR>{{s?.enviar_no_maximo_ate  | date:'dd/MMM/yy'}}</td>
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_Horario_Inicial }}<BR>{{s?.enviar_Horario_Final  }}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.cgcDemandante}} / {{s?.cgcExecutora}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.cgcDemandante}}<BR>{{s?.cgcExecutora}}</td>
                 <!-- <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td> -->
 
-                <td *ngIf="usuario.user.idRole===1" scope="row" (click)="rowClick(se)">
+                <td *ngIf="usuario.user.idRole===1" scope="row" >
                   <button *ngIf="!s?.autorizacao_Gestor_PUSH" nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>
                   <div *ngIf="s?.solicitacao_Upload[0]?.idSolicitacao_Upload > 0" [nbTooltip]="geraTooltip(s)">
                     <b>{{ s?.solicitacao_Upload[0]?.processado ? 'Processado' : 'Aguardando' }}</b><BR>
@@ -98,12 +113,12 @@
                   </div>
                 </td>
 
-                <td scope="row"                         (click)="rowClick(e)">
+                <td scope="row">
                   <nb-toggle [ngModel]="s?.autorizacao_Gestor_PUSH" (ngModelChange)="changeCheckAutorizado(s,$event)" [disabled]="usuario.user.idRole!==1" status="success"></nb-toggle>
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 
-                <td scope="row" (click)="rowClick(e)">
+                <td scope="row">
                   <nb-toggle [ngModel]="s?.cancelado" (ngModelChange)="changeCheckCancelado(s,$event)" [disabled]="usuario.user.idRole!==1" status="warning"></nb-toggle>
                   <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
@@ -113,13 +128,35 @@
                 </td>
               </tr>
             </tbody>
+
+            <tfoot class="row-title">
+              <td scope="col" colspan="6" >Total Geral</td>
+              <td scope="col">
+                Solicitações: {{quantidade_Solicitacoes | number:'0.':'pt-BR'}}<BR>
+                Solicitações Autorizadas: {{quantidade_Solicitacoes_Autorizadas | number:'0.':'pt-BR'}}
+              </td>
+              <td scope="col dir" colspan="4">
+                Total: {{quantidade_Total_Sum | number:'0.':'pt-BR'}}<BR>
+                Total Autorizado: {{quantidade_Total_Autorizado_Sum | number:'0.':'pt-BR'}}<BR>
+                Enviado: {{quantidade_Enviada_Sum | number:'0.':'pt-BR'}}<BR>
+                Restante: {{quantidade_Total_Sum - quantidade_Enviada_Sum  | number:'0.':'pt-BR'}}<BR>
+                Restante Autorizado: {{quantidade_Total_Autorizado_Sum - quantidade_Enviada_Sum  | number:'0.':'pt-BR'}}
+              </td>
+              <td scope="col dir"  colspan="3">
+                Agendado: {{quantidade_Agendada_Sum | number:'0.':'pt-BR'}}<BR>
+                Autorizado: {{quantidade_Agendada_Autorizado_Sum | number:'0.':'pt-BR'}}
+              </td>
+              <td *ngIf="usuario.user.idRole===1" scope="col"></td>
+              <td scope="col" colspan="2"></td>
+              <td *ngIf="usuario.user.idRole===1"></td>
+            </tfoot>
+
           </table>
 
         </nb-card-body>
 
         <nb-card-footer>
           Legenda:<BR>
-          <i class="fas fa-pen"></i> Solicitação pode ser editada&nbsp;&nbsp;
           <i class="fa fa-hourglass red" ></i>&nbsp;Base ainda não carregada&nbsp;&nbsp;
           <nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon>&nbsp;Botão de upload de arquivo&nbsp;&nbsp;
           <i class="fas fa-thumbs-up blue"></i>&nbsp;Registros carregados do arquivo e aceitos&nbsp;&nbsp;

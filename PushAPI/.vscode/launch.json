@@ -5,6 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
+            // Use IntelliSense to find out which attributes exist for C# debugging
+            // Use hover for the description of the existing attributes
+            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/bin/Debug/net6.0/PushAPI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
             "name": "Watch .NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
@@ -19,29 +44,37 @@
             "preLaunchTask": "build" // Ensure we don't watch an unbuilt site
         },
         {
-            "name": ".NET Core Launch (web)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net6.0/PushAPI.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "name": "Watch",
+            "type": "coreclr",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "dotnet",
+            "args": [
+                "watch",
+                "--project",
+                ".",
+                "--verbose" // Let's us confirm browser connects with hot reload capabilities
+            ],
+            "preLaunchTask": "build" // Ensure we don't watch an unbuilt site
+        },
+        {
+            "name": "Attach",
+            "type": "blazorwasm",
+            "request": "attach",
+            "cwd": "${workspaceFolder}",
+            "url": "https://localhost:7021",  // Tell launch where to find site
+            "timeout": 120000, // Allows time for the site to launch
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Debug with Hot Reload",
+            "configurations": [ "Watch", "Attach" ]
         }
     ]
 }
