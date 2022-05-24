@@ -33,9 +33,12 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/PushAPI.csproj"
+                "${workspaceFolder}/PushAPI.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "options": { "cwd": "${workspaceFolder}" },
         }
     ]
 }

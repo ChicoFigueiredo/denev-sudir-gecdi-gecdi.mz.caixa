@@ -39,7 +39,22 @@
                 <nb-form-field>
                   <div class="form-group">
                     <label for="Matricula" class="label">Matricula:</label>
-                    <input type="text" nbInput fullWidth id="matricula" [(ngModel)]="matricula" placeholder="Matricula (c999999 ou p999999 ou f999999)">
+                    <nb-form-field>
+                      <input type="text" nbInput fullWidth id="matricula"
+                            [(ngModel)]="matricula"
+                            placeholder="Matricula (c999999 ou p999999 ou f999999)"
+                            [nbAutocomplete]="autoMatricula"
+                            (ngModelChange)="findMatricula($event)"
+                            >
+                            <!-- <button nbSuffix nbButton ghost><nb-icon icon="search-outline" pack="eva"></nb-icon></button> -->
+                            <button nbSuffix nbButton ghost (click)="matricula=null;" *ngIf="(matricula??'')!=''"><nb-icon icon="close-outline"  pack="eva"></nb-icon></button>
+                    </nb-form-field>
+
+                    <nb-autocomplete #autoMatricula size="large" [activeFirst]="true" >
+                      <nb-option *ngFor="let c of listMatriculas$" [value]="c.cUsuario">{{ c.nomeExibicao }}</nb-option>
+                    </nb-autocomplete>
+
+
                   </div>
                 </nb-form-field>
               </div>

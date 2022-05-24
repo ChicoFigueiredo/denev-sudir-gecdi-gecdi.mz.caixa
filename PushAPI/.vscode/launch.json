@@ -1,7 +1,4 @@
 {
-    // Use o IntelliSense para saber mais sobre os atributos possíveis.
-    // Focalizar para exibir as descrições dos atributos existentes.
-    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -11,7 +8,7 @@
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "watch",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/bin/Debug/net6.0/PushAPI.dll",
             "args": [],
@@ -30,51 +27,10 @@
             }
         },
         {
-            "name": "Watch .NET Core Launch (web)",
-            "type": "coreclr",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "program": "dotnet",
-            "args": [
-                "watch",
-                "--project",
-                ".",
-                "--verbose" // Let's us confirm browser connects with hot reload capabilities
-            ],
-            "preLaunchTask": "build" // Ensure we don't watch an unbuilt site
-        },
-        {
             "name": ".NET Core Attach",
             "type": "coreclr",
-            "request": "attach"
-        },
-        {
-            "name": "Watch",
-            "type": "coreclr",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "program": "dotnet",
-            "args": [
-                "watch",
-                "--project",
-                ".",
-                "--verbose" // Let's us confirm browser connects with hot reload capabilities
-            ],
-            "preLaunchTask": "build" // Ensure we don't watch an unbuilt site
-        },
-        {
-            "name": "Attach",
-            "type": "blazorwasm",
             "request": "attach",
-            "cwd": "${workspaceFolder}",
-            "url": "https://localhost:7021",  // Tell launch where to find site
-            "timeout": 120000, // Allows time for the site to launch
-        }
-    ],
-    "compounds": [
-        {
-            "name": "Debug with Hot Reload",
-            "configurations": [ "Watch", "Attach" ]
+            "processId": "${command:pickProcess}"
         }
     ]
 }

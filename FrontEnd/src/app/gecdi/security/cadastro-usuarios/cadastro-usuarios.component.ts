@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { MenuService } from '../../services/menu/menu.service';
 import { Role } from '../../services/user/classes/Role';
 import { User } from '../../services/user/classes/User';
+import { UserListRequest } from '../../services/user/classes/user-request';
 import { Usuario } from '../../services/user/classes/Usuario';
 import { UserService } from '../../services/user/user.service';
 
@@ -23,6 +24,9 @@ export class CadastroUsuariosComponent implements OnInit {
   public roles:any[];
   public usuariosSelecionados:Observable<Usuario[]>
   public searchText:string;
+
+  public matriculaSol:string = null;
+  listMatriculas$:UserListRequest[];
 
   constructor(
     private menuService: MenuService,
@@ -91,6 +95,15 @@ export class CadastroUsuariosComponent implements OnInit {
         }
       }
     );
+  }
+
+  waitMatricula:any
+  findMatricula(t){
+    this.waitMatricula && clearTimeout(this.waitMatricula);
+    if (t.length>=7)
+      this.waitMatricula = setTimeout(() => this.userService.getUsersFind(t).subscribe(u => this.listMatriculas$=u),environment.intervalToGetAPI);
+    else (t.length == 0)
+      this.matriculaSol = null;
   }
 
 }
