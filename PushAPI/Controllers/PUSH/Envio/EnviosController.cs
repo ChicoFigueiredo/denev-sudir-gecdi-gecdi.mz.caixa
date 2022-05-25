@@ -15,7 +15,6 @@ namespace PushAPI.Controllers.PUSH.Envio
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class EnviosController : ControllerBase
     {
         private readonly dbPUSH _dbPush;
@@ -82,7 +81,7 @@ namespace PushAPI.Controllers.PUSH.Envio
         }
 
 
-        // GET: api/Envios/resumo
+        // GET: api/envios/resumo
         [HttpGet("resumo")]
         public async Task<ActionResult<IEnumerable<spResumo_Envios>>> GetSolicitacao_Simulacao_Envio_Resumo(DateTime? Data_Resumo)
         {

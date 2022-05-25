@@ -6,7 +6,7 @@ namespace PushAPI.Models.Push
     {
         [Key]
         public int IDS { get; set; }
-        public long WF { get; set; }
+        public long? WF { get; set; }
         public string Canal { get; set; }
         public int IDM { get; set; }
         public string Mensagem { get; set; }
