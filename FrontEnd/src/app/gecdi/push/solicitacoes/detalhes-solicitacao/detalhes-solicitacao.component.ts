@@ -54,7 +54,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     reQ_WO_Aprovacao_Mensagem_Texto        : new FormControl(''                                              ,[]),
     wF_GECRM                               : new FormControl(null                                            ,[Validators.pattern('^[0-9]*$')]),
     idEnvio_Mensagem                       : new FormControl(-1                                              ,[]),
-    mensagem                               : new FormControl(''                                              ,[Validators.required, Validators.minLength(20), Validators.maxLength(1000), Validators.pattern('^(?!.*(\\w)\\1{3,}).+$')]),
+    mensagem                               : new FormControl(''                                              ,[Validators.required, Validators.minLength(20), Validators.maxLength(1000), Validators.pattern(/^(?!.*(\\w)\\1{3,}).+$/gmi), Validators.pattern(/^.*?[{][{](Campo[1-5])[}][}].*?$/gmi)]),
     idTipoMensagem                         : new FormControl(1                                               ,[]),
     canal                                  : new FormControl(null                                            ,[Validators.required]),
     quantidade_Total                       : new FormControl(null                                            ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),

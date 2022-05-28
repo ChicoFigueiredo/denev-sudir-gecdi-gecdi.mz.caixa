@@ -33,7 +33,6 @@
                 <td scope="col dir">Qtd.<BR>Ag. / Fila</td>
                 <td scope="col">De/Ate</td>
                 <td scope="col">Horário</td>
-                <td scope="col">Demand.<BR>Exec.</td>
                 <td scope="col">Impactos</td>
                 <td scope="col">Au torizado</td>
                 <td scope="col">Can ce lado</td>
@@ -57,10 +56,16 @@
                   {{s?.quantidade_Enviada | number:'0.':'pt-BR'}}
                 </td>
 
-                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">{{s?.quantidade_Agendada | number:'0.':'pt-BR'}}<BR>{{s?.quantidade_Total_Restante | number:'0.':'pt-BR'}}</td>
+                <td scope="row" class="no-wrap dir"       (click)="rowClick(s,i)">
+                  {{s?.quantidade_Agendada | number:'0.':'pt-BR'}}<BR>
+                  <b class="brown">{{s?.quantidade_Total_Restante > 0 ? (s?.quantidade_Total_Restante | number:'0.':'pt-BR') : 'Finalizando'}}</b>
+                </td>
+
                 <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_a_partir_de  | date:'dd/MMM/yy'}}<BR>{{s?.enviar_no_maximo_ate  | date:'dd/MMM/yy'}}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.enviar_Horario_Inicial }}<BR>>{{s?.enviar_Horario_Final  }}</td>
-                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">{{s?.cgcDemandante}}<BR>{{s?.cgcExecutora}}</td>
+                <td scope="row" class="no-wrap"           (click)="rowClick(s,i)">
+                    {{s?.enviar_Horario_Inicial }}<BR>
+                    {{s?.enviar_Horario_Final  }}
+                </td>
                 <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td>
 
                 <td scope="row"                         (click)="rowClick(se)">

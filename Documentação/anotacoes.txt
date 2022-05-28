@@ -1,3 +1,33 @@
+
+11/05/2022 13:10:49 ; (C057549)
+Prezado Francisco,
+
+Informamos que os usuários foram criados apenas em ambiente HMP, conforme procedimento padrão, para que você e sua equipe possam efetuar testes necessários para implementação das ações de automatizações na GECDI:
+
+login: USR_GECDI1
+Senha:Integracao_Servico01
+
+login: USR_GECDI2
+Senha:Integracao_Servico02
+
+login: USR_GECDI3
+Senha:Integracao_Servico03
+
+Assim que o desenvolvimento estiver concluído e quiserem dar início às atividades no ambiente de produção, favor enviar email à GEAUS02 (aos cuidados de Juliana da Silva Rezende - C100881), solicitando autorização para uso em produção e criação dos usuário.
+
+Para que possamos efetuar a análise necessária, o pedido deve conter justificativa para uso da integração, benefícios esperados e volume estimado de ações diárias que serão realizadas no SIGSC com uso da API Rest ou Webservice.
+
+Em caso de dúvidas, favor entrar em contato via Teams.
+
+Atenciosamente,
+
+Cicero C A de Oliveira
+Consultor de TI
+CN Atendimento Usuários TI
+
+
+
+
 npm config set python C:\Python27\python.exe
 npm config set msvs_version 2017
 

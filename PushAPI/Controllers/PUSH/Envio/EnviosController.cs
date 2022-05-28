@@ -10,6 +10,8 @@ using PushAPI.Helpers;
 using PushAPI.Models.Push;
 using PushAPI.Models.Sites;
 using PushAPI.Responses;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace PushAPI.Controllers.PUSH.Envio
 {
@@ -189,6 +191,64 @@ namespace PushAPI.Controllers.PUSH.Envio
             await _dbPush.SaveChangesAsync();
 
             return CreatedAtAction("GetSolicitacao_Simulacao_Envio", new { id = solicitacao_Simulacao_Envio.idSolicitacao_Simulacao_Envio }, solicitacao_Simulacao_Envio);
+        }
+
+
+        // POST: api/Envios
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpGet("execute-robo")]
+        [Authorize(Role.Admin)]
+        public async Task PostSolicitacao_RoboUploadFiles()
+        {
+            await ExecuteSQLForWeb.ExecuteSQL(Response, _dbPush.Database.GetDbConnection().ConnectionString,
+                @"EXEC FILA.Upload_Executa_Robo  1"
+            );
+        }
+
+        // POST: api/Envios
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpGet("homologar")]
+        [Authorize(Role.Admin)]
+        public async Task PostSolicitacao_Homologacao(
+                bool homologar = true, 
+                bool gerar_arquivos = true, 
+                DateTime? data = null, 
+                string hora_inicio = "07:00", 
+                string hora_fim = "21:00",
+                string pasta_geracao = @"\\df7436sr671\Sigdb\PUB\!Push\Export",
+                string pasta_destino = @"\\Cr7260nt036\sicpu\GECDI\GECDI"
+        )
+        {
+            DateTime data_Final = data ?? DateTime.Now.Date;
+            await ExecuteSQLForWeb.ExecuteSQL(Response, _dbPush.Database.GetDbConnection().ConnectionString,
+                @$"
+                    DECLARE 
+                            @Homologar       BIT           = {(homologar ? 1 : 0)},
+                            @Gerar_Arquivos  BIT           = {(gerar_arquivos ? 1 : 0)},
+                            @Data_Processar  AS DATE       = '{ data_Final.ToString("yyyy-MM-dd")}',
+                            @Hora_Inicio     AS TIME(0)    = '{ hora_inicio }',
+                            @Hora_Fim        AS TIME(0)    = '{ hora_fim }'
+        
+                    IF (@Homologar=1) 
+                        EXEC DB5138_PUSH.FILA.Homologar_Envios_e_Marcar_CPF 
+                                 @Data_Processar  = @Data_Processar  
+                                ,@Hora_Inicio     = @Hora_Inicio     
+                                ,@Hora_Fim        = @Hora_Fim        
+
+                    if (@Gerar_Arquivos=1)
+                        EXEC DB5138_PUSH.FILA.Gerar_Arquivos_do_Dia 
+                             @DATA                  = @Data_Processar  
+                            ,@ROOT_DIR              = N'{ pasta_geracao }' -- N'\\df7436sr671\Sigdb\PUB\!Push\Export' --N'\\Cr7260nt036\sicpu\GECDI\GECDI' --N'\\df7436sr671\Sigdb\PUB\!Push\Export' --N'\\arquivos.caixa\br\df5325fs201\SUESC\Publico\!PUSH'
+                            ,@Segundos_execucao     = 5
+
+
+                    EXEC Fila.Servico_CAIXA_Geracao_Mensagem 
+       	                    @DATA       = @Data_Processar,
+                            @ROOT_DIR   = '{ pasta_destino }' --'\\Cr7260nt036\sicpu\GECDI\GECDI',
+                            @TIME_INI   = '00:00:00',
+                            @TIME_FIM   = '23:59:00'
+                "
+            );
         }
 
         // DELETE: api/Envios/5/delete
