@@ -13,7 +13,6 @@ namespace PushAPI.Controllers.PUSH.CanaisEnvio
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Role.Admin,Role.GECDI,Role.GestorTI,Role.Solicitante,Role.Transmissor,Role.User)]
     public class CanaisController : ControllerBase
     {
         private readonly dbPUSH _dbPUSH;

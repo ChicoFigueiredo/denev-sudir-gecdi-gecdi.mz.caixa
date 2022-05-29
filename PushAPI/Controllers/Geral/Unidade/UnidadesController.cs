@@ -13,14 +13,13 @@ namespace PushAPI.Controllers.Geral.Unidade
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Role.Admin,Role.GECDI,Role.GestorTI,Role.Solicitante,Role.Transmissor,Role.User)]
     public class UnidadesController : ControllerBase
     {
-        private readonly dbAtendimento _context;
+        private readonly dbAtendimento _dbAtendimento;
 
         public UnidadesController(dbAtendimento context)
         {
-            _context = context;
+            _dbAtendimento = context;
         }
 
         // GET: api/Unidades
@@ -29,16 +28,16 @@ namespace PushAPI.Controllers.Geral.Unidade
         {
             if (limit<=-1){
                 if(q.Trim()=="")
-                    return await _context.Unidades.ToListAsync();
+                    return await _dbAtendimento.Unidades.ToListAsync();
                 else
-                    return await _context.Unidades.Where(w => w.CGC.ToString().Contains(q) || w.Nome_Exibicao.ToLower().Contains(q.ToLower())).ToListAsync();
+                    return await _dbAtendimento.Unidades.Where(w => w.CGC.ToString().Contains(q) || w.Nome_Exibicao.ToLower().Contains(q.ToLower())).ToListAsync();
             }
             else 
             {
                 if(q.Trim()=="")
-                    return await _context.Unidades.Take(limit).ToListAsync();
+                    return await _dbAtendimento.Unidades.Take(limit).ToListAsync();
                 else
-                    return await _context.Unidades.Where(w => w.CGC.ToString().Contains(q) || w.Nome_Exibicao.ToLower().Contains(q.ToLower())).Take(limit).ToListAsync();
+                    return await _dbAtendimento.Unidades.Where(w => w.CGC.ToString().Contains(q) || w.Nome_Exibicao.ToLower().Contains(q.ToLower())).Take(limit).ToListAsync();
             }
         }
 
@@ -46,7 +45,7 @@ namespace PushAPI.Controllers.Geral.Unidade
         [HttpGet("{id}")]
         public async Task<ActionResult<Unidades>> GetUnidades(int id)
         {
-            var unidades = await _context.Unidades.FindAsync(id);
+            var unidades = await _dbAtendimento.Unidades.FindAsync(id);
 
             if (unidades == null)
             {
@@ -67,11 +66,11 @@ namespace PushAPI.Controllers.Geral.Unidade
                 return BadRequest();
             }
 
-            _context.Entry(unidades).State = EntityState.Modified;
+            _dbAtendimento.Entry(unidades).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbAtendimento.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -94,10 +93,10 @@ namespace PushAPI.Controllers.Geral.Unidade
         [Authorize(Role.Admin)]
         public async Task<ActionResult<Unidades>> PostUnidades(Unidades unidades)
         {
-            _context.Unidades.Add(unidades);
+            _dbAtendimento.Unidades.Add(unidades);
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbAtendimento.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -119,21 +118,21 @@ namespace PushAPI.Controllers.Geral.Unidade
         [Authorize(Role.Admin)]
         public async Task<IActionResult> DeleteUnidades(int id)
         {
-            var unidades = await _context.Unidades.FindAsync(id);
+            var unidades = await _dbAtendimento.Unidades.FindAsync(id);
             if (unidades == null)
             {
                 return NotFound();
             }
 
-            _context.Unidades.Remove(unidades);
-            await _context.SaveChangesAsync();
+            _dbAtendimento.Unidades.Remove(unidades);
+            await _dbAtendimento.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool UnidadesExists(int id)
         {
-            return _context.Unidades.Any(e => e.CGC == id);
+            return _dbAtendimento.Unidades.Any(e => e.CGC == id);
         }
     }
 }

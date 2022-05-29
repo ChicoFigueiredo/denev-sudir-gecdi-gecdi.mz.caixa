@@ -34,6 +34,7 @@ namespace PushAPI.Models.Push
         public virtual DbSet<Solicitacao_Clientes> Solicitacao_Clientes { get; set; } = null!;
         public virtual DbSet<Solicitacao_Simulacao_Envio> Solicitacao_Simulacao_Envio { get; set; } = null!;
         public virtual DbSet<Solicitacao_Upload> Solicitacao_Upload { get; set; } = null!;
+        public virtual DbSet<Tipo_Categoria_Solicitacao> Tipo_Categoria_Solicitacao { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -467,7 +468,7 @@ namespace PushAPI.Models.Push
                     .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.Nome_Solicitacao)
-                    .HasMaxLength(100)
+                    .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
 
@@ -485,6 +486,8 @@ namespace PushAPI.Models.Push
                     .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.REQ_WO_Aprovacao_Mensagem_Texto).IsUnicode(false);
+
+                entity.Property(e => e.Tipo_Categoria_Solicitacao).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Titulo)
                     .HasMaxLength(70)
@@ -509,6 +512,12 @@ namespace PushAPI.Models.Push
                     .HasForeignKey(d => d.Quantidade_Maxima_Autorizada)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Solicitacao_Curva_Envio1");
+
+                entity.HasOne(d => d.Tipo_Categoria_SolicitacaoNavigation)
+                    .WithMany(p => p.Solicitacao)
+                    .HasForeignKey(d => d.Tipo_Categoria_Solicitacao)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Solicitacao_Tipo_Categoria_Solicitacao");
 
                 entity.HasOne(d => d.idCurvaNavigation)
                     .WithMany(p => p.SolicitacaoidCurvaNavigation)
@@ -646,6 +655,50 @@ namespace PushAPI.Models.Push
                     .WithMany(p => p.Solicitacao_Upload)
                     .HasForeignKey(d => d.idSolicitacao_PUSH)
                     .HasConstraintName("FK_Solicitacao_Upload_Solicitacao");
+            });
+
+            modelBuilder.Entity<Tipo_Categoria_Solicitacao>(entity =>
+            {
+                entity.HasKey(e => e.Tipo_Categoria_Solicitacao1);
+
+                entity.ToTable("Tipo_Categoria_Solicitacao", "FILA");
+
+                entity.Property(e => e.Tipo_Categoria_Solicitacao1).HasColumnName("Tipo_Categoria_Solicitacao");
+
+                entity.Property(e => e.Apelido_Tipo_Categoria_Solicitacao)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Cor)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('#FFFFFF')");
+
+                entity.Property(e => e.Nome_Tipo_Categoria_Solicitacao)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.idCurva_Envio).HasDefaultValueSql("((34))");
+
+                entity.Property(e => e.idCurva_Envio_2).HasDefaultValueSql("((34))");
+
+                entity.Property(e => e.idCurva_Envio_3).HasDefaultValueSql("((34))");
+
+                entity.HasOne(d => d.idCurva_EnvioNavigation)
+                    .WithMany(p => p.Tipo_Categoria_SolicitacaoidCurva_EnvioNavigation)
+                    .HasForeignKey(d => d.idCurva_Envio)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Tipo_Categoria_Solicitacao_Curva_Envio");
+
+                entity.HasOne(d => d.idCurva_Envio_2Navigation)
+                    .WithMany(p => p.Tipo_Categoria_SolicitacaoidCurva_Envio_2Navigation)
+                    .HasForeignKey(d => d.idCurva_Envio_2)
+                    .HasConstraintName("FK_Tipo_Categoria_Solicitacao_Curva_Envio1");
+
+                entity.HasOne(d => d.idCurva_Envio_3Navigation)
+                    .WithMany(p => p.Tipo_Categoria_SolicitacaoidCurva_Envio_3Navigation)
+                    .HasForeignKey(d => d.idCurva_Envio_3)
+                    .HasConstraintName("FK_Tipo_Categoria_Solicitacao_Curva_Envio2");
             });
 
             OnModelCreatingPartial(modelBuilder);

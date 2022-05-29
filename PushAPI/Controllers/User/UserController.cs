@@ -38,7 +38,6 @@ namespace PushAPI.Controllers.User
 
 
         // GET: api/User
-        [Authorize(Role.Admin)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario(int lim = -1, string busca = "")
         {
@@ -140,6 +139,7 @@ namespace PushAPI.Controllers.User
         // PUT: api/User/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Role.Admin)]
         public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
             if (id != usuario.idUsuario)
@@ -171,6 +171,7 @@ namespace PushAPI.Controllers.User
         // POST: api/User
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Role.Admin)]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
             _dbSites.Usuario.Add(usuario);
@@ -181,6 +182,7 @@ namespace PushAPI.Controllers.User
 
         // DELETE: api/User/5
         [HttpPost("{id}/delete")]
+        [Authorize(Role.Admin)]
         public async Task<IActionResult> DeleteUsuario(int id)
         {
             var usuario = await _dbSites.Usuario.FindAsync(id);
@@ -198,6 +200,7 @@ namespace PushAPI.Controllers.User
 
         // POST: api/User/5
         [HttpPost("{id}/alter")]
+        [Authorize(Role.Admin)]
         public async Task<IActionResult> AlterUsuario(int id, Role role)
         {
             var usuario = await _dbSites.Usuario.FindAsync(id);

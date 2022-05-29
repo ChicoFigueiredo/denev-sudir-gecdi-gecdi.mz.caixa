@@ -14,7 +14,7 @@ namespace gecdi.mz.caixa.Controllers.GECDI.TemplatesChamados
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Role.Admin, Role.GECDI)]
+    [Authorize]
     public class Templates_RespostaController : ControllerBase
     {
         private readonly dbAtendimento _dbAtendimento;

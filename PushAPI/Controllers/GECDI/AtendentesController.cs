@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PushAPI.Helpers;
 using PushAPI.Models.Atendimento;
 
 namespace gecdi.mz.caixa.Controllers.GECDI
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AtendentesController : ControllerBase
     {
         private readonly dbAtendimento _dbAtendimentos;

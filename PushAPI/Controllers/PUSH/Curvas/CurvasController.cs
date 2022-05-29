@@ -13,21 +13,20 @@ namespace PushAPI.Controllers.PUSH.Curvas
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Role.Admin,Role.GECDI,Role.GestorTI,Role.Solicitante,Role.Transmissor,Role.User)]
     public class CurvasController : ControllerBase
     {
-        private readonly dbPUSH _context;
+        private readonly dbPUSH _dbPUSH;
 
         public CurvasController(dbPUSH context)
         {
-            _context = context;
+            _dbPUSH = context;
         }
 
         // GET: api/Curvas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Curva_Envio>>> GetCurva_Envio()
         {
-            return await _context.Curva_Envio
+            return await _dbPUSH.Curva_Envio
                                  .Include(c => c.Curva_Envio_Tranches)
                                  .ToListAsync();
         }
@@ -36,7 +35,7 @@ namespace PushAPI.Controllers.PUSH.Curvas
         [HttpGet("{id}")]
         public async Task<ActionResult<Curva_Envio>> GetCurva_Envio(int id)
         {
-            var curva_Envio = await _context.Curva_Envio.FindAsync(id);
+            var curva_Envio = await _dbPUSH.Curva_Envio.FindAsync(id);
 
             if (curva_Envio == null)
             {
@@ -57,11 +56,11 @@ namespace PushAPI.Controllers.PUSH.Curvas
                 return BadRequest();
             }
 
-            _context.Entry(curva_Envio).State = EntityState.Modified;
+            _dbPUSH.Entry(curva_Envio).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbPUSH.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,8 +83,8 @@ namespace PushAPI.Controllers.PUSH.Curvas
         [Authorize(Role.Admin)]
         public async Task<ActionResult<Curva_Envio>> PostCurva_Envio(Curva_Envio curva_Envio)
         {
-            _context.Curva_Envio.Add(curva_Envio);
-            await _context.SaveChangesAsync();
+            _dbPUSH.Curva_Envio.Add(curva_Envio);
+            await _dbPUSH.SaveChangesAsync();
 
             return CreatedAtAction("GetCurva_Envio", new { id = curva_Envio.idCurva_Envio }, curva_Envio);
         }
@@ -95,21 +94,21 @@ namespace PushAPI.Controllers.PUSH.Curvas
         [Authorize(Role.Admin)]
         public async Task<IActionResult> DeleteCurva_Envio(int id)
         {
-            var curva_Envio = await _context.Curva_Envio.FindAsync(id);
+            var curva_Envio = await _dbPUSH.Curva_Envio.FindAsync(id);
             if (curva_Envio == null)
             {
                 return NotFound();
             }
 
-            _context.Curva_Envio.Remove(curva_Envio);
-            await _context.SaveChangesAsync();
+            _dbPUSH.Curva_Envio.Remove(curva_Envio);
+            await _dbPUSH.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool Curva_EnvioExists(int id)
         {
-            return _context.Curva_Envio.Any(e => e.idCurva_Envio == id);
+            return _dbPUSH.Curva_Envio.Any(e => e.idCurva_Envio == id);
         }
     }
 }

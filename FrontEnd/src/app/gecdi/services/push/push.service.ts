@@ -7,6 +7,7 @@ import { FilaResponse } from './classes/fila';
 import { Curva } from './classes/curvas';
 import { Solicitacao } from './classes/solicitacao';
 import { Canal } from './classes/canais';
+import { TipoCategoriaSolicitacao } from './classes/tipo.categora.solicitacao';
 
 const API_PUSH = environment.urlAPI + '/api'
 
@@ -17,6 +18,7 @@ export class PushService {
 
   public Curvas:Curva[] = [];
   public Canais:Canal[] = [];
+  public tiposCategoriasSolicitacao:TipoCategoriaSolicitacao[];
   public solicitacaoSelecionada:Solicitacao;
 
   constructor(
@@ -24,6 +26,7 @@ export class PushService {
   ) {
     this.getCurvas().subscribe((c:Curva[]) => this.Curvas = c);
     this.getCanais().subscribe((c:Canal[]) => this.Canais = c);
+    this.getTipoCategoriaSolicitacao().subscribe((t:TipoCategoriaSolicitacao[]) => this.tiposCategoriasSolicitacao = t);
   }
 
   getSolicitacoesEnvio(de = null,ate = null, enviados = -1, antigos = true, simular = false){
@@ -66,6 +69,11 @@ export class PushService {
   getCurvas() {
     return this.http
                .get<Curva[]>(`${API_PUSH}/Curvas`)
+  }
+
+  getTipoCategoriaSolicitacao() {
+    return this.http
+               .get<TipoCategoriaSolicitacao[]>(`${API_PUSH}/Tipo_Categoria_Solicitacao`)
   }
 
   getCanais() {
