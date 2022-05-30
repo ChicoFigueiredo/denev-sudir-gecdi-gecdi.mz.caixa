@@ -197,10 +197,9 @@
       <button nbButton status="primary" (click)="salvarAnotacoes(EnvioSelecionado,$event)">Salvar Observação</button> &nbsp;&nbsp;
       <button nbButton status="danger" (click)="ref.close()">Fechar</button> &nbsp;&nbsp;
       <div class="float-right">
-        <button nbButton (click)="getPosition(-1)" *ngIf="PosicaoSelecionada > 0">
-          <</button> {{ PosicaoSelecionada + 1 }} <button nbButton (click)="getPosition(+1)"
-            *ngIf="PosicaoSelecionada < envios.length-1">>
-        </button>
+        <button nbButton (click)="getPosition(-1,EnvioSelecionado)" *ngIf="PosicaoSelecionada > 0"><</button>
+        {{ PosicaoSelecionada + 1 }}
+        <button nbButton (click)="getPosition(+1,EnvioSelecionado)"*ngIf="PosicaoSelecionada < envios.length-1">></button>
       </div>
 
     </nb-card-footer>

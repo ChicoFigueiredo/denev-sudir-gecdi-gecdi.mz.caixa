@@ -140,7 +140,7 @@ namespace PushAPI.Controllers.PUSH.Envio
             if (solicitacao_Simulacao_Envio == null)
                 return NotFound();
 
-            if (solicitacao_Simulacao_Envio.Homologado && obs?.Trim() != "")
+            if (solicitacao_Simulacao_Envio.Homologado)
             {
                 Usuario u = HttpContext.Items["User"] as Usuario;
                 solicitacao_Simulacao_Envio.Observacoes = obs??"";
