@@ -4,6 +4,7 @@ export interface TipoCategoriaSolicitacao {
   tipo_Categoria_Solicitacao1:        number;
   apelido_Tipo_Categoria_Solicitacao: string;
   nome_Tipo_Categoria_Solicitacao:    string;
+  cor:                                string;
   minimo_Tranche:                     number;
   maximo_Tranche:                     number;
   ordem:                              number;

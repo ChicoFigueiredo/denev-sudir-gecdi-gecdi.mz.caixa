@@ -211,6 +211,27 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
         }
 
+        // GET: api/Solicitacao/5/set-tipo-categoria
+        [HttpPost("{id}/set-tipo-categoria")]
+        public async Task<ActionResult<Solicitacao>> PostSolicitacao_SetTipoCategoria(int id, short tipoCategoria = 1)
+        {
+            var solicitacao = await _dbPush.Solicitacao.FindAsync(id);
+            if (solicitacao == null)
+                return NotFound();
+
+            var cat = await _dbPush.Tipo_Categoria_Solicitacao.FindAsync(tipoCategoria);
+            if (cat == null)
+                return NotFound();
+
+
+            solicitacao.Tipo_Categoria_Solicitacao = cat.Tipo_Categoria_Solicitacao1;
+            solicitacao.idCurva = cat.idCurva_Envio;
+            await _dbPush.SaveChangesAsync();
+
+            return Ok(solicitacao);
+
+        }
+
         // GET: api/Solicitacao/5/Autorizar
         [HttpPost("{id}/Autorizar")]
         public async Task<ActionResult<Solicitacao>> PostSolicitacao_MarcarAutorizado(int id, bool MarcarAutorizado = true)
@@ -286,10 +307,18 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 }
 
                 solicitacao.Data_Cadastramento = DateTime.Now;
-                solicitacao.CGCExecutora = 5135;
+                solicitacao.CGCExecutora = 5138;
                 Usuario u = HttpContext.Items["User"] as Usuario;
                 solicitacao.Matricula_Cadastramento = u.cUsuario;
                 solicitacao.CGCDemandante = (short)u.CGC;
+
+
+                var cat = await _dbPush.Tipo_Categoria_Solicitacao.FindAsync(solicitacao.Tipo_Categoria_Solicitacao);
+                if (cat == null)
+                    solicitacao.Tipo_Categoria_Solicitacao = 1;
+
+                if (solicitacao.idCurva < 0)
+                    solicitacao.idCurva = cat.idCurva_Envio;
 
                 _dbPush.Solicitacao.Add(solicitacao);
                 await _dbPush.SaveChangesAsync();
@@ -344,8 +373,28 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 solicitacaoDB.CGCDemandante =  solicitacaoDB.CGCDemandante != solicitacao.CGCDemandante ? solicitacao.CGCDemandante : solicitacaoDB.CGCDemandante;
                 solicitacaoDB.Observacoes = solicitacaoDB.Observacoes.ToLower().Trim() != solicitacao.Observacoes.ToLower().Trim() ? solicitacao.Observacoes.Trim() : solicitacaoDB.Observacoes;
 
+                solicitacaoDB.Tipo_Categoria_Solicitacao = solicitacaoDB.Tipo_Categoria_Solicitacao != solicitacao.Tipo_Categoria_Solicitacao ? solicitacao.Tipo_Categoria_Solicitacao : solicitacaoDB.Tipo_Categoria_Solicitacao;
+
+
+                var cat = await _dbPush.Tipo_Categoria_Solicitacao.FindAsync(solicitacaoDB.Tipo_Categoria_Solicitacao);
+                if (cat == null)
+                    solicitacaoDB.Tipo_Categoria_Solicitacao = 1;
+
+                if (solicitacao.idCurva > 0)
+                    solicitacaoDB.idCurva = solicitacaoDB.idCurva != solicitacao.idCurva ? solicitacao.idCurva : solicitacaoDB.idCurva;
+                else
+                    solicitacaoDB.idCurva = cat.idCurva_Envio;
+
 
                 solicitacaoDB.Limite_Mensagens_Por_Dia = solicitacaoDB.Limite_Mensagens_Por_Dia  != solicitacao.Limite_Mensagens_Por_Dia ? solicitacao.Limite_Mensagens_Por_Dia : solicitacaoDB.Limite_Mensagens_Por_Dia;
+
+
+                //solicitacaoDB.data.Data_Cadastramento = DateTime.Now;
+                solicitacaoDB.CGCExecutora = 5138;
+                Usuario u = HttpContext.Items["User"] as Usuario;
+                //solicitacaoDB.matr.Matricula_Cadastramento = u.cUsuario;
+                //solicitacaoDB.CGCDemandante = (short)u.CGC;
+
                 await _dbPush.SaveChangesAsync();
 
                 return Ok(solicitacaoDB);

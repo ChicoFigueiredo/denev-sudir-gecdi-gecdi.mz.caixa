@@ -106,8 +106,8 @@ namespace PushAPI.Controllers.PUSH.Envio
 
 
         // GET: api/Envios/5/MarcarEnviado
-        [HttpPost("{id}/MarcarEnviado")]
-        public async Task<ActionResult<Solicitacao_Simulacao_Envio>> GetSolicitacao_Simulacao_Envio_MarcarEnvio(long id, bool MarcarEnvioRealizado = true)
+        [HttpPost("{id}/marcar-envio")]
+        public async Task<ActionResult<Solicitacao_Simulacao_Envio>> GetSolicitacao_Simulacao_Envio_MarcarEnvio(long id, bool MarcarEnvioRealizado = true, string obs = "")
         {
             var solicitacao_Simulacao_Envio = await _dbPush.Solicitacao_Simulacao_Envio.FindAsync(id);
 
@@ -120,6 +120,8 @@ namespace PushAPI.Controllers.PUSH.Envio
                 solicitacao_Simulacao_Envio.Enviado = MarcarEnvioRealizado;
                 solicitacao_Simulacao_Envio.Matricula_Enviante = u.cUsuario;
                 solicitacao_Simulacao_Envio.Data_Hora_Atualizacao = DateTime.Now;
+                if ((obs??"").Trim()!="")
+                    solicitacao_Simulacao_Envio.Observacoes = obs??"";
                 await _dbPush.SaveChangesAsync();
 
                 return Ok(solicitacao_Simulacao_Envio);
@@ -129,8 +131,32 @@ namespace PushAPI.Controllers.PUSH.Envio
                 return BadRequest(new { Error = 1000, Message = "Não é possível marcar enviado em um envio simulado e não homologado" });
         }
 
+        // GET: api/Envios/5/MarcarEnviado
+        [HttpPost("{id}/gravar-observacao")]
+        public async Task<ActionResult<Solicitacao_Simulacao_Envio>> PostEnvio_Obs(long id, string obs = "")
+        {
+            var solicitacao_Simulacao_Envio = await _dbPush.Solicitacao_Simulacao_Envio.FindAsync(id);
+
+            if (solicitacao_Simulacao_Envio == null)
+                return NotFound();
+
+            if (solicitacao_Simulacao_Envio.Homologado && obs?.Trim() != "")
+            {
+                Usuario u = HttpContext.Items["User"] as Usuario;
+                solicitacao_Simulacao_Envio.Observacoes = obs??"";
+                solicitacao_Simulacao_Envio.Matricula_Enviante = u.cUsuario;
+                solicitacao_Simulacao_Envio.Data_Hora_Atualizacao = DateTime.Now;
+                await _dbPush.SaveChangesAsync();
+
+                return Ok(solicitacao_Simulacao_Envio);
+
+            }
+            else
+                return BadRequest(new { Error = 1000, Message = "Não é possível gravar as observações" });
+        }
+
         // GET: api/Envios/5/MarcarCancelado
-        [HttpPost("{id}/MarcarCancelado")]
+        [HttpPost("{id}/marcar-cancelado")]
         public async Task<ActionResult<Solicitacao_Simulacao_Envio>> GetSolicitacao_Simulacao_Envio_MarcarCancelamento(long id, bool MarcarCancelado = false)
         {
             var solicitacao_Simulacao_Envio = await _dbPush.Solicitacao_Simulacao_Envio.FindAsync(id);

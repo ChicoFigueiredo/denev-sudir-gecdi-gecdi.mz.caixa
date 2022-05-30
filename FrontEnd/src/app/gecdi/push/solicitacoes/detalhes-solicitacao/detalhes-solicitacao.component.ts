@@ -11,6 +11,7 @@ import { Unidade } from "../../../services/unidades/classes/unidades";
 import { UnidadesService } from "../../../services/unidades/unidades.service";
 import { User } from "../../../services/user/classes/User";
 import { UserService } from "../../../services/user/user.service";
+import { ValidateMessage } from "../../helpers/validators/mensagem.validator";
 
 @Component({
   selector: "ngx-detalhes-solicitacao",
@@ -54,7 +55,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     reQ_WO_Aprovacao_Mensagem_Texto        : new FormControl(''                                              ,[]),
     wF_GECRM                               : new FormControl(null                                            ,[Validators.pattern('^[0-9]*$')]),
     idEnvio_Mensagem                       : new FormControl(-1                                              ,[]),
-    mensagem                               : new FormControl(''                                              ,[Validators.required, Validators.minLength(20), Validators.maxLength(1000), Validators.pattern(/^(?!.*(\\w)\\1{3,}).+$/gmi), Validators.pattern(/^.*?[{][{](Campo[1-5])[}][}].*?$/gmi)]),
+    mensagem                               : new FormControl(''                                              ,[Validators.required, Validators.minLength(20), Validators.maxLength(1000), ValidateMessage]),
     idTipoMensagem                         : new FormControl(1                                               ,[]),
     canal                                  : new FormControl(null                                            ,[Validators.required]),
     quantidade_Total                       : new FormControl(null                                            ,[Validators.required, Validators.minLength(2), Validators.pattern('^[0-9]*$')]),
@@ -74,7 +75,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     Limite_Mensagens_Por_Dia               : new FormControl(null                                            ,[]),
     observacoes                            : new FormControl(''                                              ,[]),
     prioridade                             : new FormControl(100                                             ,[]),
-    idCurva                                : new FormControl(34                                              ,[]),
+    idCurva                                : new FormControl(-1                                              ,[]),
     autorizacao_Gestor_PUSH                : new FormControl(false                                           ,[]),
     cancelado                              : new FormControl(false                                           ,[]),
     cgcDemandante                          : new FormControl(-1                                              ,[]),
@@ -108,6 +109,7 @@ export class DetalhesSolicitacaoComponent implements OnInit {
     Solicitacao_Clientes                   : new FormControl(null                                            ,[]),
     Solicitacao_Simulacao_Envio            : new FormControl(null                                            ,[]),
     idCurvaNavigation                      : new FormControl(null                                            ,[]),
+    Tipo_Categoria_Solicitacao             : new FormControl(1                                               ,[Validators.required]),
   })
 
   constructor(
@@ -210,6 +212,17 @@ export class DetalhesSolicitacaoComponent implements OnInit {
   }
 
 
+  alteraTipoCategoria(sol:Solicitacao,$event) {
+    if(this.modo==="admin"){
+      this.pushService.setTipoCategoria(sol,$event).subscribe((s:Solicitacao) => {
+         this.serviceSticker.show(`Solicitação ID ${s.idSolicitacao_PUSH} setado com a curva ${s.idCurva} - ${ this.pushService.Curvas.filter(x => x.idCurva_Envio==$event)[0].nome_Curva_Envio }`,'',{ status: 'success', duration: 10000 })
+      },(e) => {
+         this.serviceSticker.show(`ERRO! Solicitação ID ${sol.idSolicitacao_PUSH} retornou erro ${e.message} ao setar a curva`,'',{ status: 'danger', duration: 10000 })
+      })
+    }
+  }
+
+
   alteraPrioridade(sol:Solicitacao,$event) {
     this.pushService.setPrioridadeSolicitacao(sol,$event).subscribe((s:Solicitacao) => {
        sol = s;
@@ -254,6 +267,13 @@ export class DetalhesSolicitacaoComponent implements OnInit {
       }
     }
   }
+
+  colorFromTipoCategoria(tipo){
+    return this.pushService
+               .tiposCategoriasSolicitacao
+               .filter(x => x.tipo_Categoria_Solicitacao1 === tipo)[0]?.cor
+  }
+
 
   // convenience getter for easy access to form fields
   get f() { return this.formSolicitacao.controls; }

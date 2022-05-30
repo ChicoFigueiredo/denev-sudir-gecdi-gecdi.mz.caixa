@@ -19,6 +19,7 @@
         <input #nomeSolicitacao formControlName="nome_Solicitacao" type="text" nbInput fullWidth id="nome_Solicitacao"
           placeholder="Descreva suscintamente o objetivo do envio dessa mensagem"
           [status]="(f.nome_Solicitacao.touched && f.nome_Solicitacao.errors) ? 'danger': 'info'">
+        <div *ngIf="f.nome_Solicitacao.invalid && (f.nome_Solicitacao.dirty || f.nome_Solicitacao.touched)" class="alert alert-danger">Nome deve ter entre 10 e 100 caracteres, tamanho atual: {{f.nome_Solicitacao.value.length}}</div>
       </div>
     </div>
 
@@ -32,6 +33,7 @@
               (blur)="Ref_REQ_WO_Aprovacao_Mensagem.value = Ref_REQ_WO_Aprovacao_Mensagem.value.toUpperCase()"
               (keyup)="Ref_REQ_WO_Aprovacao_Mensagem.value = Ref_REQ_WO_Aprovacao_Mensagem.value.toUpperCase()"
               [status]="(f.reQ_WO_Aprovacao_Mensagem.touched && f.reQ_WO_Aprovacao_Mensagem.errors) ? 'danger': 'info'">
+            <div *ngIf="f.reQ_WO_Aprovacao_Mensagem.invalid && (f.reQ_WO_Aprovacao_Mensagem.dirty || f.reQ_WO_Aprovacao_Mensagem.touched)" class="alert alert-danger">Padrão REQ + 12 algarismos (atual: {{ f.reQ_WO_Aprovacao_Mensagem.value.length >= 3 ? f.reQ_WO_Aprovacao_Mensagem.value.length - 3 : 0 }})</div>
 
           </div>
         </nb-form-field>
@@ -62,6 +64,7 @@
             [status]="(f.mensagem.touched && f.mensagem.errors) ? 'danger': 'info'"></textarea>
           <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible;">😀</button>
         </div>
+        <div *ngIf="f.mensagem.invalid && (f.mensagem.dirty || f.mensagem.touched)" class="alert alert-danger">{{f.mensagem.errors.message}}</div>
         <div class="meio">
           <emoji-mart
               *ngIf="isEmojiPickerVisible"
@@ -129,11 +132,18 @@
       <div class="form-group">
         <nb-form-field>
           <div class="form-group">
-            <label for="Limitacao_Tranche" class="label">Limite por tranche (a cada 30min):</label>
-            <input formControlName="limitacao_Tranche" type="text" nbInput fullWidth id="Limitacao_Tranche"
-              placeholder="Qtd. acordada com a GEPTI"
-              [status]="(f.limitacao_Tranche.touched && f.limitacao_Tranche.errors) ? 'danger': 'info'">
-
+            <label for="Limitacao_Tranche" class="label">Tipo/Categoria (risco):</label>
+            <nb-select #selTipo formControlName="Tipo_Categoria_Solicitacao" fullWidth
+                       id="Tipo_Categoria_Solicitacao" name="Tipo_Categoria_Solicitacao"
+                       (selectedChange)="alteraTipoCategoria(solicitacao,$event)"
+                       [status]="(f.Tipo_Categoria_Solicitacao.touched && f.Tipo_Categoria_Solicitacao.errors) ? 'danger': 'info'"
+                       [style.background]="colorFromTipoCategoria(f.Tipo_Categoria_Solicitacao.value)"
+                       >
+              <nb-option *ngFor="let c of pushService.tiposCategoriasSolicitacao"
+                         [value]="c.tipo_Categoria_Solicitacao1"
+                         [style.background]="c.cor"
+                         >{{c.apelido_Tipo_Categoria_Solicitacao}}</nb-option>
+            </nb-select>
           </div>
         </nb-form-field>
       </div>

@@ -180,15 +180,22 @@
           <nb-icon icon="copy-outline" pack="eva" status="primary"></nb-icon>
         </button>
       </p>
+      <P>
+        <textarea [(ngModel)]="EnvioSelecionado.observacoes" #obs type="text" nbInput fullWidth id="Mensagem" height="2em"
+            placeholder="Escreva aqui o resultado do envio, como a saida do comando ou ordens que foram emitidas" >
+        </textarea>
+
+      </P>
       <P *ngIf="[1,3].indexOf(usuario.user.idRole)>=0">
-        <nb-toggle [ngModel]="EnvioSelecionado?.enviado" (ngModelChange)="changeCheckEnviado(EnvioSelecionado,$event)" status="success">Marcar envio como concluído</nb-toggle>&nbsp;&nbsp;&nbsp;
+        <nb-toggle [ngModel]="EnvioSelecionado.enviado" (ngModelChange)="changeCheckEnviado(EnvioSelecionado,$event)" status="success">Marcar envio como concluído</nb-toggle>&nbsp;&nbsp;&nbsp;
         <span *ngIf="usuario.user.idRole===1">
           <nb-toggle [ngModel]="e?.cancelado" (ngModelChange)="changeCheckCancelado(EnvioSelecionado,$event)" status="warning">Marcar envio como cancelado</nb-toggle>
         </span>
       </P>
     </nb-card-body>
     <nb-card-footer>
-      <button nbButton status="primary" (click)="ref.close()">Fechar</button> &nbsp;&nbsp;
+      <button nbButton status="primary" (click)="salvarAnotacoes(EnvioSelecionado,$event)">Salvar Observação</button> &nbsp;&nbsp;
+      <button nbButton status="danger" (click)="ref.close()">Fechar</button> &nbsp;&nbsp;
       <div class="float-right">
         <button nbButton (click)="getPosition(-1)" *ngIf="PosicaoSelecionada > 0">
           <</button> {{ PosicaoSelecionada + 1 }} <button nbButton (click)="getPosition(+1)"

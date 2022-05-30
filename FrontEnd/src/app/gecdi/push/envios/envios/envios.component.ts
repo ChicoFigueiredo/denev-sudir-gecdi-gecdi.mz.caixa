@@ -132,7 +132,7 @@ export class EnviosComponent implements OnInit, OnDestroy {
  }
 
   changeCheckEnviado(c:EnviosResponse,$event){
-    this.pushService.setEnvioEnviado(c.idSolicitacao_Simulacao_Envio,!c.enviado).subscribe((e:EnviosResponse) => {
+    this.pushService.setEnvioEnviado(c.idSolicitacao_Simulacao_Envio,!c.enviado,c.observacoes).subscribe((e:EnviosResponse) => {
       if(e.enviado == !c.enviado){
         c.enviado = e.enviado;
         c = e;
@@ -145,8 +145,22 @@ export class EnviosComponent implements OnInit, OnDestroy {
     })
   }
 
+  salvarAnotacoes(c:EnviosResponse,$event) {
+    this.pushService.setObservacoes(c.idSolicitacao_Simulacao_Envio,c.observacoes).subscribe((e:EnviosResponse) => {
+      if(e.observacoes == c.observacoes){
+        c.enviado = e.enviado;
+        c = e;
+        this.QtdEnviosEfetivados = this.envios.map(q => <number>(q.enviado ? 1 : 0)).reduce((ant,cur,i) => ant + cur);
+        this.QtdTotalPushEfetivado = this.envios.map(q => <number>(q.enviado ? q.quantidade : 0)).reduce((ant,cur,i) => ant + cur);
+        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} gravado com a observação ${e?.observacoes}`,'',{ status: 'success' })
+      } else {
+        this.serviceSticker.show(`Envio ID ${e?.idSolicitacao_Simulacao_Envio} com erro na gravação de observação`,'',{ status: 'danger', duration: 5000 })
+      }
+    })
+  }
+
   changeCheckCancelado(c:EnviosResponse,$event){
-    this.pushService.setEnvioCancelado(c.idSolicitacao_Simulacao_Envio,!c.cancelado).subscribe((e:EnviosResponse) => {
+    this.pushService.setEnvioCancelado(c.idSolicitacao_Simulacao_Envio,!c.cancelado,c.observacoes).subscribe((e:EnviosResponse) => {
       if(e.cancelado == !c.cancelado){
         c.cancelado = e.cancelado;
         c = e;

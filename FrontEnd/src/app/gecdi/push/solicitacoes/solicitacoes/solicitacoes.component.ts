@@ -167,8 +167,6 @@ export class SolicitacoesComponent implements OnInit {
      })
   }
 
-
-
   uploadFile(s:Solicitacao,$event){
     this.router.navigateByUrl(`/gecdi/push/minhas-solicitacoes/${s.idSolicitacao_PUSH}/upload`);
   }

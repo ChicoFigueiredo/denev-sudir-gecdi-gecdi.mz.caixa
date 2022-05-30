@@ -48,15 +48,20 @@ export class PushService {
                .get<EnviosResponse>(`${API_PUSH}/envios/${id}`)
   }
 
-  setEnvioEnviado(idEnvio,enviado){
+  setEnvioEnviado(idEnvio, enviado, obs=""){
     return this.http
-               .post(`${API_PUSH}/Envios/${idEnvio}/MarcarEnviado?MarcarEnvioRealizado=${enviado}`,{})
+               .post(`${API_PUSH}/Envios/${idEnvio}/marcar-envio?MarcarEnvioRealizado=${enviado}&obs=${obs}`,{})
   }
 
 
-  setEnvioCancelado(idEnvio,enviado){
+  setEnvioCancelado(idEnvio,enviado, obs=""){
     return this.http
-               .post(`${API_PUSH}/Envios/${idEnvio}/MarcarCancelado?MarcarCancelado=${enviado}`,{})
+               .post(`${API_PUSH}/Envios/${idEnvio}/marcar-cancelado?MarcarCancelado=${enviado}&obs=${obs}`,{})
+  }
+
+  setObservacoes(idEnvio,obs=""){
+    return this.http
+               .post(`${API_PUSH}/Envios/${idEnvio}/gravar-observacao?obs=${obs}`,{})
   }
 
   getFila(recount=true,historic=false){
@@ -121,6 +126,11 @@ export class PushService {
   setCurvaSolicitacao(sol:Solicitacao,curva){
     return this.http
                .post(`${API_PUSH}/solicitacao/${sol?.idSolicitacao_PUSH}/set-curva?curva=${curva}`,{})
+  }
+
+  setTipoCategoria(sol:Solicitacao,tipoCategoria){
+    return this.http
+               .post(`${API_PUSH}/solicitacao/${sol?.idSolicitacao_PUSH}/set-tipo-categoria?tipoCategoria=${tipoCategoria}`,{})
   }
 
   deletarEnvio(envio:EnviosResponse){
