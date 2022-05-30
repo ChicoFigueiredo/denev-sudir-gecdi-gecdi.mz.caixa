@@ -106,7 +106,10 @@ export class EnviosComponent implements OnInit, OnDestroy {
     this.dialogService.open(dialog, { context : ''});
   }
 
-  getPosition(delta){
+  getPosition(delta,e:EnviosResponse){
+    if (e && e.observacoes != "")
+      this.salvarAnotacoes(e,null);
+
     if(this.PosicaoSelecionada + delta > this.envios.length-1)
       this.PosicaoSelecionada = this.envios.length-1;
     else if(this.PosicaoSelecionada + delta < 0)
