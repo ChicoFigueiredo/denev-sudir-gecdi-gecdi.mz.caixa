@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -79,6 +80,39 @@ namespace gecdi.mz.caixa.Controllers.Admin
             }
             return res;
         }
+
+        // GET: api/Test
+        [HttpGet("api/send-mail")]
+        public async Task<ActionResult<string>>  GetSendMail(string destino = "c051431@corp.caixa.gov.br", string subject = "Teste", string body = "Teste")
+        {
+
+            string from = "francisco.figueiredo@caixa.gov.br";
+            string to = destino;
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = subject;
+            //message.IsBodyHtml = true;
+            message.Body = @"Using this new feature, you can send an email message from an application very easily.";
+            SmtpClient client = new SmtpClient("sistemas.correiolivre.caixa",25);
+            // Credentials are necessary if the server requires the client
+            // to authenticate before it will send email on the client's behalf.
+            //client.UseDefaultCredentials = true;
+            client.Credentials = new NetworkCredential("c051431", "Mayara02");
+
+            try
+            {
+                client.Send(message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
+                    ex.ToString());
+                throw ex;
+            }
+
+            return Ok("Teste");
+        }
+
+
 
 
     }

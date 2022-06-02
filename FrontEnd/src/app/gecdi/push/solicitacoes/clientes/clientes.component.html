@@ -1,0 +1,74 @@
+
+<nb-card>
+  <nb-card-header>
+    <h3>
+      <button nbButton ghost (click)="voltarSolicitacoes()"><nb-icon class="font-2_25rem" size="3" icon="arrow-back-outline" pack="eva"></nb-icon></button>
+      <i  class="font-2_25rem fa fa-list"></i>  Clientes da Solicitação de PUSH {{idSolicitacao_PUSH}}</h3>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-12">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+
+        Verificar lista iniciando em:
+        <input #inicio [(ngModel)]="skip" type="text" nbInput id="skip"
+          placeholder="Pular quantas linhas"
+          (ngModelChange)="refreshClientesDelay($event,null)"
+          >
+        <button nbButton (click)="inicio.value=0; refreshClientes(0,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
+
+        retornando:
+        <input #limit [(ngModel)]="lim" type="text" nbInput id="skip"
+          placeholder="Pular quantas linhas"
+          (ngModelChange)="refreshClientesDelay(null,$event)"
+          >
+        <button nbButton (click)="limit.value=30; refreshClientes(null,30);" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>
+        registros &nbsp;&nbsp;&nbsp;
+        <button nbButton (click)="recua()"><</button>&nbsp;&nbsp;
+        <button nbButton (click)="avanca()">></button>&nbsp;&nbsp;
+        <button nbButton (click)="refreshClientes(null,null)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
+
+
+      </div>
+    </div>
+
+
+    <table class="table">
+      <thead class="row-title">
+        <tr class="row-title">
+          <td class="no-wrap" scope="col">CPF</td>
+          <td class="no-wrap" scope="col">Campo 1</td>
+          <td class="no-wrap" scope="col">Campo 2</td>
+          <td class="no-wrap" scope="col">Campo 3</td>
+          <td class="no-wrap" scope="col">Campo 4</td>
+          <td class="no-wrap" scope="col">Campo 5</td>
+          <td class="no-wrap" scope="col">Prévia Mensagem</td>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let c of clientes; let i = index ;" [ngClass]="checkRow(s) + ' hand'">
+          <th scope="row" class="no-wrap"  >{{c?.cpfFormatado}}</th>
+          <td scope="row" class="no-wrap"  >{{c?.campo1}}</td>
+          <td scope="row" class="no-wrap"  >{{c?.campo2}}</td>
+          <td scope="row" class="no-wrap"  >{{c?.campo3}}</td>
+          <td scope="row" class="no-wrap"  >{{c?.campo4}}</td>
+          <td scope="row" class="no-wrap"  >{{c?.campo5}}</td>
+          <td scope="row"                  >{{c?.mensagemPreview}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="float-right">
+
+      &nbsp;&nbsp;
+      <button nbButton (click)="voltarSolicitacoes()">Fechar / Voltar</button>
+    </div>
+  </nb-card-footer>
+</nb-card>

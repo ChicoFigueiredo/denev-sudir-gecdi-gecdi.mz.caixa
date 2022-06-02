@@ -1,0 +1,71 @@
+.mensagem-limite30 {
+  width: 30%;
+}
+
+.mensagem-limite10 {
+  width: 10%;
+}
+
+.dir {
+  text-align: right !important;
+}
+
+
+.row-title {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+.hand {
+  cursor: pointer;
+}
+
+tbody > tr:nth-child(odd) {background: #F4EEFF}
+tbody > tr:nth-child(even) {background: #FFF}
+tr > td, tr > th {
+  vertical-align: middle;
+  font-weight: normal;
+}
+
+tbody > tr.row-orange:nth-child(odd) {background: #fa9200}
+tbody > tr.row-orange:nth-child(even) {background: #ffb348}
+.row-orange {
+  color: white;
+}
+
+tbody > tr.row-lavanda:nth-child(odd) {background: #7E94BF}
+tbody > tr.row-lavanda:nth-child(even) {background: #A7CBD9}
+.row-lavanda {
+  color: white;
+}
+
+tbody > tr.row-green:nth-child(odd) {background: #4caf50}
+tbody > tr.row-green:nth-child(even) {background: #79c97c}
+.row-green {
+  color: white;
+}
+
+.row {
+  margin-bottom: 1rem;
+}
+
+:host-context(.user-name) {
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+}
+
+.brown {
+  color: brown;
+}
+
+.blue{
+  color: blue;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}

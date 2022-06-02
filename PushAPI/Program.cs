@@ -108,7 +108,7 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 builder.Services.AddDbContext<dbSites>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBSites")));
 builder.Services.AddDbContext<dbPUSH>(options => {
     options
-        //.UseLazyLoadingProxies(false)
+        .UseLazyLoadingProxies(false)
         .UseSqlServer(
             builder.Configuration.GetConnectionString("WebApiDBPUSH"),
             sql => sql.CommandTimeout(60 * 60 * 5)

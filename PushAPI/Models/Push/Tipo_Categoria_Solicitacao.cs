@@ -20,6 +20,7 @@ namespace PushAPI.Models.Push
         public int idCurva_Envio { get; set; }
         public int? idCurva_Envio_2 { get; set; }
         public int? idCurva_Envio_3 { get; set; }
+        public bool E_Admin { get; set; }
 
         public virtual Curva_Envio idCurva_EnvioNavigation { get; set; } = null!;
         public virtual Curva_Envio? idCurva_Envio_2Navigation { get; set; }

@@ -171,6 +171,10 @@ export class SolicitacoesComponent implements OnInit {
     this.router.navigateByUrl(`/gecdi/push/minhas-solicitacoes/${s.idSolicitacao_PUSH}/upload`);
   }
 
+  viewClients(s:Solicitacao,$event){
+    this.router.navigateByUrl(`/gecdi/push/solicitacao/${s.idSolicitacao_PUSH}/clients`);
+  }
+
   geraTooltip(Sol:Solicitacao) {
     return `Processado em ${Sol?.solicitacao_Upload[0].data_Processamento}\n
 Arquivo: ${Sol?.solicitacao_Upload[0].arquivo}\n

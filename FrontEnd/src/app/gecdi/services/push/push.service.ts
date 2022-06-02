@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import * as moment from 'moment';
-import { EnvioResumo, EnviosResponse } from './classes/envios';
+import { EnvioResumo, EnviosResponse, SolicitacaoCliente } from './classes/envios';
 import { FilaResponse } from './classes/fila';
 import { Curva } from './classes/curvas';
 import { Solicitacao } from './classes/solicitacao';
@@ -96,6 +96,11 @@ export class PushService {
   getEnviosResumo(data){
     if (!data) data = moment().format("YYYY-MM-DD");
     return this.http.get<EnvioResumo[]>(`${API_PUSH}/envios/resumo?Data_Resumo=${data}`);
+  }
+
+  getClientesSolicitacao(id,skip=0,lim=30){
+    return this.http
+               .get<SolicitacaoCliente[]>(`${API_PUSH}/clientes/solicitacao/${id}?skip=${skip}&lim=${lim}`);
   }
 
   setSolicitacaoCancelado(idSolicitacao,enviado){
