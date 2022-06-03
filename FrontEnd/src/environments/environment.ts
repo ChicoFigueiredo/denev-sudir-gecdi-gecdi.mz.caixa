@@ -15,5 +15,5 @@ export const environment = {
   nomeSite: 'GECDI / Gestão',
   itemsPadrao: 25,
   horarioLimite: 14,
-  intervalToGetAPI: 300,
+  intervalToGetAPI: 500,
 };

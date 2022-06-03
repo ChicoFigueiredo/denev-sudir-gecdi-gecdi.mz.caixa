@@ -48,19 +48,27 @@ namespace PushAPI.Controllers.PUSH.Solicitacoes_Clientes
 
                 // GET: api/Clientes/solicitacao/5
         [HttpGet("solicitacao/{id}")]
-        public async Task<ActionResult<List<Solicitacao_Clientes>>> GetSolicitacao_Clientes_da_Solicitacao(int id, int skip = 0, int lim = 30)
+        public async Task<ActionResult<List<Solicitacao_Clientes>>> GetSolicitacao_Clientes_da_Solicitacao(int id, int skip = 0, int lim = 30, string cpf="")
         {
             Usuario u = HttpContext.Items["User"] as Usuario;
-            if (lim > 100 && u.idRole == 1)
+            if (lim > 100 && u.idRole == 1) 
                 lim = 100;
 
-            List<Solicitacao_Clientes> clientes_sol = await _dbPUSH.Solicitacao_Clientes
-                                                                    .AsNoTracking()
-                                                                    .Where(w => w.idSolicitacao_PUSH == id)
-                                                                    .Include(i => i.idSolicitacao_PUSHNavigation)
-                                                                    .Skip(skip)
-                                                                    .Take(lim)
-                                                                    .ToListAsync<Solicitacao_Clientes>();
+            List<Solicitacao_Clientes> clientes_sol = (cpf??"").Trim() == "" ?
+                   await _dbPUSH.Solicitacao_Clientes
+                                .AsNoTracking()
+                                .Where(w => w.idSolicitacao_PUSH == id)
+                                .Include(i => i.idSolicitacao_PUSHNavigation)
+                                .Skip(skip)
+                                .Take(lim)
+                                .ToListAsync<Solicitacao_Clientes>()
+                  : await _dbPUSH.Solicitacao_Clientes
+                                .AsNoTracking()
+                                .Where(w => w.idSolicitacao_PUSH == id && w.CPF == long.Parse(cpf.Trim()))
+                                .Include(i => i.idSolicitacao_PUSHNavigation)
+                                .Skip(skip)
+                                .Take(lim)
+                                .ToListAsync<Solicitacao_Clientes>();
 
             return Ok(clientes_sol);
         }

@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
 import { PushService } from '../../../services/push/push.service';
 import { User } from '../../../services/user/classes/User';
@@ -22,6 +24,7 @@ export class MinhasSolicitacoesComponent implements OnInit {
 
   public OrdemSolicitacoes:boolean = true;
   public SoFila:boolean = true;
+  public idSol: number = null;
 
   constructor(
     private pushService:PushService,
@@ -57,10 +60,10 @@ export class MinhasSolicitacoesComponent implements OnInit {
     (<any> this.dialog).openDialog();
   }
 
-  refreshSolicitacoes(recontar:boolean=false){
+  refreshSolicitacoes(recontar:boolean=false,idSol=-1){
     const usuario:User = <User> JSON.parse(localStorage.getItem("gecdi.user.data"));
     this.pushService
-        .getSolicitacoes(recontar,usuario.lotacaoFisica,this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila)
+        .getSolicitacoes(recontar,usuario.lotacaoFisica,this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila,100,'2021-01-01','2300-01-01',null,idSol)
         .subscribe((u:Solicitacao[]) => this.solicitacao = u);
   }
 
@@ -90,7 +93,22 @@ export class MinhasSolicitacoesComponent implements OnInit {
     })
   }
 
+
+  viewClients(s:Solicitacao,$event){
+    this.router.navigateByUrl(`/gecdi/push/solicitacao/${s.idSolicitacao_PUSH}/clients`);
+  }
+
   uploadFile(s:Solicitacao,$event){
     this.router.navigateByUrl(`/gecdi/push/minhas-solicitacoes/${s.idSolicitacao_PUSH}/upload`);
   }
+
+  waitId:any
+  findId(idSol){
+    this.waitId && clearTimeout(this.waitId);
+    this.waitId = setTimeout(() => {
+      this.idSol = idSol;
+      this.refreshSolicitacoes(false,idSol);
+    },environment.intervalToGetAPI);
+  }
+
 }

@@ -18,6 +18,17 @@
             </div>
           </div>
 
+          <div class="row">
+            <div class="col-md-12">
+              Busca ID:
+              <input #buscaID [(ngModel)]="idSol" type="text" nbInput id="idSol"
+                  placeholder="Digite o ID da Solicitação de PUSH"
+                  (ngModelChange)="findId($event)"
+              >
+              <button nbButton (click)="buscaID.value=null; refreshSolicitacoes(false,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
+            </div>
+          </div>
+
           <table class="table">
             <thead class="row-title">
               <tr class="row-title">
@@ -79,6 +90,7 @@
                 </td>
 
                 <td scope="row"  (click)="rowClick(se)">
+                  <button nbButton ghost (click)="viewClients(s,$event)"><i  class="fa fa-list" status="primary"></i></button>
                   <button *ngIf="!s?.autorizacao_Gestor_PUSH" nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>
                   <div *ngIf="s?.solicitacao_Upload[0]?.idSolicitacao_Upload > 0">
                     <b>{{ s?.solicitacao_Upload[0]?.processado ? 'Processado' : 'Aguardando' }}</b><BR>

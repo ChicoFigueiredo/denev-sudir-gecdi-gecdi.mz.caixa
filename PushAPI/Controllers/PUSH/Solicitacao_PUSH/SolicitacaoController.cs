@@ -32,17 +32,22 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
         // GET: api/Solicitacoes
         [HttpGet("lista")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100, string matricula = "")
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100, string matricula = "", int id = -1)
         {
-            return await GetSolicitacaoCGC(-1, De, Ate, prior, recount, order, soFila, limit, matricula);
+            return await GetSolicitacaoCGC(-1, De, Ate, prior, recount, order, soFila, limit, matricula,id);
         }
 
 
         // GET: api/Solicitacoes/5325
         [HttpGet("lista/{cgc}")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int CGC, DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100, string matricula = "")
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int cgc, DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100, string matricula = "", int id = -1)
         {
-            //_dbPush.Configuration.LazyLoadingEnabled = false;
+            if (id>0 && cgc > 0)
+                return await _dbPush.Solicitacao.Where(w => (w.CGCDemandante == cgc || w.CGCExecutora == cgc) &&  w.idSolicitacao_PUSH == id).ToListAsync<Solicitacao>();
+            
+            if (id>0)
+                return await _dbPush.Solicitacao.Where(w => w.idSolicitacao_PUSH == id).ToListAsync<Solicitacao>();
+            
             if (recount)
                 _ = await _dbPush.Database.ExecuteSqlRawAsync("EXEC DB5138_PUSH.FILA.Atualiza_Contagem_de_Solicitacoes -1");
 
@@ -56,7 +61,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             System.Linq.Expressions.Expression<Func<Solicitacao, bool>> whereFunc; //necessário para solicitar o ToListAsync encadeado
 
             // filtros
-            if (CGC < 0)
+            if (cgc < 0)
             {
                 if (soFila)
                     whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
@@ -66,9 +71,9 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             else
             {
                 if (soFila)
-                    whereFunc = x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
+                    whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
                 else
-                    whereFunc = x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
+                    whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
             }
 
             // ordenação
@@ -118,7 +123,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             }
             else
             {
-                var ret = (CGC < 0) ?
+                var ret = (cgc < 0) ?
                      _dbPush.Solicitacao
                         .Include(i => i.idEnvio_MensagemNavigation)
                         .Include(i => i.Solicitacao_Upload)
@@ -129,7 +134,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                         .Include(i => i.idEnvio_MensagemNavigation)
                         .Include(i => i.Solicitacao_Upload)
                         //.Include(i => i.idCurvaNavigation)
-                        .Where(x => (x.CGCDemandante == CGC || x.CGCExecutora == CGC) && x.Data_Cadastramento >= (DateTime)De);
+                        .Where(x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && x.Data_Cadastramento >= (DateTime)De);
                         
                 
                 if ((matricula ?? "").Trim() != "")

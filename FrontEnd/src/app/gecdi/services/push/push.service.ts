@@ -86,11 +86,11 @@ export class PushService {
                .get<Canal[]>(`${API_PUSH}/Canais`)
   }
 
-  getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority",soFila:boolean=true,limit=-1,de='',ate='',matricula=''){
+  getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority",soFila:boolean=true,limit=-1,de='',ate='',matricula='', idSol = -1){
     if(cgc === "-1")
-      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}`);
+      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}&id=${idSol??-1}`);
     else
-      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}`);
+      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}&id=${idSol??-1}`);
   }
 
   getEnviosResumo(data){
@@ -98,9 +98,9 @@ export class PushService {
     return this.http.get<EnvioResumo[]>(`${API_PUSH}/envios/resumo?Data_Resumo=${data}`);
   }
 
-  getClientesSolicitacao(id,skip=0,lim=30){
+  getClientesSolicitacao(id,skip=0,lim=30,cpf=null){
     return this.http
-               .get<SolicitacaoCliente[]>(`${API_PUSH}/clientes/solicitacao/${id}?skip=${skip}&lim=${lim}`);
+               .get<SolicitacaoCliente[]>(`${API_PUSH}/clientes/solicitacao/${id}?skip=${skip}&lim=${lim}&cpf=${cpf}`);
   }
 
   setSolicitacaoCancelado(idSolicitacao,enviado){

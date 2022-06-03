@@ -55,7 +55,17 @@
               </nb-autocomplete>
               <button nbButton (click)="matricula.value=null; refreshSolicitacoes(false,null,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;
 
+            </div>
+          </div>
 
+          <div class="row">
+            <div class="col-md-12">
+              Busca ID:
+              <input #buscaID [(ngModel)]="idSol" type="text" nbInput id="idSol"
+                  placeholder="Digite o ID da Solicitação de PUSH"
+                  (ngModelChange)="findId($event)"
+              >
+              <button nbButton (click)="buscaID.value=null; refreshSolicitacoes(false,null,null,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
             </div>
           </div>
 
@@ -130,8 +140,8 @@
                 <!-- <td scope="row" class="mensagem-limite10" (click)="rowClick(s,i)">{{s?.impactos_Previstos}}</td> -->
 
                 <td *ngIf="usuario.user.idRole===1" scope="row" >
+                  <button nbButton ghost (click)="viewClients(s,$event)"><i  class="fa fa-list" status="primary"></i></button>
                   <button *ngIf="!s?.autorizacao_Gestor_PUSH" nbButton ghost (click)="uploadFile(s,$event)"><nb-icon size="2" icon="cloud-upload-outline" pack="eva" status="primary"></nb-icon></button>
-                  <button *ngIf="s?.autorizacao_Gestor_PUSH" nbButton ghost (click)="viewClients(s,$event)"><i  class="fa fa-list" status="primary"></i></button>
                   <div *ngIf="s?.solicitacao_Upload[0]?.idSolicitacao_Upload > 0" [nbTooltip]="geraTooltip(s)">
                     <b>{{ s?.solicitacao_Upload[0]?.processado ? 'Processado' : 'Aguardando' }}</b><BR>
                     <span *ngIf="s?.solicitacao_Upload[0]?.processado" class="nowrap" >

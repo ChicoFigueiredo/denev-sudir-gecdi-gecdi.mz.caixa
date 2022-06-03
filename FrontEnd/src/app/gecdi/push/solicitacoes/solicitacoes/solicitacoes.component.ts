@@ -32,6 +32,7 @@ export class SolicitacoesComponent implements OnInit {
 
   public cgcSol: number = null;
   listCGC$:Unidade[];
+  public idSol: number = null;
 
   public matriculaSol:string = null;
   listMatriculas$:UserListRequest[];
@@ -80,10 +81,11 @@ export class SolicitacoesComponent implements OnInit {
   quantidade_Agendada_Autorizado_Sum:number = 0;
   quantidade_Solicitacoes:number = 0;
   quantidade_Solicitacoes_Autorizadas:number = 0;
-  refreshSolicitacoes(recontar:boolean=false, callback = null, cgc = null, matr = null){
+  refreshSolicitacoes(recontar:boolean=false, callback = null, cgc = null, matr = null, idSol = null){
     this.cgcSol = cgc;
     this.matriculaSol = matr;
-    this.pushService.getSolicitacoes(recontar,this.cgcSol && this.cgcSol > 0 ? `${this.cgcSol}` : '-1' ,this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila,this.limitRegistros,moment(this.dataDe).format('YYYY-MM-DD'),moment(this.dataAte).format('YYYY-MM-DD'),this.matriculaSol)
+    this.idSol = idSol;
+    this.pushService.getSolicitacoes(recontar,this.cgcSol && this.cgcSol > 0 ? `${this.cgcSol}` : '-1' ,this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila,this.limitRegistros,moment(this.dataDe).format('YYYY-MM-DD'),moment(this.dataAte).format('YYYY-MM-DD'),this.matriculaSol,this.idSol)
         .subscribe((s:Solicitacao[]) =>{
           this.solicitacao = s;
           this.quantidade_Total_Sum = s.map(q => q.quantidade_Total).reduce((ant,cur,i) => ant + cur);
@@ -198,6 +200,15 @@ Histórico: ${Sol?.solicitacao_Upload[0].resultado_Processamento}`
       this.waitMatricula = setTimeout(() => this.userService.getUsersFind(t).subscribe(u => this.listMatriculas$=u),environment.intervalToGetAPI);
     else (t.length == 0)
       this.matriculaSol = null;
+  }
+
+  waitId:any
+  findId(idSol){
+    this.waitId && clearTimeout(this.waitId);
+    this.waitId = setTimeout(() => {
+      this.idSol = idSol;
+      this.refreshSolicitacoes(false,null,null,null,idSol);
+    },environment.intervalToGetAPI);
   }
 
 }

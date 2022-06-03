@@ -19,6 +19,7 @@ export class ClientesComponent implements OnInit {
 
   skip:number = 0;
   lim:number = 25;
+  buscaCPF:string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -41,19 +42,20 @@ export class ClientesComponent implements OnInit {
     this.router.navigateByUrl("/gecdi/push/solicitacoes")
   }
 
-  refreshClientes(skip,lim){
+  refreshClientes(skip=null,lim=null,cpf=null){
     this.skip = skip ?? this.skip;
     this.lim  = lim ?? this.lim;
+    this.buscaCPF  = cpf ?? this.buscaCPF;
     this.pushService
-        .getClientesSolicitacao(this.idSolicitacao_PUSH,this.skip,this.lim)
+        .getClientesSolicitacao(this.idSolicitacao_PUSH,this.skip,this.lim,this.buscaCPF)
         .subscribe(l => this.clientes = l);
   }
 
 
   waitRefresh:any
-  refreshClientesDelay(skip,lim){
+  refreshClientesDelay(skip,lim,cpf=null){
     this.waitRefresh && clearTimeout(this.waitRefresh);
-    this.waitRefresh = setTimeout(() => this.refreshClientes(skip,lim),environment.intervalToGetAPI);
+    this.waitRefresh = setTimeout(() => this.refreshClientes(skip,lim,cpf),environment.intervalToGetAPI);
   }
 
   avanca(){

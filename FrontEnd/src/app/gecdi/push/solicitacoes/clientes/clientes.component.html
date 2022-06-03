@@ -30,12 +30,28 @@
         registros &nbsp;&nbsp;&nbsp;
         <button nbButton (click)="recua()"><</button>&nbsp;&nbsp;
         <button nbButton (click)="avanca()">></button>&nbsp;&nbsp;
-        <button nbButton (click)="refreshClientes(null,null)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
-
+        <button nbButton (click)="refreshClientes(null,null)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
       </div>
     </div>
 
+
+    <div class="row">
+      <div class="col-md-12">
+        Busca CPF:
+        <input #buscaCPFinput [(ngModel)]="buscaCPF" type="text" nbInput id="buscaCPF"
+          placeholder="Digite o CPF"
+          (ngModelChange)="refreshClientesDelay(null,null,$event)"
+          >
+        <button nbButton (click)="buscaCPFinput.value=null; refreshClientes(null,null,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        Template Mensagem: <b>{{solicitacao.mensagem}}</b>
+      </div>
+    </div>
 
     <table class="table">
       <thead class="row-title">

@@ -1,5 +1,7 @@
 cd ..\FrontEnd
 call ng build --configuration production --build-optimizer --optimization --progress --verbose --aot
+rem call ng build --configuration production --aot
+rem call npm run build:prod
 
 cd ..\PushAPI
 
