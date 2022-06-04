@@ -233,6 +233,25 @@ namespace PushAPI.Controllers.PUSH.Envio
 
         // POST: api/Envios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpGet("simular")]
+        [Authorize(Role.Admin)]
+        public async Task PostSolicitacao_SimularEnvio()
+        {
+            await ExecuteSQLForWeb.ExecuteSQL(Response, _dbPush.Database.GetDbConnection().ConnectionString,
+                @"
+                
+                    EXEC DB5138_PUSH.FILA.Simular_Envio_PUSH 
+                        @Processar       = 1
+                        ,@Data_Processar  = '2022-06-04'
+                        ,@Hora_Inicio     = '07:00'
+                        ,@Hora_Fim        = '23:50' 
+                
+                "
+            );
+        }
+
+        // POST: api/Envios
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpGet("homologar")]
         [Authorize(Role.Admin)]
         public async Task PostSolicitacao_Homologacao(

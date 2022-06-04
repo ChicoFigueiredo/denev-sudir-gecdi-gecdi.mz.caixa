@@ -1,0 +1,15 @@
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\bin\Debug\net6.0\DownloadFont.exe
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\bin\Debug\net6.0\DownloadFont.deps.json
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\bin\Debug\net6.0\DownloadFont.runtimeconfig.json
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\bin\Debug\net6.0\DownloadFont.dll
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\bin\Debug\net6.0\ref\DownloadFont.dll
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\bin\Debug\net6.0\DownloadFont.pdb
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\obj\Debug\net6.0\DownloadFont.csproj.AssemblyReference.cache
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\obj\Debug\net6.0\DownloadFont.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\obj\Debug\net6.0\DownloadFont.AssemblyInfoInputs.cache
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\obj\Debug\net6.0\DownloadFont.AssemblyInfo.cs
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\obj\Debug\net6.0\DownloadFont.csproj.CoreCompileInputs.cache
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\obj\Debug\net6.0\DownloadFont.dll
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\obj\Debug\net6.0\ref\DownloadFont.dll
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\obj\Debug\net6.0\DownloadFont.pdb
+C:\Dev\gecdi.mz.caixa\Tools\DownloadFont\obj\Debug\net6.0\DownloadFont.genruntimeconfig.cache
