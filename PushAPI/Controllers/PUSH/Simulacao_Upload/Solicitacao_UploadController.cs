@@ -13,7 +13,7 @@ namespace PushAPI.Controllers.PUSH.Simulacao_Upload
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Role.Admin)]
     public class Solicitacao_UploadController : ControllerBase
     {
         private readonly dbPUSH _context;

@@ -32,15 +32,36 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
         // GET: api/Solicitacoes
         [HttpGet("lista")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100, string matricula = "", int id = -1)
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(
+            DateTime? De = null, 
+            DateTime? Ate = null, 
+            bool prior = true, 
+            bool recount = true, 
+            string order = "priority", 
+            bool soFila = true, 
+            int limit = 100, 
+            string matricula = "", 
+            int id = -1,
+            DateTime? enviarParaODia=null)
         {
-            return await GetSolicitacaoCGC(-1, De, Ate, prior, recount, order, soFila, limit, matricula,id);
+            return await GetSolicitacaoCGC(-1, De, Ate, prior, recount, order, soFila, limit, matricula,id,enviarParaODia);
         }
 
 
         // GET: api/Solicitacoes/5325
         [HttpGet("lista/{cgc}")]
-        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(int cgc, DateTime? De = null, DateTime? Ate = null, bool prior = true, bool recount = true, string order = "priority", bool soFila = true, int limit = 100, string matricula = "", int id = -1)
+        public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(
+            int cgc, 
+            DateTime? De = null, 
+            DateTime? Ate = null, 
+            bool prior = true, 
+            bool recount = true, 
+            string order = "priority", 
+            bool soFila = true, 
+            int limit = 100, 
+            string matricula = "", 
+            int id = -1,
+            DateTime? enviarParaODia=null)
         {
             if (id>0 && cgc > 0)
                 return await _dbPush.Solicitacao.Where(w => (w.CGCDemandante == cgc || w.CGCExecutora == cgc) &&  w.idSolicitacao_PUSH == id).ToListAsync<Solicitacao>();
@@ -63,17 +84,29 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             // filtros
             if (cgc < 0)
             {
-                if (soFila)
-                    whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
-                else
-                    whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
+                if(enviarParaODia!=null){
+                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate  ) && !x.Finalizado && !x.Cancelado;
+                }
+                else 
+                {
+                    if (soFila)
+                        whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
+                    else
+                        whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
+                }
             }
             else
             {
-                if (soFila)
-                    whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
-                else
-                    whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
+                if(enviarParaODia!=null){
+                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate  ) && !x.Finalizado && !x.Cancelado;
+                }
+                else 
+                {
+                    if (soFila)
+                        whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
+                    else
+                        whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
+                }
             }
 
             // ordenação
@@ -401,6 +434,8 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 //solicitacaoDB.CGCDemandante = (short)u.CGC;
 
                 await _dbPush.SaveChangesAsync();
+
+                await Mail.MailSentAsync(solicitacaoDB);
 
                 return Ok(solicitacaoDB);
             }

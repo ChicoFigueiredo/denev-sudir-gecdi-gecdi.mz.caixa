@@ -29,6 +29,7 @@ export class SolicitacoesComponent implements OnInit {
 
   public dataDe: Date = moment().add(-90,'day').startOf('day').toDate();
   public dataAte: Date = moment().add(90,'day').startOf('day').toDate();
+  public ElegiveisDia: Date = null;
 
   public cgcSol: number = null;
   listCGC$:Unidade[];
@@ -81,11 +82,13 @@ export class SolicitacoesComponent implements OnInit {
   quantidade_Agendada_Autorizado_Sum:number = 0;
   quantidade_Solicitacoes:number = 0;
   quantidade_Solicitacoes_Autorizadas:number = 0;
-  refreshSolicitacoes(recontar:boolean=false, callback = null, cgc = null, matr = null, idSol = null){
+  refreshSolicitacoes(recontar:boolean=false, callback = null, cgc = null, matr = null, idSol = null, ElegiveisDia=null){
     this.cgcSol = cgc;
     this.matriculaSol = matr;
     this.idSol = idSol;
-    this.pushService.getSolicitacoes(recontar,this.cgcSol && this.cgcSol > 0 ? `${this.cgcSol}` : '-1' ,this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila,this.limitRegistros,moment(this.dataDe).format('YYYY-MM-DD'),moment(this.dataAte).format('YYYY-MM-DD'),this.matriculaSol,this.idSol)
+    this.ElegiveisDia = ElegiveisDia
+    ElegiveisDia = ElegiveisDia ? moment(this.ElegiveisDia).format('YYYY-MM-DD') : null;
+    this.pushService.getSolicitacoes(recontar,this.cgcSol && this.cgcSol > 0 ? `${this.cgcSol}` : '-1' ,this.OrdemSolicitacoes ? "idDesc" : "priority",this.SoFila,this.limitRegistros,moment(this.dataDe).format('YYYY-MM-DD'),moment(this.dataAte).format('YYYY-MM-DD'),this.matriculaSol,this.idSol,ElegiveisDia)
         .subscribe((s:Solicitacao[]) =>{
           this.solicitacao = s;
           this.quantidade_Total_Sum = s.map(q => q.quantidade_Total).reduce((ant,cur,i) => ant + cur);

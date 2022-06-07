@@ -83,10 +83,10 @@ namespace gecdi.mz.caixa.Controllers.Admin
 
         // GET: api/Test
         [HttpGet("api/send-mail")]
-        public async Task<ActionResult<string>>  GetSendMail(string destino = "c051431@corp.caixa.gov.br", string subject = "Teste", string body = "Teste")
+        public async Task<ActionResult<string>>  GetSendMail(string de = "gecdi02@caixa.gov.br", string destino = "c051431@corp.caixa.gov.br", string subject = "Teste", string body = "Teste")
         {
 
-            string from = "francisco.figueiredo@caixa.gov.br";
+            string from = de;
             string to = destino;
             MailMessage message = new MailMessage(from, to);
             message.Subject = subject;
@@ -95,8 +95,8 @@ namespace gecdi.mz.caixa.Controllers.Admin
             SmtpClient client = new SmtpClient("sistemas.correiolivre.caixa",25);
             // Credentials are necessary if the server requires the client
             // to authenticate before it will send email on the client's behalf.
-            //client.UseDefaultCredentials = true;
-            client.Credentials = new NetworkCredential("c051431", "Mayara02");
+            client.UseDefaultCredentials = true;
+            //client.Credentials = new NetworkCredential("c051431", "Mayara02");
 
             try
             {

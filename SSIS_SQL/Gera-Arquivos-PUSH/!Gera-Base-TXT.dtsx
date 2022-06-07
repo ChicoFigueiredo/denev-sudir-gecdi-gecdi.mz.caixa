@@ -11,8 +11,8 @@
   DTS:LocaleID="1046"
   DTS:ObjectName="Processa_Uploads"
   DTS:PackageType="5"
-  DTS:VersionBuild="89"
-  DTS:VersionGUID="{FCAF2F79-B011-4ADA-82AD-56B0A8BE1908}">
+  DTS:VersionBuild="90"
+  DTS:VersionGUID="{8E0D7DA6-DBAC-4034-8A65-B988DE2D4ED9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>

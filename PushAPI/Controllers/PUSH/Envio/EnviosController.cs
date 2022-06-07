@@ -17,6 +17,7 @@ namespace PushAPI.Controllers.PUSH.Envio
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EnviosController : ControllerBase
     {
         private readonly dbPUSH _dbPush;
@@ -179,6 +180,7 @@ namespace PushAPI.Controllers.PUSH.Envio
         // PUT: api/Envios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Role.Admin)]
         public async Task<IActionResult> PutSolicitacao_Simulacao_Envio(long id, Solicitacao_Simulacao_Envio solicitacao_Simulacao_Envio)
         {
             if (id != solicitacao_Simulacao_Envio.idSolicitacao_Simulacao_Envio)

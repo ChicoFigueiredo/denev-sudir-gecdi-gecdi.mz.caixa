@@ -11,8 +11,8 @@
         <nb-card-body>
           <div class="row">
             <div class="col-md-12">
-              <button nbButton (click)="refreshSolicitacoes(false)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
-              <button nbButton (click)="refreshSolicitacoes(true)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
+              <button nbButton (click)="refreshSolicitacoes(false,null,cgcSol,matriculaSol,idSol,ElegiveisDia)" ><i class="fas fa-sync"></i>&nbsp;Atualizar &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
+              <button nbButton (click)="refreshSolicitacoes(true ,null,cgcSol,matriculaSol,idSol,ElegiveisDia)" ><i class="fas fa-sync"></i>&nbsp;Atualizar com Recontagem &nbsp;&nbsp;<span #atu></span></button>&nbsp;&nbsp;
               <nb-toggle [(ngModel)]="OrdemSolicitacoes" status="primary" (change)="refreshSolicitacoes(true)" class="align-middle">Ordenar pelo solicitação mais recente</nb-toggle>&nbsp;&nbsp;
               <nb-toggle [(ngModel)]="SoFila" status="primary" (change)="refreshSolicitacoes(true)" class="align-middle">Só Fila para Envio</nb-toggle>&nbsp;&nbsp;
               <nb-toggle *ngIf="usuario.user.idRole===1" [(ngModel)]="AlteraPrioridade" status="primary" class="align-middle">Altera Prioridade/Curva</nb-toggle>&nbsp;&nbsp;<BR>
@@ -22,10 +22,16 @@
           <div class="row">
             <div class="col-md-12">
 
-              De:<input nbInput placeholder="De" [nbDatepicker]="dateTimePickerDe" [ngModel]="dataDe" (ngModelChange)="refreshSolicitacoes(true)"><nb-datepicker #dateTimePickerDe format="dd/MMM/yyyy"></nb-datepicker>&nbsp;&nbsp;&nbsp;
-              Até:<input nbInput placeholder="Ate" [nbDatepicker]="dateTimePickerAte" [ngModel]="dataAte" (ngModelChange)="refreshSolicitacoes(true)"><nb-datepicker #dateTimePickerAte format="dd/MMM/yyyy"></nb-datepicker>&nbsp;&nbsp;&nbsp;
+              De:
+              <input nbInput placeholder="De" [nbDatepicker]="dateTimePickerDe" [ngModel]="dataDe" (ngModelChange)="refreshSolicitacoes(false,null,cgcSol,matriculaSol,idSol,ElegiveisDia)">
+              <nb-datepicker #dateTimePickerDe format="dd/MMM/yyyy"></nb-datepicker>&nbsp;&nbsp;&nbsp;
 
-              <nb-select [(ngModel)]="limitRegistros" id="regs" name="regs" (selectedChange)="refreshSolicitacoes(true)">
+
+              Até:
+              <input nbInput placeholder="Ate" [nbDatepicker]="dateTimePickerAte" [ngModel]="dataAte" (ngModelChange)="refreshSolicitacoes(false,null,cgcSol,matriculaSol,idSol,ElegiveisDia)">
+              <nb-datepicker #dateTimePickerAte format="dd/MMM/yyyy"></nb-datepicker>&nbsp;&nbsp;&nbsp;
+
+              <nb-select [(ngModel)]="limitRegistros" id="regs" name="regs" (selectedChange)="refreshSolicitacoes(false,null,cgcSol,matriculaSol,idSol,ElegiveisDia)">
                 <nb-option *ngFor="let i of listLimits" [value]="i">{{ i==-1 ? "Todos" : i }}</nb-option>
               </nb-select>
               &nbsp;registros&nbsp;&nbsp;&nbsp;
@@ -38,10 +44,10 @@
                 (ngModelChange)="findCGC($event)"
                 (keyup.enter)="cgcSol == null || cgcSol < 0 ? refreshSolicitacoes(true) : ''"
                 >
-              <nb-autocomplete #autoCGC size="large" [activeFirst]="true" (selectedChange)="refreshSolicitacoes(true,null,$event,matriculaSol)">
+              <nb-autocomplete #autoCGC size="large" [activeFirst]="true" (selectedChange)="refreshSolicitacoes(false,null,$event,matriculaSol,idSol,ElegiveisDia)">
                 <nb-option *ngFor="let c of listCGC$" [value]="c.cgc">{{ c.nome_Exibicao }}</nb-option>
               </nb-autocomplete>
-              <button nbButton (click)="cgc.value=null; refreshSolicitacoes(false,null,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
+              <button nbButton (click)="cgc.value=null; refreshSolicitacoes(false,null,null,matriculaSol,idSol,ElegiveisDia)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
 
               Matricula:
               <input #matricula [(ngModel)]="matriculaSol" type="text" nbInput id="MatriculaDemandante"
@@ -50,10 +56,10 @@
                 (ngModelChange)="findMatricula($event)"
                 (keyup.enter)="matriculaSol == null ? refreshSolicitacoes(true) : ''"
                 >
-              <nb-autocomplete #autoMatricula size="large" [activeFirst]="true" (selectedChange)="refreshSolicitacoes(true,null,cgcSol,$event)">
+              <nb-autocomplete #autoMatricula size="large" [activeFirst]="true" (selectedChange)="refreshSolicitacoes(false,null,cgcSol,$event,idSol,ElegiveisDia)">
                 <nb-option *ngFor="let c of listMatriculas$" [value]="c.cUsuario">{{ c.nomeExibicao }}</nb-option>
               </nb-autocomplete>
-              <button nbButton (click)="matricula.value=null; refreshSolicitacoes(false,null,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;
+              <button nbButton (click)="matricula.value=null; refreshSolicitacoes(false,null,cgcSol,null,idSol,ElegiveisDia)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;
 
             </div>
           </div>
@@ -65,7 +71,11 @@
                   placeholder="Digite o ID da Solicitação de PUSH"
                   (ngModelChange)="findId($event)"
               >
-              <button nbButton (click)="buscaID.value=null; refreshSolicitacoes(false,null,null,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
+              <button nbButton (click)="buscaID.value=null; refreshSolicitacoes(false,null,cgcSol,matriculaSol,idSol,ElegiveisDia)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
+              Elegíveis para enviar em:
+              <input #DtElegiveisDia nbInput placeholder="Data Elegivel" [nbDatepicker]="DtpElegiveisDia" [ngModel]="ElegiveisDia" (ngModelChange)="refreshSolicitacoes(false,null,null,null,null,$event)"><nb-datepicker #DtpElegiveisDia format="dd/MMM/yyyy"></nb-datepicker>
+              <button nbButton (click)="DtElegiveisDia.value=null; refreshSolicitacoes(false,null,cgcSol,matriculaSol,idSol,null)" ><nb-icon icon="close-outline" pack="eva"></nb-icon></button>&nbsp;&nbsp;&nbsp;
+
             </div>
           </div>
 

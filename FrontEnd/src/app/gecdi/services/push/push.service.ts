@@ -86,11 +86,19 @@ export class PushService {
                .get<Canal[]>(`${API_PUSH}/Canais`)
   }
 
-  getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority",soFila:boolean=true,limit=-1,de='',ate='',matricula='', idSol = -1){
-    if(cgc === "-1")
-      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}&id=${idSol??-1}`);
-    else
-      return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}&id=${idSol??-1}`);
+  getSolicitacoes(recontar:boolean=true,cgc="-1" , order="priority",soFila:boolean=true,limit=-1,de='',ate='',matricula='', idSol = -1, dataEnvio = null){
+    if (dataEnvio){
+      if(cgc === "-1")
+        return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}&id=${idSol??-1}&enviarParaODia=${dataEnvio}`);
+      else
+        return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}&id=${idSol??-1}&enviarParaODia=${dataEnvio}`);
+
+    } else {
+      if(cgc === "-1")
+        return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}&id=${idSol??-1}`);
+      else
+        return this.http.get<Solicitacao[]>(`${API_PUSH}/solicitacao/lista/${cgc}?recount=${recontar}&CGC=${cgc}&order=${order}&soFila=${soFila}&limit=${limit}&de=${de}&ate=${ate}&matricula=${matricula??''}&id=${idSol??-1}`);
+    }
   }
 
   getEnviosResumo(data){
