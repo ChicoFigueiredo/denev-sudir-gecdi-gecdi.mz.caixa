@@ -400,6 +400,10 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 solicitacaoDB.Enviar_Horario_InicialFormatado = (solicitacaoDB.Enviar_Horario_InicialFormatado.ToLower().Trim() ?? "") != (solicitacao.Enviar_Horario_InicialFormatado.ToLower().Trim() ?? "") ? solicitacao.Enviar_Horario_InicialFormatado.ToLower().Trim() : solicitacaoDB.Enviar_Horario_InicialFormatado;
                 solicitacaoDB.Enviar_Horario_FinalFormatado   = (solicitacaoDB.Enviar_Horario_FinalFormatado.ToLower().Trim() ?? "")   != (solicitacao.Enviar_Horario_FinalFormatado.ToLower().Trim() ?? "")   ? solicitacao.Enviar_Horario_FinalFormatado.ToLower().Trim()   : solicitacaoDB.Enviar_Horario_FinalFormatado;
 
+                solicitacaoDB.Enviar_Horario_Inicial = solicitacaoDB.Enviar_Horario_Inicial != solicitacao.Enviar_Horario_Inicial ? solicitacao.Enviar_Horario_Inicial : solicitacaoDB.Enviar_Horario_Inicial;
+                solicitacaoDB.Enviar_Horario_Final = solicitacaoDB.Enviar_Horario_Final != solicitacao.Enviar_Horario_Final ? solicitacao.Enviar_Horario_Final : solicitacaoDB.Enviar_Horario_Final;
+
+
                 solicitacaoDB.Enviar_DOM =  solicitacaoDB.Enviar_DOM != solicitacao.Enviar_DOM ? solicitacao.Enviar_DOM : solicitacaoDB.Enviar_DOM;
                 solicitacaoDB.Enviar_SEG =  solicitacaoDB.Enviar_SEG != solicitacao.Enviar_SEG ? solicitacao.Enviar_SEG : solicitacaoDB.Enviar_SEG;
                 solicitacaoDB.Enviar_TER =  solicitacaoDB.Enviar_TER != solicitacao.Enviar_TER ? solicitacao.Enviar_TER : solicitacaoDB.Enviar_TER;

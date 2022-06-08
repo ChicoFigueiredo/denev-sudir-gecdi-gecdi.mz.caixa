@@ -8,13 +8,19 @@ namespace PushAPI.Helpers
     {
 
         private static readonly AppSettings _appSettings;
+		private static string mailServer;
+		private static int mailPort;
+		private static string mailFrom;
+		
 
         static Mail()
         {
             var config = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json", optional: false)
                             .Build();
-            _appSettings = config.GetValue<AppSettings>("AppSettings");
+            mailServer = config.GetValue<string>("AppSettings:MailServer");
+			mailPort = config.GetValue<int>("AppSettings:MailPort");
+			mailFrom = config.GetValue<string>("AppSettings:mailFrom");
         }
 
         public static async Task<bool> MailSentAsync(Solicitacao sol, string to = "", string cc = "", string bcc = "", string from = "")
@@ -45,7 +51,7 @@ namespace PushAPI.Helpers
 
         public async static Task<bool> MailSentAsync(string to, string subject, string body, string cc = "", string bcc ="", string from = "")
         {
-            from = from.Trim() == "" ? _appSettings.MailFrom :"GECDI02 - PUSH <gecdi02@caixa.gov.br>";
+            from = from.Trim() == "" ? mailFrom :"GECDI02 - PUSH <gecdi02@caixa.gov.br>";
             MailMessage message = new MailMessage(from, to);
             message.Subject = subject;
             message.IsBodyHtml = true;
@@ -58,7 +64,7 @@ namespace PushAPI.Helpers
                 bcc.Split(new char[] { ',', ';' }).ToList().ForEach(ibcc => message.Bcc.Add(ibcc));
             
 
-            SmtpClient client = new SmtpClient(_appSettings.MailServer, _appSettings.MailPort);
+            SmtpClient client = new SmtpClient(mailServer, mailPort);
             client.UseDefaultCredentials = true;
             //client.Credentials = new NetworkCredential("c051431", "Mayara02");
 

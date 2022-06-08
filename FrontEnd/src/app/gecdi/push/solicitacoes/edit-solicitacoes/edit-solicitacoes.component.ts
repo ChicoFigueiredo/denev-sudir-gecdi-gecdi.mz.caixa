@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
+import * as moment from 'moment';
 import { Solicitacao } from '../../../services/push/classes/solicitacao';
 import { PushService } from '../../../services/push/push.service';
 import { DetalhesSolicitacaoComponent } from '../detalhes-solicitacao/detalhes-solicitacao.component';
@@ -67,10 +68,16 @@ export class EditSolicitacoesComponent implements OnInit {
       btnSalvar.disabled = false;
       detal.estaSalvando = false;
     } else {
+
+      let hi = moment(detal.formSolicitacao.controls.enviar_Horario_InicialFormatado.value._d);
+      let hf = moment(detal.formSolicitacao.controls.enviar_Horario_FinalFormatado.value._d);
+
       detal.formSolicitacao.patchValue({
         wF_GECRM                        : detal.formSolicitacao.controls.wF_GECRM.value === "" ? null : detal.formSolicitacao.controls.wF_GECRM.value,
         Limite_Mensagens_Por_Dia        : detal.formSolicitacao.controls.Limite_Mensagens_Por_Dia.value === "" ? null : detal.formSolicitacao.controls.Limite_Mensagens_Por_Dia.value,
         limitacao_Tranche               : detal.formSolicitacao.controls.limitacao_Tranche.value === "" ? null : detal.formSolicitacao.controls.limitacao_Tranche.value,
+        enviar_Horario_Inicial          : hi.format('HH:mm:ss'),
+        enviar_Horario_Final            : hf.format('HH:mm:ss')
       })
       this.pushService.postNewSolicitacao(detal.formSolicitacao.value).subscribe((sol: Solicitacao) => {
         try {

@@ -42,6 +42,19 @@ export class SolicitacoesComponent implements OnInit {
   public SoFila:boolean = true;
   public AlteraPrioridade:boolean = false;
 
+
+  quantidade_Total_Sum:number = 0;
+  quantidade_Total_Autorizado_Sum:number = 0;
+  quantidade_Enviada_Sum:number = 0;
+  quantidade_Agendada_Sum:number = 0;
+  quantidade_Agendada_Autorizado_Sum:number = 0;
+  quantidade_Solicitacoes:number = 0;
+  quantidade_Solicitacoes_Autorizadas:number = 0;
+  solicitacaoASerExcluida:Solicitacao
+  waitCGC:any
+  waitMatricula:any
+  waitId:any
+
   constructor(
     public pushService:PushService,
     private serviceSticker: NbToastrService,
@@ -74,14 +87,6 @@ export class SolicitacoesComponent implements OnInit {
     this.router.navigateByUrl(`/gecdi/push/solicitacao/${s.idSolicitacao_PUSH}/edit`)
   }
 
-
-  quantidade_Total_Sum:number = 0;
-  quantidade_Total_Autorizado_Sum:number = 0;
-  quantidade_Enviada_Sum:number = 0;
-  quantidade_Agendada_Sum:number = 0;
-  quantidade_Agendada_Autorizado_Sum:number = 0;
-  quantidade_Solicitacoes:number = 0;
-  quantidade_Solicitacoes_Autorizadas:number = 0;
   refreshSolicitacoes(recontar:boolean=false, callback = null, cgc = null, matr = null, idSol = null, ElegiveisDia=null){
     this.cgcSol = cgc;
     this.matriculaSol = matr;
@@ -130,7 +135,6 @@ export class SolicitacoesComponent implements OnInit {
      })
   }
 
-  solicitacaoASerExcluida:Solicitacao
   excluirSolicitacao(sol:Solicitacao,dialog: TemplateRef<any>){
     this.solicitacaoASerExcluida = sol;
     this.dialogService.open(dialog, { context : `Deseja excluir Solicitação ID ${sol.idSolicitacao_PUSH} - ${sol.nome_Solicitacao} ` });
@@ -187,7 +191,6 @@ Tempo de Processamento: ${Sol?.solicitacao_Upload[0].tempo_Decorrido}\n
 Histórico: ${Sol?.solicitacao_Upload[0].resultado_Processamento}`
   }
 
-  waitCGC:any
   findCGC(t){
     this.waitCGC && clearTimeout(this.waitCGC);
     if (t.length>=3)
@@ -196,7 +199,6 @@ Histórico: ${Sol?.solicitacao_Upload[0].resultado_Processamento}`
       this.cgcSol = null;
   }
 
-  waitMatricula:any
   findMatricula(t){
     this.waitMatricula && clearTimeout(this.waitMatricula);
     if (t.length>=7)
@@ -205,7 +207,6 @@ Histórico: ${Sol?.solicitacao_Upload[0].resultado_Processamento}`
       this.matriculaSol = null;
   }
 
-  waitId:any
   findId(idSol){
     this.waitId && clearTimeout(this.waitId);
     this.waitId = setTimeout(() => {
