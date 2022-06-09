@@ -20,7 +20,7 @@
 
           <div class="row">
             <div class="col-md-12">
-              Busca ID:
+              Busca ID/WF:
               <input #buscaID [(ngModel)]="idSol" type="text" nbInput id="idSol"
                   placeholder="Digite o ID da Solicitação de PUSH"
                   (ngModelChange)="findId($event)"
@@ -81,12 +81,10 @@
 
                 <td scope="row"                         (click)="rowClick(se)">
                   <nb-toggle [ngModel]="s?.autorizacao_Gestor_PUSH" disabled status="success"></nb-toggle>
-                  <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
                 </td>
 
                 <td scope="row"                         (click)="rowClick(s)">
-                  <nb-toggle [ngModel]="s?.cancelado" disabled status="warning"></nb-toggle>
-                  <!-- <nb-checkbox [ngModel]="e?.enviado" (ngModelChange)="changeCheckEnviado(e,$event)" status="primary"></nb-checkbox> -->
+                  <nb-toggle [ngModel]="s?.cancelado" status="warning"></nb-toggle>
                 </td>
 
                 <td scope="row"  (click)="rowClick(se)">

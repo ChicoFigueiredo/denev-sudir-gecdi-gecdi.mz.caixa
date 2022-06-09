@@ -33,42 +33,42 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
         // GET: api/Solicitacoes
         [HttpGet("lista")]
         public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacao(
-            DateTime? De = null, 
-            DateTime? Ate = null, 
-            bool prior = true, 
-            bool recount = true, 
-            string order = "priority", 
-            bool soFila = true, 
-            int limit = 100, 
-            string matricula = "", 
+            DateTime? De = null,
+            DateTime? Ate = null,
+            bool prior = true,
+            bool recount = true,
+            string order = "priority",
+            bool soFila = true,
+            int limit = 100,
+            string matricula = "",
             int id = -1,
-            DateTime? enviarParaODia=null)
+            DateTime? enviarParaODia = null)
         {
-            return await GetSolicitacaoCGC(-1, De, Ate, prior, recount, order, soFila, limit, matricula,id,enviarParaODia);
+            return await GetSolicitacaoCGC(-1, De, Ate, prior, recount, order, soFila, limit, matricula, id, enviarParaODia);
         }
 
 
         // GET: api/Solicitacoes/5325
         [HttpGet("lista/{cgc}")]
         public async Task<ActionResult<IEnumerable<Solicitacao>>> GetSolicitacaoCGC(
-            int cgc, 
-            DateTime? De = null, 
-            DateTime? Ate = null, 
-            bool prior = true, 
-            bool recount = true, 
-            string order = "priority", 
-            bool soFila = true, 
-            int limit = 100, 
-            string matricula = "", 
+            int cgc,
+            DateTime? De = null,
+            DateTime? Ate = null,
+            bool prior = true,
+            bool recount = true,
+            string order = "priority",
+            bool soFila = true,
+            int limit = 100,
+            string matricula = "",
             int id = -1,
-            DateTime? enviarParaODia=null)
+            DateTime? enviarParaODia = null)
         {
-            if (id>0 && cgc > 0)
-                return await _dbPush.Solicitacao.Where(w => (w.CGCDemandante == cgc || w.CGCExecutora == cgc) &&  w.idSolicitacao_PUSH == id).ToListAsync<Solicitacao>();
-            
-            if (id>0)
-                return await _dbPush.Solicitacao.Where(w => w.idSolicitacao_PUSH == id).ToListAsync<Solicitacao>();
-            
+            if (id > 0 && cgc > 0)
+                return await _dbPush.Solicitacao.Where(w => (w.CGCDemandante == cgc || w.CGCExecutora == cgc) && w.idSolicitacao_PUSH == id).ToListAsync<Solicitacao>();
+
+            if (id > 0)
+                return await _dbPush.Solicitacao.Where(w => w.idSolicitacao_PUSH == id || w.WF_GECRM == id).ToListAsync<Solicitacao>();
+
             if (recount)
                 _ = await _dbPush.Database.ExecuteSqlRawAsync("EXEC DB5138_PUSH.FILA.Atualiza_Contagem_de_Solicitacoes -1");
 
@@ -84,28 +84,30 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             // filtros
             if (cgc < 0)
             {
-                if(enviarParaODia!=null){
-                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate  ) && !x.Finalizado && !x.Cancelado;
+                if (enviarParaODia != null)
+                {
+                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate) && !x.Finalizado && !x.Cancelado;
                 }
-                else 
+                else
                 {
                     if (soFila)
-                        whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
+                        whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate) && !x.Finalizado && !x.Cancelado;
                     else
-                        whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
+                        whereFunc = x => (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate);
                 }
             }
             else
             {
-                if(enviarParaODia!=null){
-                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate  ) && !x.Finalizado && !x.Cancelado;
+                if (enviarParaODia != null)
+                {
+                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate) && !x.Finalizado && !x.Cancelado;
                 }
-                else 
+                else
                 {
                     if (soFila)
-                        whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate ) && !x.Finalizado && !x.Cancelado;
+                        whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate) && !x.Finalizado && !x.Cancelado;
                     else
-                        whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate );
+                        whereFunc = x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && (x.Data_Cadastramento >= (DateTime)De && x.Data_Cadastramento <= (DateTime)Ate);
                 }
             }
 
@@ -144,15 +146,15 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                     .ThenBy(o => o.Prioridade)
                     .ThenBy(o => o.Quantidade_Total_Restante)
                     .Where(whereFunc);
-                
+
                 if ((matricula ?? "").Trim() != "")
                     ret = ret.Where(x => x.Matricula_Cadastramento.ToLower() == matricula.ToLower().Trim());
-                    
-                if (limit > 0) 
+
+                if (limit > 0)
                     return await ret.Take(limit).ToListAsync<Solicitacao>();
                 else
                     return await ret.ToListAsync<Solicitacao>();
-                
+
             }
             else
             {
@@ -168,12 +170,12 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                         .Include(i => i.Solicitacao_Upload)
                         //.Include(i => i.idCurvaNavigation)
                         .Where(x => (x.CGCDemandante == cgc || x.CGCExecutora == cgc) && x.Data_Cadastramento >= (DateTime)De);
-                        
-                
+
+
                 if ((matricula ?? "").Trim() != "")
                     ret = ret.Where(x => x.Matricula_Cadastramento.ToLower() == matricula.ToLower().Trim());
 
-                if (limit > 0) 
+                if (limit > 0)
                     return await ret.Take(limit).ToListAsync<Solicitacao>();
                 else
                     return await ret.ToListAsync<Solicitacao>();
@@ -326,7 +328,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
         [HttpPost]
         public async Task<ActionResult<Solicitacao>> PostSolicitacao([FromBody] object _solicitacao) // _solicitacao virou object para que possa ser desserializado aqui no controle devido a 'erros' quando entregue ao core da webapi e suas validações
         {
-            Solicitacao solicitacao = JsonSerializer.Deserialize<Solicitacao>(_solicitacao.ToString(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true, NumberHandling = JsonNumberHandling.AllowReadingFromString,  }) ; 
+            Solicitacao solicitacao = JsonSerializer.Deserialize<Solicitacao>(_solicitacao.ToString(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true, NumberHandling = JsonNumberHandling.AllowReadingFromString, });
             if (solicitacao.idSolicitacao_PUSH <= 0)
             {
                 solicitacao.idSolicitacao_PUSH = 0;
@@ -363,13 +365,14 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
                 return CreatedAtAction("GetSolicitacao", new { id = solicitacao.idSolicitacao_PUSH }, solicitacao);
             }
-            else 
+            else
             {
                 var solicitacaoDB = await _dbPush.Solicitacao.FindAsync(solicitacao.idSolicitacao_PUSH);
                 if (solicitacaoDB == null)
                     return NotFound();
-                
-                if ( solicitacaoDB.Mensagem.ToLower().Trim() != solicitacao.Mensagem.ToLower().Trim() ){
+
+                if (solicitacaoDB.Mensagem.ToLower().Trim() != solicitacao.Mensagem.ToLower().Trim())
+                {
                     Mensagem msg = await _dbPush.Mensagem.FirstOrDefaultAsync(f => f.Mensagem1 == solicitacao.Mensagem.Trim());
                     if (msg == null)
                     {
@@ -384,35 +387,35 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
                 solicitacaoDB.Nome_Solicitacao = solicitacaoDB.Nome_Solicitacao.ToLower().Trim() != solicitacao.Nome_Solicitacao.ToLower().Trim() ? solicitacao.Nome_Solicitacao.Trim() : solicitacaoDB.Nome_Solicitacao;
                 solicitacaoDB.REQ_WO_Aprovacao_Mensagem = solicitacaoDB.REQ_WO_Aprovacao_Mensagem.ToLower().Trim() != solicitacao.REQ_WO_Aprovacao_Mensagem.ToLower().Trim() ? solicitacao.REQ_WO_Aprovacao_Mensagem.Trim() : solicitacaoDB.REQ_WO_Aprovacao_Mensagem;
-                
+
                 solicitacaoDB.WF_GECRM = (solicitacaoDB.WF_GECRM ?? -1) != (solicitacao.WF_GECRM ?? -1) ? solicitacao.WF_GECRM : solicitacaoDB.WF_GECRM;
 
-                solicitacaoDB.idTipoMensagem = solicitacaoDB.idTipoMensagem  != solicitacao.idTipoMensagem ? solicitacao.idTipoMensagem : solicitacaoDB.idTipoMensagem;
+                solicitacaoDB.idTipoMensagem = solicitacaoDB.idTipoMensagem != solicitacao.idTipoMensagem ? solicitacao.idTipoMensagem : solicitacaoDB.idTipoMensagem;
                 solicitacaoDB.Canal = solicitacaoDB.Canal.ToLower().Trim() != solicitacao.Canal.ToLower().Trim() ? solicitacao.Canal.ToLower().Trim() : solicitacaoDB.Canal;
-                solicitacaoDB.Quantidade_Total = solicitacaoDB.Quantidade_Total  != solicitacao.Quantidade_Total ? solicitacao.Quantidade_Total : solicitacaoDB.Quantidade_Total;
-                solicitacaoDB.Limitacao_Tranche = solicitacaoDB.Limitacao_Tranche  != solicitacao.Limitacao_Tranche ? solicitacao.Limitacao_Tranche : solicitacaoDB.Limitacao_Tranche;
+                solicitacaoDB.Quantidade_Total = solicitacaoDB.Quantidade_Total != solicitacao.Quantidade_Total ? solicitacao.Quantidade_Total : solicitacaoDB.Quantidade_Total;
+                solicitacaoDB.Limitacao_Tranche = solicitacaoDB.Limitacao_Tranche != solicitacao.Limitacao_Tranche ? solicitacao.Limitacao_Tranche : solicitacaoDB.Limitacao_Tranche;
                 solicitacaoDB.Impactos_Previstos = solicitacaoDB.Impactos_Previstos.ToLower().Trim() != solicitacao.Impactos_Previstos.ToLower().Trim() ? solicitacao.Impactos_Previstos.Trim() : solicitacaoDB.Impactos_Previstos;
-                solicitacaoDB.Limitacao_Tranche = solicitacaoDB.Limitacao_Tranche  != solicitacao.Limitacao_Tranche ? solicitacao.Limitacao_Tranche : solicitacaoDB.Limitacao_Tranche;
-                
-                solicitacaoDB.Enviar_a_partir_de= (solicitacaoDB.Enviar_a_partir_de ?? new DateTime(0)) != (solicitacao.Enviar_a_partir_de ?? new DateTime(0)) ? solicitacao.Enviar_a_partir_de : solicitacaoDB.Enviar_a_partir_de;
-                solicitacaoDB.Enviar_no_maximo_ate= (solicitacaoDB.Enviar_no_maximo_ate ?? new DateTime(0)) != (solicitacao.Enviar_no_maximo_ate ?? new DateTime(0)) ? solicitacao.Enviar_no_maximo_ate : solicitacaoDB.Enviar_no_maximo_ate;
-                
+                solicitacaoDB.Limitacao_Tranche = solicitacaoDB.Limitacao_Tranche != solicitacao.Limitacao_Tranche ? solicitacao.Limitacao_Tranche : solicitacaoDB.Limitacao_Tranche;
+
+                solicitacaoDB.Enviar_a_partir_de = (solicitacaoDB.Enviar_a_partir_de ?? new DateTime(0)) != (solicitacao.Enviar_a_partir_de ?? new DateTime(0)) ? solicitacao.Enviar_a_partir_de : solicitacaoDB.Enviar_a_partir_de;
+                solicitacaoDB.Enviar_no_maximo_ate = (solicitacaoDB.Enviar_no_maximo_ate ?? new DateTime(0)) != (solicitacao.Enviar_no_maximo_ate ?? new DateTime(0)) ? solicitacao.Enviar_no_maximo_ate : solicitacaoDB.Enviar_no_maximo_ate;
+
                 solicitacaoDB.Enviar_Horario_InicialFormatado = (solicitacaoDB.Enviar_Horario_InicialFormatado.ToLower().Trim() ?? "") != (solicitacao.Enviar_Horario_InicialFormatado.ToLower().Trim() ?? "") ? solicitacao.Enviar_Horario_InicialFormatado.ToLower().Trim() : solicitacaoDB.Enviar_Horario_InicialFormatado;
-                solicitacaoDB.Enviar_Horario_FinalFormatado   = (solicitacaoDB.Enviar_Horario_FinalFormatado.ToLower().Trim() ?? "")   != (solicitacao.Enviar_Horario_FinalFormatado.ToLower().Trim() ?? "")   ? solicitacao.Enviar_Horario_FinalFormatado.ToLower().Trim()   : solicitacaoDB.Enviar_Horario_FinalFormatado;
+                solicitacaoDB.Enviar_Horario_FinalFormatado = (solicitacaoDB.Enviar_Horario_FinalFormatado.ToLower().Trim() ?? "") != (solicitacao.Enviar_Horario_FinalFormatado.ToLower().Trim() ?? "") ? solicitacao.Enviar_Horario_FinalFormatado.ToLower().Trim() : solicitacaoDB.Enviar_Horario_FinalFormatado;
 
                 solicitacaoDB.Enviar_Horario_Inicial = solicitacaoDB.Enviar_Horario_Inicial != solicitacao.Enviar_Horario_Inicial ? solicitacao.Enviar_Horario_Inicial : solicitacaoDB.Enviar_Horario_Inicial;
                 solicitacaoDB.Enviar_Horario_Final = solicitacaoDB.Enviar_Horario_Final != solicitacao.Enviar_Horario_Final ? solicitacao.Enviar_Horario_Final : solicitacaoDB.Enviar_Horario_Final;
 
 
-                solicitacaoDB.Enviar_DOM =  solicitacaoDB.Enviar_DOM != solicitacao.Enviar_DOM ? solicitacao.Enviar_DOM : solicitacaoDB.Enviar_DOM;
-                solicitacaoDB.Enviar_SEG =  solicitacaoDB.Enviar_SEG != solicitacao.Enviar_SEG ? solicitacao.Enviar_SEG : solicitacaoDB.Enviar_SEG;
-                solicitacaoDB.Enviar_TER =  solicitacaoDB.Enviar_TER != solicitacao.Enviar_TER ? solicitacao.Enviar_TER : solicitacaoDB.Enviar_TER;
-                solicitacaoDB.Enviar_QUA =  solicitacaoDB.Enviar_QUA != solicitacao.Enviar_QUA ? solicitacao.Enviar_QUA : solicitacaoDB.Enviar_QUA;
-                solicitacaoDB.Enviar_QUI =  solicitacaoDB.Enviar_QUI != solicitacao.Enviar_QUI ? solicitacao.Enviar_QUI : solicitacaoDB.Enviar_QUI;
-                solicitacaoDB.Enviar_SEX =  solicitacaoDB.Enviar_SEX != solicitacao.Enviar_SEX ? solicitacao.Enviar_SEX : solicitacaoDB.Enviar_SEX;
-                solicitacaoDB.Enviar_SAB =  solicitacaoDB.Enviar_SAB != solicitacao.Enviar_SAB ? solicitacao.Enviar_SAB : solicitacaoDB.Enviar_SAB;
+                solicitacaoDB.Enviar_DOM = solicitacaoDB.Enviar_DOM != solicitacao.Enviar_DOM ? solicitacao.Enviar_DOM : solicitacaoDB.Enviar_DOM;
+                solicitacaoDB.Enviar_SEG = solicitacaoDB.Enviar_SEG != solicitacao.Enviar_SEG ? solicitacao.Enviar_SEG : solicitacaoDB.Enviar_SEG;
+                solicitacaoDB.Enviar_TER = solicitacaoDB.Enviar_TER != solicitacao.Enviar_TER ? solicitacao.Enviar_TER : solicitacaoDB.Enviar_TER;
+                solicitacaoDB.Enviar_QUA = solicitacaoDB.Enviar_QUA != solicitacao.Enviar_QUA ? solicitacao.Enviar_QUA : solicitacaoDB.Enviar_QUA;
+                solicitacaoDB.Enviar_QUI = solicitacaoDB.Enviar_QUI != solicitacao.Enviar_QUI ? solicitacao.Enviar_QUI : solicitacaoDB.Enviar_QUI;
+                solicitacaoDB.Enviar_SEX = solicitacaoDB.Enviar_SEX != solicitacao.Enviar_SEX ? solicitacao.Enviar_SEX : solicitacaoDB.Enviar_SEX;
+                solicitacaoDB.Enviar_SAB = solicitacaoDB.Enviar_SAB != solicitacao.Enviar_SAB ? solicitacao.Enviar_SAB : solicitacaoDB.Enviar_SAB;
 
-                solicitacaoDB.CGCDemandante =  solicitacaoDB.CGCDemandante != solicitacao.CGCDemandante ? solicitacao.CGCDemandante : solicitacaoDB.CGCDemandante;
+                solicitacaoDB.CGCDemandante = solicitacaoDB.CGCDemandante != solicitacao.CGCDemandante ? solicitacao.CGCDemandante : solicitacaoDB.CGCDemandante;
                 solicitacaoDB.Observacoes = solicitacaoDB.Observacoes.ToLower().Trim() != solicitacao.Observacoes.ToLower().Trim() ? solicitacao.Observacoes.Trim() : solicitacaoDB.Observacoes;
 
                 solicitacaoDB.Tipo_Categoria_Solicitacao = solicitacaoDB.Tipo_Categoria_Solicitacao != solicitacao.Tipo_Categoria_Solicitacao ? solicitacao.Tipo_Categoria_Solicitacao : solicitacaoDB.Tipo_Categoria_Solicitacao;
@@ -428,7 +431,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                     solicitacaoDB.idCurva = cat.idCurva_Envio;
 
 
-                solicitacaoDB.Limite_Mensagens_Por_Dia = solicitacaoDB.Limite_Mensagens_Por_Dia  != solicitacao.Limite_Mensagens_Por_Dia ? solicitacao.Limite_Mensagens_Por_Dia : solicitacaoDB.Limite_Mensagens_Por_Dia;
+                solicitacaoDB.Limite_Mensagens_Por_Dia = solicitacaoDB.Limite_Mensagens_Por_Dia != solicitacao.Limite_Mensagens_Por_Dia ? solicitacao.Limite_Mensagens_Por_Dia : solicitacaoDB.Limite_Mensagens_Por_Dia;
 
 
                 //solicitacaoDB.data.Data_Cadastramento = DateTime.Now;
@@ -444,7 +447,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                 return Ok(solicitacaoDB);
             }
             //return BadRequest(new { error = 1002, message = "Solicitação de criação/atualização de Solicitação com problemas" });
-            
+
         }
 
         // DELETE: api/Solicitacao/5/delete
@@ -464,7 +467,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             int quantidadeClientes = await _dbPush.Solicitacao_Clientes.CountAsync(c => c.idSolicitacao_PUSH == id);
             if (quantidadeClientes > 0)
                 return StatusCode(418, new { error = 1004, message = "Solicitações com envios não podem ser apagadas em virtude de preservação de histórico." });
-            
+
             _ = await _dbPush.Database.ExecuteSqlRawAsync($"DELETE FROM [DB5138_PUSH].[FILA].[Solicitacao_Simulacao_Envio] WHERE idSolicitacao_PUSH = {id}");
 
             _dbPush.Solicitacao.Remove(solicitacao);
@@ -476,7 +479,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
 
         // DELETE: api/Solicitacao/5/delete
         [HttpPost("{id}/upload")]
-        [Authorize(Role.Admin,Role.Solicitante,Role.GECDI)]
+        [Authorize(Role.Admin, Role.Solicitante, Role.GECDI)]
         public async Task<IActionResult> UploadFileOnSolicitacao(int id, int idPUSH) //([FromRoute]  int ID, [FromForm] IFormFile file0, [FromQuery] int idPUSH)
         {
             //ID = ID > 0 ? ID : idPUSH;
@@ -493,7 +496,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
                     if (file != null)
                     {
                         Solicitacao_Upload su = await _dbPush.Solicitacao_Upload.FirstOrDefaultAsync(a => a.idSolicitacao_PUSH == id) ?? new();
-                        if (su.idSolicitacao_PUSH == 0) 
+                        if (su.idSolicitacao_PUSH == 0)
                             _dbPush.Solicitacao_Upload.Add(su);
                         su.idSolicitacao_PUSH = id;
                         su.Data_Upload = DateTime.Now;

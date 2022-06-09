@@ -56,7 +56,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
     // Include 'SecurityScheme' to use JWT Authentication
-    var jwtSecurityScheme = new  OpenApiSecurityScheme
+    var jwtSecurityScheme = new OpenApiSecurityScheme
     {
         Scheme = "bearer",
         BearerFormat = "JWT",
@@ -102,11 +102,12 @@ builder.Services.Configure<IISServerOptions>(options =>
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
     options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB 
-    
+
 });
 
 builder.Services.AddDbContext<dbSites>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDBSites")));
-builder.Services.AddDbContext<dbPUSH>(options => {
+builder.Services.AddDbContext<dbPUSH>(options =>
+{
     options
         .UseLazyLoadingProxies(false)
         .UseSqlServer(
@@ -117,7 +118,7 @@ builder.Services.AddDbContext<dbPUSH>(options => {
 builder.Services.AddDbContext<dbAtendimento>(options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("WebApiDBAtendimento"),
         sql => sql.CommandTimeout(60 * 60 * 5)
-)); 
+));
 
 // configure DI for application services
 builder.Services.AddScoped<IUserService, UserService>();
@@ -145,7 +146,7 @@ app.UseMiddleware<OptionsMiddleware>();
 
 // global cors policy
 app.UseCors(x => x
-    .WithMethods("OPTIONS","GET","PUT","DELETE","POST", "HEAD", "TRACE", "PATCH")
+    .WithMethods("OPTIONS", "GET", "PUT", "DELETE", "POST", "HEAD", "TRACE", "PATCH")
     .AllowAnyOrigin()
     .AllowAnyHeader()
     );
@@ -157,7 +158,8 @@ app.MapControllers();
 
 // Fallback SPA
 app.UseRouting();
-app.UseEndpoints(endpoints => {
+app.UseEndpoints(endpoints =>
+{
     endpoints.MapFallbackToFile("/index.html");
 });
 
