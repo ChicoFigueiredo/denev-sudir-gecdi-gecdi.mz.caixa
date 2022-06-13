@@ -8,5 +8,7 @@ export function ValidateMessage(control: AbstractControl) {
   if(/(\w)\1{3,}/gmi.test(control.value))
       return { invalidMessage: true, message: 'Não é admitido repetição de letras' };
 
+  if(/\r|\n|\t/gmi.test(control.value))
+      return { invalidMessage: true, message: 'Não é admitido tabulações e quebras de linhas' };
   return null;
 }

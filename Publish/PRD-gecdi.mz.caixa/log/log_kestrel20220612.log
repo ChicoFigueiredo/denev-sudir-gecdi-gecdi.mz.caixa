@@ -1,0 +1,259 @@
+2022-06-12 07:22:28.853 -03:00 [INF] Now listening on: http://127.0.0.1:43389
+2022-06-12 07:22:29.430 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-06-12 07:22:29.431 -03:00 [INF] Hosting environment: Production
+2022-06-12 07:22:29.431 -03:00 [INF] Content root path: E:\WEBSITES\1048conheca-gerenciador.caixa\
+2022-06-12 07:22:29.505 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/gecdi/push/solicitacoes - -
+2022-06-12 07:22:32.524 -03:00 [INF] Executing endpoint 'Fallback {*path:nonfile}'
+2022-06-12 07:22:33.004 -03:00 [INF] Sending file. Request path: '//index.html'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\index.html'
+2022-06-12 07:22:33.005 -03:00 [INF] Executed endpoint 'Fallback {*path:nonfile}'
+2022-06-12 07:22:33.010 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/gecdi/push/solicitacoes - - - 200 4406 text/html 3507.6538ms
+2022-06-12 07:22:33.058 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/assets/images/logo/caixa.svg - -
+2022-06-12 07:22:33.065 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/runtime-es2015.ac087bdc4eb7993b092a.js - -
+2022-06-12 07:22:33.071 -03:00 [INF] Sending file. Request path: '/runtime-es2015.ac087bdc4eb7993b092a.js'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\runtime-es2015.ac087bdc4eb7993b092a.js'
+2022-06-12 07:22:33.071 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/runtime-es2015.ac087bdc4eb7993b092a.js - - - 200 3792 application/javascript 6.7639ms
+2022-06-12 07:22:33.085 -03:00 [INF] Sending file. Request path: '/assets/images/logo/caixa.svg'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\assets\images\logo\caixa.svg'
+2022-06-12 07:22:33.085 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/assets/images/logo/caixa.svg - - - 200 5817 image/svg+xml 26.3454ms
+2022-06-12 07:22:33.105 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/main-es2015.cdff2eedd08726a0685c.js - -
+2022-06-12 07:22:33.119 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/polyfills-es2015.064913c9a0e8b0056cdf.js - -
+2022-06-12 07:22:33.125 -03:00 [INF] Sending file. Request path: '/polyfills-es2015.064913c9a0e8b0056cdf.js'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\polyfills-es2015.064913c9a0e8b0056cdf.js'
+2022-06-12 07:22:33.126 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/polyfills-es2015.064913c9a0e8b0056cdf.js - - - 200 114694 application/javascript 6.6184ms
+2022-06-12 07:22:33.126 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/styles.5be2eef3b4a6fc85f3a1.css - -
+2022-06-12 07:22:33.126 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/scripts.61aa79d9a17490734807.js - -
+2022-06-12 07:22:33.254 -03:00 [INF] Sending file. Request path: '/main-es2015.cdff2eedd08726a0685c.js'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\main-es2015.cdff2eedd08726a0685c.js'
+2022-06-12 07:22:33.254 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/main-es2015.cdff2eedd08726a0685c.js - - - 200 1392238 application/javascript 148.9761ms
+2022-06-12 07:22:33.541 -03:00 [INF] Sending file. Request path: '/styles.5be2eef3b4a6fc85f3a1.css'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\styles.5be2eef3b4a6fc85f3a1.css'
+2022-06-12 07:22:33.541 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/styles.5be2eef3b4a6fc85f3a1.css - - - 200 1405892 text/css 415.2517ms
+2022-06-12 07:22:33.825 -03:00 [INF] Sending file. Request path: '/scripts.61aa79d9a17490734807.js'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\scripts.61aa79d9a17490734807.js'
+2022-06-12 07:22:33.825 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/scripts.61aa79d9a17490734807.js - - - 200 2549892 application/javascript 699.4783ms
+2022-06-12 07:22:34.636 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/9-es2015.0e2cc40606a34fd09b3e.js - -
+2022-06-12 07:22:34.660 -03:00 [INF] Sending file. Request path: '/9-es2015.0e2cc40606a34fd09b3e.js'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\9-es2015.0e2cc40606a34fd09b3e.js'
+2022-06-12 07:22:34.661 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/9-es2015.0e2cc40606a34fd09b3e.js - - - 200 11310 application/javascript 24.4428ms
+2022-06-12 07:22:34.707 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/528-es2015.f88bcb62d0fd9a217f3b.js - -
+2022-06-12 07:22:34.713 -03:00 [INF] Sending file. Request path: '/528-es2015.f88bcb62d0fd9a217f3b.js'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\528-es2015.f88bcb62d0fd9a217f3b.js'
+2022-06-12 07:22:34.713 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/528-es2015.f88bcb62d0fd9a217f3b.js - - - 200 544770 application/javascript 6.2868ms
+2022-06-12 07:22:35.021 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/user/roles - -
+2022-06-12 07:22:35.040 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/Curvas - -
+2022-06-12 07:22:35.043 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/Canais - -
+2022-06-12 07:22:35.051 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/Tipo_Categoria_Solicitacao - -
+2022-06-12 07:22:35.371 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/solicitacao/lista?recount=false&CGC=-1&order=priority&soFila=true&limit=100&de=2022-03-14&ate=2022-09-10&matricula=&id=-1 - -
+2022-06-12 07:22:35.589 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/assets/images/logo/caixa-positive.svg - -
+2022-06-12 07:22:35.613 -03:00 [INF] Sending file. Request path: '/assets/images/logo/caixa-positive.svg'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\assets\images\logo\caixa-positive.svg'
+2022-06-12 07:22:35.613 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/assets/images/logo/caixa-positive.svg - - - 200 3952 image/svg+xml 24.1867ms
+2022-06-12 07:22:35.706 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.a09c41fc423095613b8e.woff2 - -
+2022-06-12 07:22:35.708 -03:00 [INF] Sending file. Request path: '/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.a09c41fc423095613b8e.woff2'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.a09c41fc423095613b8e.woff2'
+2022-06-12 07:22:35.708 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.a09c41fc423095613b8e.woff2 - - - 200 44800 font/woff2 2.4822ms
+2022-06-12 07:22:35.965 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/fa-solid-900.1551f4f60c37af51121f.woff2 - -
+2022-06-12 07:22:35.987 -03:00 [INF] Sending file. Request path: '/fa-solid-900.1551f4f60c37af51121f.woff2'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\fa-solid-900.1551f4f60c37af51121f.woff2'
+2022-06-12 07:22:35.987 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/fa-solid-900.1551f4f60c37af51121f.woff2 - - - 200 78268 font/woff2 21.8700ms
+2022-06-12 07:22:45.568 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:46.063 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:46.063 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:46.063 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:46.063 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:47.463 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/gecdi/push/resumo-geral - -
+2022-06-12 07:22:47.464 -03:00 [INF] Executing endpoint 'Fallback {*path:nonfile}'
+2022-06-12 07:22:47.466 -03:00 [INF] Sending file. Request path: '//index.html'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\index.html'
+2022-06-12 07:22:47.466 -03:00 [INF] Executed endpoint 'Fallback {*path:nonfile}'
+2022-06-12 07:22:47.466 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/gecdi/push/resumo-geral - - - 200 4406 text/html 3.4252ms
+2022-06-12 07:22:49.106 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/envios/resumo?Data_Resumo=2022-06-12 - -
+2022-06-12 07:22:49.621 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:53.844 -03:00 [INF] Executed DbCommand (615ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:53.844 -03:00 [INF] Executed DbCommand (612ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:53.844 -03:00 [INF] Executed DbCommand (625ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:53.844 -03:00 [INF] Executed DbCommand (627ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:53.844 -03:00 [INF] Executed DbCommand (622ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:53.844 -03:00 [INF] Executed DbCommand (618ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:54.388 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.PUSH.Tipo_Categoria_Solicitacoes.Tipo_Categoria_SolicitacaoController.GetTipo_Categoria_Solicitacao (PushAPI)'
+2022-06-12 07:22:54.388 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.PUSH.Solicitacao_PUSH.SolicitacaoController.GetSolicitacao (PushAPI)'
+2022-06-12 07:22:54.388 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.PUSH.Envio.EnviosController.GetSolicitacao_Simulacao_Envio_Resumo (PushAPI)'
+2022-06-12 07:22:54.388 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.PUSH.CanaisEnvio.CanaisController.GetCanais (PushAPI)'
+2022-06-12 07:22:54.388 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.PUSH.Curvas.CurvasController.GetCurva_Envio (PushAPI)'
+2022-06-12 07:22:54.389 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.User.UserController.GetRoles (PushAPI)'
+2022-06-12 07:22:54.407 -03:00 [INF] Route matched with {action = "GetTipo_Categoria_Solicitacao", controller = "Tipo_Categoria_Solicitacao"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Push.Tipo_Categoria_Solicitacao]]] GetTipo_Categoria_Solicitacao() on controller PushAPI.Controllers.PUSH.Tipo_Categoria_Solicitacoes.Tipo_Categoria_SolicitacaoController (PushAPI).
+2022-06-12 07:22:54.412 -03:00 [INF] Route matched with {action = "GetRoles", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Sites.Roles]] GetRoles() on controller PushAPI.Controllers.User.UserController (PushAPI).
+2022-06-12 07:22:54.412 -03:00 [INF] Route matched with {action = "GetCanais", controller = "Canais"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Push.Canais]]] GetCanais(Boolean) on controller PushAPI.Controllers.PUSH.CanaisEnvio.CanaisController (PushAPI).
+2022-06-12 07:22:54.412 -03:00 [INF] Route matched with {action = "GetSolicitacao_Simulacao_Envio_Resumo", controller = "Envios"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Push.spResumo_Envios]]] GetSolicitacao_Simulacao_Envio_Resumo(System.Nullable`1[System.DateTime]) on controller PushAPI.Controllers.PUSH.Envio.EnviosController (PushAPI).
+2022-06-12 07:22:54.413 -03:00 [INF] Route matched with {action = "GetCurva_Envio", controller = "Curvas"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Push.Curva_Envio]]] GetCurva_Envio() on controller PushAPI.Controllers.PUSH.Curvas.CurvasController (PushAPI).
+2022-06-12 07:22:54.413 -03:00 [INF] Route matched with {action = "GetSolicitacao", controller = "Solicitacao"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Push.Solicitacao]]] GetSolicitacao(System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], Boolean, Boolean, System.String, Boolean, Int32, System.String, Int32, System.Nullable`1[System.DateTime]) on controller PushAPI.Controllers.PUSH.Solicitacao_PUSH.SolicitacaoController (PushAPI).
+2022-06-12 07:22:54.986 -03:00 [INF] Executed DbCommand (505ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Roles] AS [r]
+2022-06-12 07:22:55.007 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Sites.Roles, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:55.624 -03:00 [INF] Executed action PushAPI.Controllers.User.UserController.GetRoles (PushAPI) in 1199.6278ms
+2022-06-12 07:22:55.625 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.User.UserController.GetRoles (PushAPI)'
+2022-06-12 07:22:56.146 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/user/roles - - - 200 - application/json;+charset=utf-8 21124.7265ms
+2022-06-12 07:22:56.146 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/assets/fonts/tw/TCBI____.TTF - -
+2022-06-12 07:22:56.158 -03:00 [INF] Sending file. Request path: '/assets/fonts/tw/TCBI____.TTF'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\assets\fonts\tw\TCBI____.TTF'
+2022-06-12 07:22:56.158 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/assets/fonts/tw/TCBI____.TTF - - - 200 73856 application/x-font-ttf 11.8659ms
+2022-06-12 07:22:56.189 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/envios/resumo?Data_Resumo=2022-06-13 - -
+2022-06-12 07:22:56.192 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:56.193 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:56.199 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.PUSH.Envio.EnviosController.GetSolicitacao_Simulacao_Envio_Resumo (PushAPI)'
+2022-06-12 07:22:56.199 -03:00 [INF] Route matched with {action = "GetSolicitacao_Simulacao_Envio_Resumo", controller = "Envios"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Push.spResumo_Envios]]] GetSolicitacao_Simulacao_Envio_Resumo(System.Nullable`1[System.DateTime]) on controller PushAPI.Controllers.PUSH.Envio.EnviosController (PushAPI).
+2022-06-12 07:22:57.405 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbPUSH' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: CommandTimeout=18000 
+2022-06-12 07:22:57.405 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbPUSH' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: CommandTimeout=18000 
+2022-06-12 07:22:57.405 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbPUSH' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: CommandTimeout=18000 
+2022-06-12 07:22:57.405 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbPUSH' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: CommandTimeout=18000 
+2022-06-12 07:22:57.405 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbPUSH' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: CommandTimeout=18000 
+2022-06-12 07:22:57.405 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbPUSH' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: CommandTimeout=18000 
+2022-06-12 07:22:58.063 -03:00 [INF] Executed DbCommand (575ms) [Parameters=[], CommandType='"Text"', CommandTimeout='18000']
+SELECT [c].[idCurva_Envio], [c].[Apelido_Curva_Envio], [c].[Nome_Curva_Envio], [c0].[idCurva_Envio_Tranches], [c0].[Hora_Envio], [c0].[Quantidade_Normal], [c0].[Quantidade_Reduzida], [c0].[Tranche], [c0].[idCurva_Envio]
+FROM [FILA].[Curva_Envio] AS [c]
+LEFT JOIN [FILA].[Curva_Envio_Tranches] AS [c0] ON [c].[idCurva_Envio] = [c0].[idCurva_Envio]
+ORDER BY [c].[idCurva_Envio]
+2022-06-12 07:22:58.084 -03:00 [INF] Executed DbCommand (654ms) [Parameters=[], CommandType='"Text"', CommandTimeout='18000']
+SELECT [c].[Canal], [c].[Disponivel], [c].[Nome_Canal]
+FROM [GERAL].[Canais] AS [c]
+WHERE COALESCE([c].[Disponivel], CAST(0 AS bit)) = CAST(1 AS bit)
+2022-06-12 07:22:58.101 -03:00 [INF] Executed DbCommand (673ms) [Parameters=[], CommandType='"Text"', CommandTimeout='18000']
+SELECT [t].[Tipo_Categoria_Solicitacao], [t].[Apelido_Tipo_Categoria_Solicitacao], [t].[Cor], [t].[E_Admin], [t].[Maximo_Tranche], [t].[Minimo_Tranche], [t].[Nome_Tipo_Categoria_Solicitacao], [t].[Ordem], [t].[idCurva_Envio], [t].[idCurva_Envio_2], [t].[idCurva_Envio_3]
+FROM [FILA].[Tipo_Categoria_Solicitacao] AS [t]
+2022-06-12 07:22:58.113 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Push.Canais, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:58.135 -03:00 [INF] Executed action PushAPI.Controllers.PUSH.CanaisEnvio.CanaisController.GetCanais (PushAPI) in 3722.5948ms
+2022-06-12 07:22:58.135 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.PUSH.CanaisEnvio.CanaisController.GetCanais (PushAPI)'
+2022-06-12 07:22:58.136 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/Canais - - - 200 - application/json;+charset=utf-8 23093.0381ms
+2022-06-12 07:22:58.139 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Push.Tipo_Categoria_Solicitacao, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:58.146 -03:00 [INF] Executed action PushAPI.Controllers.PUSH.Tipo_Categoria_Solicitacoes.Tipo_Categoria_SolicitacaoController.GetTipo_Categoria_Solicitacao (PushAPI) in 3737.2024ms
+2022-06-12 07:22:58.146 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.PUSH.Tipo_Categoria_Solicitacoes.Tipo_Categoria_SolicitacaoController.GetTipo_Categoria_Solicitacao (PushAPI)'
+2022-06-12 07:22:58.146 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/Tipo_Categoria_Solicitacao - - - 200 - application/json;+charset=utf-8 23094.9022ms
+2022-06-12 07:22:58.160 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/user/roles - -
+2022-06-12 07:22:58.162 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:58.164 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:58.166 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.User.UserController.GetRoles (PushAPI)'
+2022-06-12 07:22:58.166 -03:00 [INF] Route matched with {action = "GetRoles", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Sites.Roles]] GetRoles() on controller PushAPI.Controllers.User.UserController (PushAPI).
+2022-06-12 07:22:58.167 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Roles] AS [r]
+2022-06-12 07:22:58.168 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Sites.Roles, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:58.168 -03:00 [INF] Executed action PushAPI.Controllers.User.UserController.GetRoles (PushAPI) in 2.1595ms
+2022-06-12 07:22:58.168 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.User.UserController.GetRoles (PushAPI)'
+2022-06-12 07:22:58.168 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/user/roles - - - 200 - application/json;+charset=utf-8 8.9039ms
+2022-06-12 07:22:58.171 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/Canais - -
+2022-06-12 07:22:58.173 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:58.174 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:58.175 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.PUSH.CanaisEnvio.CanaisController.GetCanais (PushAPI)'
+2022-06-12 07:22:58.175 -03:00 [INF] Route matched with {action = "GetCanais", controller = "Canais"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Push.Canais]]] GetCanais(Boolean) on controller PushAPI.Controllers.PUSH.CanaisEnvio.CanaisController (PushAPI).
+2022-06-12 07:22:58.195 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/Tipo_Categoria_Solicitacao - -
+2022-06-12 07:22:58.197 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:58.198 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:58.199 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.PUSH.Tipo_Categoria_Solicitacoes.Tipo_Categoria_SolicitacaoController.GetTipo_Categoria_Solicitacao (PushAPI)'
+2022-06-12 07:22:58.199 -03:00 [INF] Route matched with {action = "GetTipo_Categoria_Solicitacao", controller = "Tipo_Categoria_Solicitacao"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Push.Tipo_Categoria_Solicitacao]]] GetTipo_Categoria_Solicitacao() on controller PushAPI.Controllers.PUSH.Tipo_Categoria_Solicitacoes.Tipo_Categoria_SolicitacaoController (PushAPI).
+2022-06-12 07:22:58.228 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbPUSH' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: CommandTimeout=18000 
+2022-06-12 07:22:58.254 -03:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='18000']
+SELECT [c].[Canal], [c].[Disponivel], [c].[Nome_Canal]
+FROM [GERAL].[Canais] AS [c]
+WHERE COALESCE([c].[Disponivel], CAST(0 AS bit)) = CAST(1 AS bit)
+2022-06-12 07:22:58.255 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Push.Canais, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:58.255 -03:00 [INF] Executed action PushAPI.Controllers.PUSH.CanaisEnvio.CanaisController.GetCanais (PushAPI) in 80.0939ms
+2022-06-12 07:22:58.255 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.PUSH.CanaisEnvio.CanaisController.GetCanais (PushAPI)'
+2022-06-12 07:22:58.255 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/Canais - - - 200 - application/json;+charset=utf-8 84.1797ms
+2022-06-12 07:22:58.298 -03:00 [INF] Executed DbCommand (856ms) [Parameters=[], CommandType='"Text"', CommandTimeout='18000']
+EXEC DB5138_PUSH.Fila.Resumo_Envios '2022-06-12'
+2022-06-12 07:22:58.304 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Push.spResumo_Envios, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:58.306 -03:00 [INF] Executed action PushAPI.Controllers.PUSH.Envio.EnviosController.GetSolicitacao_Simulacao_Envio_Resumo (PushAPI) in 3893.2598ms
+2022-06-12 07:22:58.306 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.PUSH.Envio.EnviosController.GetSolicitacao_Simulacao_Envio_Resumo (PushAPI)'
+2022-06-12 07:22:58.306 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/envios/resumo?Data_Resumo=2022-06-12 - - - 200 - application/json;+charset=utf-8 9200.3932ms
+2022-06-12 07:22:58.375 -03:00 [INF] Executed DbCommand (922ms) [Parameters=[], CommandType='"Text"', CommandTimeout='18000']
+EXEC DB5138_PUSH.Fila.Resumo_Envios '2022-06-13'
+2022-06-12 07:22:58.500 -03:00 [INF] Executed DbCommand (398ms) [Parameters=[@__p_2='?' (DbType = Int32), @__p_0='?' (DbType = DateTime), @__p_1='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='18000']
+SELECT [t].[idSolicitacao_PUSH], [t].[Autorizacao_Gestor_PUSH], [t].[Bloqueado_TI], [t].[CGCDemandante], [t].[CGCExecutora], [t].[Canal], [t].[Cancelado], [t].[Data_Cadastramento], [t].[Data_Hora_Autorizacao], [t].[Data_Hora_Bloqueio], [t].[Data_Hora_Cancelamento], [t].[E_Cadastramento_Manual], [t].[Enviar_DOM], [t].[Enviar_Horario_Final], [t].[Enviar_Horario_Inicial], [t].[Enviar_QUA], [t].[Enviar_QUI], [t].[Enviar_SAB], [t].[Enviar_SEG], [t].[Enviar_SEX], [t].[Enviar_TER], [t].[Enviar_a_partir_de], [t].[Enviar_no_maximo_ate], [t].[Finalizado], [t].[Impactos_Previstos], [t].[Limitacao_Tranche], [t].[Limite_Mensagens_Por_Dia], [t].[Matricula_Autorizacao_Gestor_PUSH], [t].[Matricula_Bloqueio_TI], [t].[Matricula_Cadastramento], [t].[Matricula_Cancelamento], [t].[Mensagem], [t].[Nome_Campo1], [t].[Nome_Campo2], [t].[Nome_Campo3], [t].[Nome_Campo4], [t].[Nome_Campo5], [t].[Nome_Solicitacao], [t].[Observacoes], [t].[Prioridade], [t].[Quantidade_Agendada], [t].[Quantidade_Enviada], [t].[Quantidade_Maxima_Autorizada], [t].[Quantidade_Total], [t].[Quantidade_Total_Restante], [t].[REQ_WO_Aprovacao_Mensagem], [t].[REQ_WO_Aprovacao_Mensagem_Texto], [t].[Tipo_Categoria_Solicitacao], [t].[Titulo], [t].[URL_Acao], [t].[URL_Imagem], [t].[WF_GECRM], [t].[idCurva], [t].[idEnvio_Mensagem], [t].[idTipoMensagem], [m].[idEnvio_Mensagem], [m].[Apelido], [m].[AppCaixa], [m].[Ativo], [m].[CAIXA_Tem], [m].[CaixaTem], [m].[Cartão], [m].[Crédito], [m].[Data_Fim], [m].[Data_Inicio], [m].[Enviados], [m].[Faltam], [m].[Mensagem], [m].[MensagemRegex], [m].[Monitoração_Producao], [m].[Pre_Autorizado], [m].[Push_Enviados], [m].[Tranches], [s0].[idSolicitacao_Upload], [s0].[Arquivo], [s0].[Data_Processamento], [s0].[Data_Upload], [s0].[Matricula_Upload], [s0].[Processado], [s0].[Registros_Aceitos], [s0].[Registros_Rejeitados], [s0].[Registros_Total], [s0].[Rejeitado], [s0].[Resultado_Processamento], [s0].[Tempo_Decorrido], [s0].[idSolicitacao_PUSH]
+FROM (
+    SELECT TOP(@__p_2) [s].[idSolicitacao_PUSH], [s].[Autorizacao_Gestor_PUSH], [s].[Bloqueado_TI], [s].[CGCDemandante], [s].[CGCExecutora], [s].[Canal], [s].[Cancelado], [s].[Data_Cadastramento], [s].[Data_Hora_Autorizacao], [s].[Data_Hora_Bloqueio], [s].[Data_Hora_Cancelamento], [s].[E_Cadastramento_Manual], [s].[Enviar_DOM], [s].[Enviar_Horario_Final], [s].[Enviar_Horario_Inicial], [s].[Enviar_QUA], [s].[Enviar_QUI], [s].[Enviar_SAB], [s].[Enviar_SEG], [s].[Enviar_SEX], [s].[Enviar_TER], [s].[Enviar_a_partir_de], [s].[Enviar_no_maximo_ate], [s].[Finalizado], [s].[Impactos_Previstos], [s].[Limitacao_Tranche], [s].[Limite_Mensagens_Por_Dia], [s].[Matricula_Autorizacao_Gestor_PUSH], [s].[Matricula_Bloqueio_TI], [s].[Matricula_Cadastramento], [s].[Matricula_Cancelamento], [s].[Mensagem], [s].[Nome_Campo1], [s].[Nome_Campo2], [s].[Nome_Campo3], [s].[Nome_Campo4], [s].[Nome_Campo5], [s].[Nome_Solicitacao], [s].[Observacoes], [s].[Prioridade], [s].[Quantidade_Agendada], [s].[Quantidade_Enviada], [s].[Quantidade_Maxima_Autorizada], [s].[Quantidade_Total], [s].[Quantidade_Total_Restante], [s].[REQ_WO_Aprovacao_Mensagem], [s].[REQ_WO_Aprovacao_Mensagem_Texto], [s].[Tipo_Categoria_Solicitacao], [s].[Titulo], [s].[URL_Acao], [s].[URL_Imagem], [s].[WF_GECRM], [s].[idCurva], [s].[idEnvio_Mensagem], [s].[idTipoMensagem], CASE
+        WHEN (([s].[Quantidade_Agendada] + [s].[Quantidade_Total_Restante]) = 0) OR ([s].[Cancelado] = CAST(1 AS bit)) THEN 1
+        ELSE 0
+    END AS [c]
+    FROM [FILA].[Solicitacao] AS [s]
+    WHERE ((([s].[Data_Cadastramento] >= @__p_0) AND ([s].[Data_Cadastramento] <= @__p_1)) AND ([s].[Finalizado] = CAST(0 AS bit))) AND ([s].[Cancelado] = CAST(0 AS bit))
+    ORDER BY CASE
+        WHEN (([s].[Quantidade_Agendada] + [s].[Quantidade_Total_Restante]) = 0) OR ([s].[Cancelado] = CAST(1 AS bit)) THEN 1
+        ELSE 0
+    END, [s].[Prioridade], [s].[Quantidade_Total_Restante]
+) AS [t]
+LEFT JOIN [PUSH].[Mensagem] AS [m] ON [t].[idEnvio_Mensagem] = [m].[idEnvio_Mensagem]
+LEFT JOIN [FILA].[Solicitacao_Upload] AS [s0] ON [t].[idSolicitacao_PUSH] = [s0].[idSolicitacao_PUSH]
+ORDER BY [t].[c], [t].[Prioridade], [t].[Quantidade_Total_Restante], [t].[idSolicitacao_PUSH], [m].[idEnvio_Mensagem]
+2022-06-12 07:22:58.522 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbPUSH' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: CommandTimeout=18000 
+2022-06-12 07:22:58.523 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='18000']
+SELECT [t].[Tipo_Categoria_Solicitacao], [t].[Apelido_Tipo_Categoria_Solicitacao], [t].[Cor], [t].[E_Admin], [t].[Maximo_Tranche], [t].[Minimo_Tranche], [t].[Nome_Tipo_Categoria_Solicitacao], [t].[Ordem], [t].[idCurva_Envio], [t].[idCurva_Envio_2], [t].[idCurva_Envio_3]
+FROM [FILA].[Tipo_Categoria_Solicitacao] AS [t]
+2022-06-12 07:22:58.524 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Push.Tipo_Categoria_Solicitacao, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:58.525 -03:00 [INF] Executed action PushAPI.Controllers.PUSH.Tipo_Categoria_Solicitacoes.Tipo_Categoria_SolicitacaoController.GetTipo_Categoria_Solicitacao (PushAPI) in 325.6379ms
+2022-06-12 07:22:58.525 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.PUSH.Tipo_Categoria_Solicitacoes.Tipo_Categoria_SolicitacaoController.GetTipo_Categoria_Solicitacao (PushAPI)'
+2022-06-12 07:22:58.525 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/Tipo_Categoria_Solicitacao - - - 200 - application/json;+charset=utf-8 330.4677ms
+2022-06-12 07:22:58.528 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Push.spResumo_Envios, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:58.532 -03:00 [INF] Executed action PushAPI.Controllers.PUSH.Envio.EnviosController.GetSolicitacao_Simulacao_Envio_Resumo (PushAPI) in 2332.8223ms
+2022-06-12 07:22:58.532 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.PUSH.Envio.EnviosController.GetSolicitacao_Simulacao_Envio_Resumo (PushAPI)'
+2022-06-12 07:22:58.533 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/envios/resumo?Data_Resumo=2022-06-13 - - - 200 - application/json;+charset=utf-8 2343.1204ms
+2022-06-12 07:22:58.587 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Push.Curva_Envio, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:58.589 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/assets/fonts/tw/TCMI____.TTF - -
+2022-06-12 07:22:58.598 -03:00 [INF] Sending file. Request path: '/assets/fonts/tw/TCMI____.TTF'. Physical path: 'E:\WEBSITES\1048conheca-gerenciador.caixa\wwwroot\assets\fonts\tw\TCMI____.TTF'
+2022-06-12 07:22:58.598 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/assets/fonts/tw/TCMI____.TTF - - - 200 78236 application/x-font-ttf 9.4707ms
+2022-06-12 07:22:59.116 -03:00 [INF] Executed action PushAPI.Controllers.PUSH.Curvas.CurvasController.GetCurva_Envio (PushAPI) in 4703.7217ms
+2022-06-12 07:22:59.117 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.PUSH.Curvas.CurvasController.GetCurva_Envio (PushAPI)'
+2022-06-12 07:22:59.117 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/Curvas - - - 200 - application/json;+charset=utf-8 24076.6780ms
+2022-06-12 07:22:59.140 -03:00 [INF] Request starting HTTP/1.1 GET http://gecdi.mz.caixa/api/Curvas - -
+2022-06-12 07:22:59.143 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbSites' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: None
+2022-06-12 07:22:59.145 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [u].[idUsuario], [u].[CGC], [u].[Nome], [u].[cUsuario], [u].[idRole], [r].[idRole], [r].[E_Admin], [r].[Nome_Role], [r].[Ordem], [r].[Pode_Geranciar_Simulacao], [r].[Pode_Gerenciar_Curvas], [r].[Pode_Gerenciar_Envios], [r].[Pode_Gerenciar_Solicitacao], [r].[Pode_Marcar_Envio], [r].[Pode_Suspender_Envios], [r].[Pode_Ver_Relatorio], [r].[Role], [r].[Rota], [r].[Tem_Permissao_Geral]
+FROM [SITES].[Usuario] AS [u]
+INNER JOIN [SITES].[Roles] AS [r] ON [u].[idRole] = [r].[idRole]
+WHERE [u].[idUsuario] = @__id_0
+2022-06-12 07:22:59.145 -03:00 [INF] Executing endpoint 'PushAPI.Controllers.PUSH.Curvas.CurvasController.GetCurva_Envio (PushAPI)'
+2022-06-12 07:22:59.146 -03:00 [INF] Route matched with {action = "GetCurva_Envio", controller = "Curvas"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[PushAPI.Models.Push.Curva_Envio]]] GetCurva_Envio() on controller PushAPI.Controllers.PUSH.Curvas.CurvasController (PushAPI).
+2022-06-12 07:22:59.147 -03:00 [INF] Entity Framework Core 6.0.4 initialized 'dbPUSH' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.4' with options: CommandTimeout=18000 
+2022-06-12 07:22:59.150 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='18000']
+SELECT [c].[idCurva_Envio], [c].[Apelido_Curva_Envio], [c].[Nome_Curva_Envio], [c0].[idCurva_Envio_Tranches], [c0].[Hora_Envio], [c0].[Quantidade_Normal], [c0].[Quantidade_Reduzida], [c0].[Tranche], [c0].[idCurva_Envio]
+FROM [FILA].[Curva_Envio] AS [c]
+LEFT JOIN [FILA].[Curva_Envio_Tranches] AS [c0] ON [c].[idCurva_Envio] = [c0].[idCurva_Envio]
+ORDER BY [c].[idCurva_Envio]
+2022-06-12 07:22:59.183 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Push.Curva_Envio, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:22:59.188 -03:00 [INF] Executed action PushAPI.Controllers.PUSH.Curvas.CurvasController.GetCurva_Envio (PushAPI) in 42.3533ms
+2022-06-12 07:22:59.188 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.PUSH.Curvas.CurvasController.GetCurva_Envio (PushAPI)'
+2022-06-12 07:22:59.188 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/Curvas - - - 200 - application/json;+charset=utf-8 48.0917ms
+2022-06-12 07:23:00.401 -03:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[PushAPI.Models.Push.Solicitacao, PushAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-06-12 07:23:00.444 -03:00 [INF] Executed action PushAPI.Controllers.PUSH.Solicitacao_PUSH.SolicitacaoController.GetSolicitacao (PushAPI) in 6031.1666ms
+2022-06-12 07:23:00.446 -03:00 [INF] Executed endpoint 'PushAPI.Controllers.PUSH.Solicitacao_PUSH.SolicitacaoController.GetSolicitacao (PushAPI)'
+2022-06-12 07:23:00.446 -03:00 [INF] Request finished HTTP/1.1 GET http://gecdi.mz.caixa/api/solicitacao/lista?recount=false&CGC=-1&order=priority&soFila=true&limit=100&de=2022-03-14&ate=2022-09-10&matricula=&id=-1 - - - 200 - application/json;+charset=utf-8 25074.8785ms
+2022-06-12 07:43:20.195 -03:00 [INF] Request starting HTTP/1.1 POST http://127.0.0.1:43389/iisintegration - 0
+2022-06-12 07:43:20.196 -03:00 [INF] Request finished HTTP/1.1 POST http://127.0.0.1:43389/iisintegration - 0 - 202 0 - 1.2103ms
+2022-06-12 07:43:20.196 -03:00 [INF] Application is shutting down...
