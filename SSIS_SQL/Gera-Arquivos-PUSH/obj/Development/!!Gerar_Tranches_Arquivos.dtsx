@@ -11,8 +11,8 @@
   DTS:LocaleID="1046"
   DTS:ObjectName="Gerar_Tranches_Arquivos"
   DTS:PackageType="5"
-  DTS:VersionBuild="101"
-  DTS:VersionGUID="{968E22BA-7130-444E-BB52-32FDC0FC8629}">
+  DTS:VersionBuild="103"
+  DTS:VersionGUID="{6A516083-DF2D-413C-8BF5-AECF22C10976}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -191,7 +191,7 @@
       DTS:CreationName=""
       DTS:DTSID="{4DEDB575-F54D-4805-B839-3A768A0F3FDF}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;DECLARE&#xA;&#x9;@idEnvio_Mensagem               INT         = &quot; + (DT_WSTR, 200) @[User::idEnvio_Mensagem]    + &quot;,&#xA;&#x9;@idSolicitacao_Simulacao_Envio  INT         = &quot; + (DT_WSTR, 200) @[User::idSolicitacao_Simulacao_Envio] + &quot;,&#xA;                @Canal                          VARCHAR(50) = '&quot; + (DT_WSTR, 200) @[User::Canal] + &quot;'&#xA;&#x9;&#xA;;WITH SAIDA_DADOS AS (&#xA;&#x9;&#x9;SELECT &#xA;&#x9;&#x9;&#x9;SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem] + ';' + @Canal )&#xA;&#x9;&#x9;FROM &#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[PUSH].[CPF_Controles] E WITH (NOLOCK),&#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[PUSH].[Mensagem]      M WITH (NOLOCK)&#xA;&#x9;&#x9;WHERE&#xA;&#x9;&#x9;&#x9;&#x9;M.idEnvio_Mensagem = @idEnvio_Mensagem&#xA;&#xA;&#xA;&#x9;UNION ALL&#xA;&#xA;&#x9;&#x9;SELECT &#xA;&#x9;&#x9;&#x9;SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + &#xA;                    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE([Mensagem],'{{Campo1}}',ISNULL(c.Campo1,'')),'{{Campo2}}',ISNULL(c.Campo2,'')),'{{Campo3}}',ISNULL(c.Campo1,'')),'{{Campo4}}',ISNULL(c.Campo4,'')),'{{Campo5}}',ISNULL(c.Campo5,''))  &#xA;                    + ';' + ISNULL([canal],'') )&#xA;&#x9;&#x9;FROM &#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[FILA].[Solicitacao_Clientes] C WITH (NOLOCK) INNER JOIN&#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[FILA].[Solicitacao]          F ON C.idSolicitacao_PUSH = F.idSolicitacao_PUSH&#xA;&#x9;&#x9;WHERE&#xA;&#x9;&#x9;    c.idSolicitacao_Simulacao_Envio = @idSolicitacao_Simulacao_Envio&#xA;&#xA;&#x9;UNION ALL&#xA;&#xA;&#x9;&#x9;SELECT &#xA;&#x9;&#x9;&#x9;SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem] + ';' + @Canal )&#xA;&#x9;&#x9;FROM &#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[PUSH].[CPF_Controles] E WITH (NOLOCK),&#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[PUSH].[Mensagem]      M WITH (NOLOCK)&#xA;&#x9;&#x9;WHERE&#xA;&#x9;&#x9;&#x9;&#x9;M.idEnvio_Mensagem = @idEnvio_Mensagem&#xA;)&#xA;&#x9;SELECT&#xA;&#x9;&#x9;SAIDA&#xA;&#x9;FROM&#xA;&#x9;&#x9;SAIDA_DADOS&#xA;&#x9;WHERE&#x9;&#xA;&#x9;&#x9;RTRIM(LTRIM(ISNULL(SAIDA,''))) &lt;&gt; ''&#xA;&quot;"
+      DTS:Expression="&quot;DECLARE&#xA;&#x9;@idEnvio_Mensagem               INT         = &quot; + (DT_WSTR, 200) @[User::idEnvio_Mensagem]    + &quot;,&#xA;&#x9;@idSolicitacao_Simulacao_Envio  INT         = &quot; + (DT_WSTR, 200) @[User::idSolicitacao_Simulacao_Envio] + &quot;,&#xA;                @Canal                          VARCHAR(50) = '&quot; + (DT_WSTR, 200) @[User::Canal] + &quot;'&#xA;&#x9;&#xA;;WITH SAIDA_DADOS AS (&#xA;&#x9;&#x9;SELECT &#xA;&#x9;&#x9;&#x9;SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem] + ';' + @Canal )&#xA;&#x9;&#x9;FROM &#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[PUSH].[CPF_Controles] E WITH (NOLOCK),&#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[PUSH].[Mensagem]      M WITH (NOLOCK)&#xA;&#x9;&#x9;WHERE&#xA;&#x9;&#x9;&#x9;&#x9;M.idEnvio_Mensagem = @idEnvio_Mensagem&#xA;&#xA;&#xA;&#x9;UNION ALL&#xA;&#xA;&#x9;&#x9;SELECT &#xA;&#x9;&#x9;&#x9;SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + &#xA;                    REPLACE(REPLACE(&#xA;                    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE([Mensagem],'{{Campo1}}',ISNULL(c.Campo1,'')),'{{Campo2}}',ISNULL(c.Campo2,'')),'{{Campo3}}',ISNULL(c.Campo1,'')),'{{Campo4}}',ISNULL(c.Campo4,'')),'{{Campo5}}',ISNULL(c.Campo5,''))&#xA;                    ,CHAR(10),''),CHAR(13),'')&#xA;                    + ';' + ISNULL([canal],'') )&#xA;&#x9;&#x9;FROM &#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[FILA].[Solicitacao_Clientes] C WITH (NOLOCK) INNER JOIN&#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[FILA].[Solicitacao]          F ON C.idSolicitacao_PUSH = F.idSolicitacao_PUSH&#xA;&#x9;&#x9;WHERE&#xA;&#x9;&#x9;    c.idSolicitacao_Simulacao_Envio = @idSolicitacao_Simulacao_Envio&#xA;&#xA;&#x9;UNION ALL&#xA;&#xA;&#x9;&#x9;SELECT &#xA;&#x9;&#x9;&#x9;SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + [Mensagem] + ';' + @Canal )&#xA;&#x9;&#x9;FROM &#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[PUSH].[CPF_Controles] E WITH (NOLOCK),&#xA;&#x9;&#x9;&#x9;[DB5138_PUSH].[PUSH].[Mensagem]      M WITH (NOLOCK)&#xA;&#x9;&#x9;WHERE&#xA;&#x9;&#x9;&#x9;&#x9;M.idEnvio_Mensagem = @idEnvio_Mensagem&#xA;)&#xA;&#x9;SELECT&#xA;&#x9;&#x9;SAIDA&#xA;&#x9;FROM&#xA;&#x9;&#x9;SAIDA_DADOS&#xA;&#x9;WHERE&#x9;&#xA;&#x9;&#x9;RTRIM(LTRIM(ISNULL(SAIDA,''))) &lt;&gt; ''&#xA;&quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="SQL_ORIGEM">
@@ -215,7 +215,9 @@
 
 		SELECT 
 			SAIDA = CONVERT(NVARCHAR(2000), FORMAT([CPF],'00000000000') + ';' + 
-                    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE([Mensagem],'{{Campo1}}',ISNULL(c.Campo1,'')),'{{Campo2}}',ISNULL(c.Campo2,'')),'{{Campo3}}',ISNULL(c.Campo1,'')),'{{Campo4}}',ISNULL(c.Campo4,'')),'{{Campo5}}',ISNULL(c.Campo5,''))  
+                    REPLACE(REPLACE(
+                    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE([Mensagem],'{{Campo1}}',ISNULL(c.Campo1,'')),'{{Campo2}}',ISNULL(c.Campo2,'')),'{{Campo3}}',ISNULL(c.Campo1,'')),'{{Campo4}}',ISNULL(c.Campo4,'')),'{{Campo5}}',ISNULL(c.Campo5,''))
+                    ,CHAR(10),''),CHAR(13),'')
                     + ';' + ISNULL([canal],'') )
 		FROM 
 			[DB5138_PUSH].[FILA].[Solicitacao_Clientes] C WITH (NOLOCK) INNER JOIN
@@ -252,7 +254,7 @@
       DTS:LocaleID="-1"
       DTS:ObjectName="Captura Lista de Tranches ou Tarefas"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
+      DTS:ThreadHint="1">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
@@ -280,7 +282,7 @@
       DTS:ExecutableType="Microsoft.FileSystemTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="CriarPasta"
-      DTS:ThreadHint="1">
+      DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <FileSystemData

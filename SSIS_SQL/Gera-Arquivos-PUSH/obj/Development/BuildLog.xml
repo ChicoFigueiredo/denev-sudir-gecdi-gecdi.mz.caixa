@@ -2,7 +2,7 @@
 <BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ProjectInfo>
     <Name>Gera-Arquivos-PUSH</Name>
-    <LastWriteTime>2022-05-23T03:23:17.823307Z</LastWriteTime>
+    <LastWriteTime>2022-06-06T18:48:18.0396711Z</LastWriteTime>
     <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
   </ProjectInfo>
   <LastBuildInfos>
@@ -38,7 +38,7 @@
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>
       <Name>!!Gerar_Tranches_Arquivos.dtsx</Name>
-      <LastWriteTime>2022-05-09T15:50:21.5943185Z</LastWriteTime>
+      <LastWriteTime>2022-06-15T19:30:03.4277023Z</LastWriteTime>
       <LastKnownProtectionLevel>EncryptSensitiveWithUserKey</LastKnownProtectionLevel>
     </ProjectBuildItemInfo>
     <ProjectBuildItemInfo>

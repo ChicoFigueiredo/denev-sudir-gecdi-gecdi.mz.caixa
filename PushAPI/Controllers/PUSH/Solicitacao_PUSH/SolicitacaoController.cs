@@ -86,7 +86,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             {
                 if (enviarParaODia != null)
                 {
-                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate) && !x.Finalizado && !x.Cancelado;
+                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate) && !x.Finalizado && !x.Cancelado  && x.Quantidade_Total_Restante > 0;
                 }
                 else
                 {
@@ -100,7 +100,7 @@ namespace PushAPI.Controllers.PUSH.Solicitacao_PUSH
             {
                 if (enviarParaODia != null)
                 {
-                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate) && !x.Finalizado && !x.Cancelado;
+                    whereFunc = x => (enviarParaODia >= x.Enviar_a_partir_de && enviarParaODia <= x.Enviar_no_maximo_ate) && !x.Finalizado && !x.Cancelado && x.Quantidade_Total_Restante > 0;
                 }
                 else
                 {

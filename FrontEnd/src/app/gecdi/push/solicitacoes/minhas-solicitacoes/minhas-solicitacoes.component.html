@@ -83,8 +83,8 @@
                   <nb-toggle [ngModel]="s?.autorizacao_Gestor_PUSH" disabled status="success"></nb-toggle>
                 </td>
 
-                <td scope="row"                         (click)="rowClick(s)">
-                  <nb-toggle [ngModel]="s?.cancelado" status="warning"></nb-toggle>
+                <td scope="row">
+                  <nb-toggle [ngModel]="s?.cancelado" (ngModelChange)="changeCheckCancelado(s,$event)" status="warning"></nb-toggle>
                 </td>
 
                 <td scope="row"  (click)="rowClick(se)">
